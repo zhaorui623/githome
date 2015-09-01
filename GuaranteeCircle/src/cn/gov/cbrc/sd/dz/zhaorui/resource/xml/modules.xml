@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<modules>
+
+	<module id="1" class="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step1.Step1Module" name="第一步：导入数据"
+		icon="navigator1.png" />
+	<module id="2" class="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.Step2Module" name="第二步：配置参数"
+		icon="navigator2.png" />
+	<module id="3" class="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module" name="第三步：生成过程"
+		icon="navigator3.png" />
+	<module id="4" class="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.Step4Module" name="第四步：查看结果"
+		icon="navigator4.png" />
+
+</modules>

@@ -1,0 +1,1961 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 14">
+<meta name=Originator content="Microsoft Word 14">
+<link rel=File-List href="IuB接口规划原理介绍.files/filelist.xml">
+<link rel=Edit-Time-Data href="IuB接口规划原理介绍.files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>gaomai</o:Author>
+  <o:LastAuthor>赵瑞</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>12</o:TotalTime>
+  <o:Created>2010-10-20T00:49:00Z</o:Created>
+  <o:LastSaved>2010-10-20T00:49:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>165</o:Words>
+  <o:Characters>943</o:Characters>
+  <o:Company>DT</o:Company>
+  <o:Lines>7</o:Lines>
+  <o:Paragraphs>2</o:Paragraphs>
+  <o:CharactersWithSpaces>1106</o:CharactersWithSpaces>
+  <o:Version>14.00</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:TargetScreenSize>800x600</o:TargetScreenSize>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=themeData href="IuB接口规划原理介绍.files/themedata.thmx">
+<link rel=colorSchemeMapping href="IuB接口规划原理介绍.files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 磅</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>ZH-CN</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:DontUseIndentAsNumberingTabStop/>
+   <w:FELineBreak11/>
+   <w:WW11IndentRules/>
+   <w:DontAutofitConstrainedTables/>
+   <w:AutofitLikeWW11/>
+   <w:HangulWidthLikeWW11/>
+   <w:UseNormalStyleForList/>
+   <w:DontVertAlignCellWithSp/>
+   <w:DontBreakConstrainedForcedTables/>
+   <w:DontVertAlignInTxbx/>
+   <w:Word11KerningPairs/>
+   <w:CachedColBalance/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="0" Name="Normal Indent"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="0" Name="List Number"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-alt:Arial;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520092929 1073786111 9 0 415 0;}
+@font-face
+	{font-family:华文细黑;
+	mso-font-alt:微软雅黑;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 135200768 16 0 262303 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520081665 -1073717157 41 0 66047 0;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+	{font-family:"\@华文细黑";
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 135200768 16 0 262303 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+h1
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-style-link:"标题 1 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:21.6pt;
+	text-indent:-21.6pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-list:l4 level1 lfo1;
+	tab-stops:list 21.6pt;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	layout-grid-mode:line;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-style-link:"标题 2 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:28.8pt;
+	text-indent:-28.8pt;
+	line-height:12.0pt;
+	mso-pagination:none;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-list:l4 level2 lfo1;
+	tab-stops:list 28.8pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";}
+h3
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 3 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:36.0pt;
+	text-indent:-36.0pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	mso-list:l4 level3 lfo1;
+	tab-stops:list 36.0pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;
+	mso-bidi-font-weight:normal;}
+h4
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 4 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:43.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-43.2pt;
+	line-height:156%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	mso-list:l4 level4 lfo1;
+	tab-stops:list 43.2pt;
+	font-size:10.5pt;
+	font-family:宋体;
+	mso-bidi-font-weight:normal;}
+h5
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 5 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:50.4pt;
+	text-indent:-50.4pt;
+	mso-pagination:none;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	mso-list:l4 level5 lfo1;
+	tab-stops:list 50.4pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+h6
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 6 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:57.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-57.6pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	mso-list:l4 level6 lfo1;
+	tab-stops:list 57.6pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 7 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:64.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-64.8pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:7;
+	mso-list:l4 level7 lfo1;
+	tab-stops:list 64.8pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 8 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:72.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-72.0pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:8;
+	mso-list:l4 level8 lfo1;
+	tab-stops:list 72.0pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 9 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:79.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-79.2pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:9;
+	mso-list:l4 level9 lfo1;
+	tab-stops:list 79.2pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
+	{mso-style-name:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-link:"正文缩进 Char1\,正文（首行缩进两字） Char Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char Char1\,正文（首行缩进两字） Char Char Char\,\D45C \BA38\B9AC\AE00 Char\,表正文 Char1\,正文非缩进 Char1\,特点 Char1\,Normal Indent（正文缩进） Char\,段1 Char1\,正文不缩进 Char1\,特点 Char Char\,ALT+Z Char\,水上软件 Char\,正文对齐 Char\,d Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.MsoListNumber, li.MsoListNumber, div.MsoListNumber
+	{mso-style-unhide:no;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:18.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-18.0pt;
+	mso-pagination:none;
+	mso-list:l0 level1 lfo3;
+	tab-stops:list 18.0pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"文档结构图 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:9.0pt;
+	font-family:宋体;
+	mso-hansi-font-family:Calibri;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"批注框文本 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.CharCharCharCharCharChar1CharCharCharCharCharCharChar, li.CharCharCharCharCharChar1CharCharCharCharCharCharChar, div.CharCharCharCharCharChar1CharCharCharCharCharCharChar
+	{mso-style-name:" Char Char Char Char Char Char1 Char Char Char Char Char Char Char";
+	mso-style-unhide:no;
+	mso-style-parent:文档结构图;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:17.85pt;
+	margin-bottom:.0001pt;
+	line-height:21.8pt;
+	mso-line-height-rule:exactly;
+	mso-pagination:none;
+	mso-outline-level:4;
+	background:navy;
+	mso-layout-grid-align:none;
+	font-size:12.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.Char
+	{mso-style-name:"文档结构图 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:文档结构图;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:宋体;
+	mso-ascii-font-family:宋体;
+	mso-fareast-font-family:宋体;}
+span.Char0
+	{mso-style-name:"批注框文本 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:批注框文本;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;}
+span.Char1
+	{mso-style-name:"正文缩进 Char1\,正文（首行缩进两字） Char Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char Char1\,正文（首行缩进两字） Char Char Char\,\D45C \BA38\B9AC\AE00 Char\,表正文 Char1\,正文非缩进 Char1\,特点 Char1\,Normal Indent（正文缩进） Char\,段1 Char1\,正文不缩进 Char1\,特点 Char Char\,ALT+Z Char\,水上软件 Char\,正文对齐 Char\,d Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman","serif";
+	mso-ascii-font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.1Char
+	{mso-style-name:"标题 1 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 1";
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	layout-grid-mode:line;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.2Char
+	{mso-style-name:"标题 2 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 2";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:bold;}
+span.3Char
+	{mso-style-name:"标题 3 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 3";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.4Char
+	{mso-style-name:"标题 4 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 4";
+	mso-bidi-font-size:10.5pt;
+	font-family:宋体;
+	mso-ascii-font-family:宋体;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.5Char
+	{mso-style-name:"标题 5 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 5";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;}
+span.6Char
+	{mso-style-name:"标题 6 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 6";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:0pt;}
+span.7Char
+	{mso-style-name:"标题 7 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 7";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";}
+span.8Char
+	{mso-style-name:"标题 8 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 8";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";}
+span.9Char
+	{mso-style-name:"标题 9 Char";
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"标题 9";
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	mso-ascii-font-family:Calibri;
+	mso-fareast-font-family:宋体;
+	mso-hansi-font-family:Calibri;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:-120;
+	mso-list-type:simple;
+	mso-list-template-ids:1586422796;}
+@list l0:level1
+	{mso-level-style-link:列表编号;
+	mso-level-tab-stop:18.0pt;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l1
+	{mso-list-id:1593777957;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-296052742 67698695 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-number-format:image;
+	list-style-image:url("IuB接口规划原理介绍.files/image001.gif");
+	mso-level-text:\F06C;
+	mso-level-tab-stop:42.0pt;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:63.0pt;
+	mso-level-number-position:left;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:84.0pt;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:105.0pt;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:126.0pt;
+	mso-level-number-position:left;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:147.0pt;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:168.0pt;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:189.0pt;
+	mso-level-number-position:left;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:210.0pt;
+	mso-level-number-position:left;
+	margin-left:210.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2
+	{mso-list-id:1783111085;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1439893162 67698695 67698689 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l2:level1
+	{mso-level-number-format:image;
+	list-style-image:url("IuB接口规划原理介绍.files/image001.gif");
+	mso-level-text:\F06C;
+	mso-level-tab-stop:42.0pt;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:63.0pt;
+	mso-level-number-position:left;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:84.0pt;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:105.0pt;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:126.0pt;
+	mso-level-number-position:left;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:147.0pt;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:168.0pt;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:189.0pt;
+	mso-level-number-position:left;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l2:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:210.0pt;
+	mso-level-number-position:left;
+	margin-left:210.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3
+	{mso-list-id:1871530498;
+	mso-list-type:hybrid;
+	mso-list-template-ids:192433036 67698695 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l3:level1
+	{mso-level-number-format:image;
+	list-style-image:url("IuB接口规划原理介绍.files/image001.gif");
+	mso-level-text:\F06C;
+	mso-level-tab-stop:42.0pt;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:63.0pt;
+	mso-level-number-position:left;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:84.0pt;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:105.0pt;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:126.0pt;
+	mso-level-number-position:left;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:147.0pt;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06C;
+	mso-level-tab-stop:168.0pt;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F06E;
+	mso-level-tab-stop:189.0pt;
+	mso-level-number-position:left;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l3:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F075;
+	mso-level-tab-stop:210.0pt;
+	mso-level-number-position:left;
+	margin-left:210.0pt;
+	text-indent:-21.0pt;
+	font-family:Wingdings;}
+@list l4
+	{mso-list-id:1984237908;
+	mso-list-template-ids:-1744304468;}
+@list l4:level1
+	{mso-level-style-link:"标题 1";
+	mso-level-text:%1;
+	mso-level-tab-stop:21.6pt;
+	mso-level-number-position:left;
+	margin-left:21.6pt;
+	text-indent:-21.6pt;}
+@list l4:level2
+	{mso-level-style-link:"标题 2";
+	mso-level-text:"%1\.%2";
+	mso-level-tab-stop:28.8pt;
+	mso-level-number-position:left;
+	margin-left:28.8pt;
+	text-indent:-28.8pt;}
+@list l4:level3
+	{mso-level-style-link:"标题 3";
+	mso-level-text:"%1\.%2\.%3";
+	mso-level-tab-stop:36.0pt;
+	mso-level-number-position:left;
+	margin-left:36.0pt;
+	text-indent:-36.0pt;}
+@list l4:level4
+	{mso-level-style-link:"标题 4";
+	mso-level-text:"%1\.%2\.%3\.%4";
+	mso-level-tab-stop:43.2pt;
+	mso-level-number-position:left;
+	margin-left:43.2pt;
+	text-indent:-43.2pt;}
+@list l4:level5
+	{mso-level-style-link:"标题 5";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5";
+	mso-level-tab-stop:50.4pt;
+	mso-level-number-position:left;
+	margin-left:50.4pt;
+	text-indent:-50.4pt;}
+@list l4:level6
+	{mso-level-style-link:"标题 6";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6";
+	mso-level-tab-stop:57.6pt;
+	mso-level-number-position:left;
+	margin-left:57.6pt;
+	text-indent:-57.6pt;}
+@list l4:level7
+	{mso-level-style-link:"标题 7";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7";
+	mso-level-tab-stop:64.8pt;
+	mso-level-number-position:left;
+	margin-left:64.8pt;
+	text-indent:-64.8pt;}
+@list l4:level8
+	{mso-level-style-link:"标题 8";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8";
+	mso-level-tab-stop:72.0pt;
+	mso-level-number-position:left;
+	margin-left:72.0pt;
+	text-indent:-72.0pt;}
+@list l4:level9
+	{mso-level-style-link:"标题 9";
+	mso-level-text:"%1\.%2\.%3\.%4\.%5\.%6\.%7\.%8\.%9";
+	mso-level-tab-stop:79.2pt;
+	mso-level-number-position:left;
+	margin-left:79.2pt;
+	text-indent:-79.2pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:普通表格;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-bidi-font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=ZH-CN style='tab-interval:21.0pt;text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal><strong><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑;color:#000099'>TD-SCDMA</span></strong><strong><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS";color:#000099'>系统</span></strong><strong><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑;color:#000099'>Iub</span></strong><strong><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS";color:#000099'>接口协议栈概述</span></strong><strong><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑;color:#000099'><o:p></o:p></span></strong></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>RNC</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>设备的</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>Iub</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>接口既支持</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>ATM</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>传输方式</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>, </span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>又支持</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>IP</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>传输方式。基于</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>IP</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>传输方式</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>Iub</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>接口协议层如图</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>1</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>所示。</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑;mso-no-proof:
+yes'><!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+ o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+ stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="图片_x0020_1" o:spid="_x0000_i1025" type="#_x0000_t75"
+ style='width:415.5pt;height:279pt;visibility:visible'>
+ <v:imagedata src="IuB接口规划原理介绍.files/image002.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img width=554 height=372
+src="IuB接口规划原理介绍.files/image003.jpg" v:shapes="图片_x0020_1"><![endif]></span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>图</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>1</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>：</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>Iub</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>接口协议栈结构</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:0cm'><span style='mso-bidi-font-size:
+10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>当</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>Iub</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>接口采用</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>ATM</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>传输时，物理层接口可以支持</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>E1
+IMA</span><span style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:
+"Arial Unicode MS";mso-hansi-font-family:"Arial Unicode MS"'>接口和</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>STM-1 155</span><span style='mso-bidi-font-size:
+10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>光接口。</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:0cm'><span style='mso-bidi-font-size:
+10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>当</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>Iub</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>接口采用</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>IP</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>传输时，物理层可以选择是以太</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>,
+GE</span><span style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:
+"Arial Unicode MS";mso-hansi-font-family:"Arial Unicode MS"'>，</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>FE</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>和</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>E1</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>接口。组网方式可以为星型或链型。</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:0cm'><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑;color:#000099'>NBAP</span></b><b style='mso-bidi-font-weight:
+normal'><span style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:
+"Arial Unicode MS";mso-hansi-font-family:"Arial Unicode MS";color:#000099'>协议功能</span></b><b
+style='mso-bidi-font-weight:normal'><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑;
+color:#000099'><o:p></o:p></span></b></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>小区配置管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>管理在</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>中的小区配置信息。</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>公共传输信道管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>管理在</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>中的公共传输信道配置。</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>系统信息管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>调度在小区中广播的系统信息；</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>资源时间管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>NODEB</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>向</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>CRNC</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>通知该</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>NODEB</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>中的资源状态。</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>配置稽核：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>和</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>核对和强制他们共有的无线资源具有同样的配置信息。</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>公共资源测量：</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>触发</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>对公共无线资源进行测量，同时还允许</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>NODEB</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>报告测量结果。</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>无线链路管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>在</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>中发起专用资源来管理无线链路。</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>无线链路监视：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>报告无线链路的失败和恢复状况。</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>专用资源测量：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>在</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>中发起专用资源的测量，同样还允许</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>NODEB</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>报告所测量的结果。</span><span lang=EN-US style='mso-bidi-font-size:
+10.5pt;font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l2 level1 lfo2;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:Wingdings;mso-fareast-font-family:
+Wingdings;mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img
+width=11 height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>物理信道共享管理：允许</span><span lang=EN-US
+style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'>CRNC</span><span style='mso-bidi-font-size:10.5pt;
+font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";mso-hansi-font-family:
+"Arial Unicode MS"'>在</span><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'>NODEB</span><span
+style='mso-bidi-font-size:10.5pt;font-family:华文细黑;mso-ascii-font-family:"Arial Unicode MS";
+mso-hansi-font-family:"Arial Unicode MS"'>中管理属于共享信道的物理资源。</span><span
+lang=EN-US style='mso-bidi-font-size:10.5pt;font-family:"Arial Unicode MS","serif";
+mso-fareast-font-family:华文细黑'><o:p></o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'>ALCAP</span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-family:宋体;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri;
+color:#000099'>协议功能</span><span lang=EN-US style='color:#000099'><o:p></o:p></span></b></p>
+
+<p class=MsoNormalIndent><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>传输网络层控制面</span><span
+lang=EN-US>ALCAP</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>协议主要实现</span><span lang=EN-US>Iub</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>接口上建立、释放、维护</span><span lang=EN-US>Iub</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>接口用户平面传输资源（</span><span lang=EN-US>AAL2</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>连接）的功能</span><span lang=EN-US>.</span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'>Iub-FP</span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-family:宋体;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri;
+color:#000099'>协议功能</span><span lang=EN-US style='color:#000099'><o:p></o:p></span></b></p>
+
+<p class=MsoNormalIndent><span lang=EN-US>Iub-FP</span><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>协议主要功能是把无线接口上的帧和</span><span
+lang=EN-US>Iub</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>接口上的数据帧之间的转换，并产生相应的控制帧来服务于此功能。公共信道</span><span
+lang=EN-US>FP</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>包括</span><span lang=EN-US>RACH-FP</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>、</span><span lang=EN-US>FACH-FP</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>、</span><span lang=EN-US>PCH-FP</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>等帧格式</span><span lang=EN-US>,<span
+style='mso-spacerun:yes'>&nbsp; </span></span><span style='font-family:宋体;
+mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>专用信道</span><span
+lang=EN-US>FP</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>包括</span><span lang=EN-US>DCH-FP</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>、</span><span lang=EN-US>HS-DSCH-FP</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>等帧格式。</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体;mso-ascii-font-family:Calibri;
+mso-hansi-font-family:Calibri'>公共信道</span><span lang=EN-US>FP</span><span
+style='font-family:宋体;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri'>功能</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l3 level1 lfo4;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>数据传输：在</span><span
+lang=EN-US>RNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>间传递公共传输信道的传输格式集。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l3 level1 lfo4;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>传输信道同步：支持</span><span
+lang=EN-US>RNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>传输信道同步机制。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l3 level1 lfo4;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>节点同步：支持</span><span
+lang=EN-US>RNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>节点同步机制。</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体;mso-ascii-font-family:Calibri;
+mso-hansi-font-family:Calibri'>专业信道</span><span lang=EN-US>FP</span><span
+style='font-family:宋体;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri'>功能</span></p>
+
+<p class=MsoNormalIndent><span lang=EN-US>Iub</span><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>接口的</span><span
+lang=EN-US>DCH-FP</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>提供如下功能：</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在</span><span
+lang=EN-US>RNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>间传递专用传输信道的传输格式集。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>在</span><span
+lang=EN-US>SRNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>和</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>之间的外环功率控制信息的传递。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>支持传输信道同步机制。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>支持节点同步机制。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>把</span><span
+lang=EN-US>DSCH</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>上应用的</span><span lang=EN-US>TFI</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>从</span><span lang=EN-US>SRNC</span><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>传送到</span><span
+lang=EN-US>NODEB</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>把接收的时间偏移信息从</span><span
+lang=EN-US>NODEB</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>传送到</span><span lang=EN-US>SRNC</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>。</span></p>
+
+<p class=MsoNormalIndent style='margin-left:42.0pt;text-indent:-21.0pt;
+mso-list:l1 level1 lfo5;tab-stops:list 42.0pt'><![if !supportLists]><span
+lang=EN-US style='font-family:Wingdings;mso-fareast-font-family:Wingdings;
+mso-bidi-font-family:Wingdings'><span style='mso-list:Ignore'><img width=11
+height=11 src="IuB接口规划原理介绍.files/image001.gif" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span></span><![endif]><span style='font-family:宋体;mso-ascii-font-family:
+"Times New Roman";mso-hansi-font-family:"Times New Roman"'>把无线接口参数从</span><span
+lang=EN-US>SRNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>传送到</span><span lang=EN-US>NODEB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>。</span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'><o:p>&nbsp;</o:p></span></b></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span lang=EN-US
+style='color:#000099'>OAM</span></b><b style='mso-bidi-font-weight:normal'><span
+style='font-family:宋体;mso-ascii-font-family:Calibri;mso-hansi-font-family:Calibri;
+color:#000099'>通道功能</span><span lang=EN-US style='color:#000099'><o:p></o:p></span></b></p>
+
+<p class=MsoNormalIndent><span lang=EN-US>OAM</span><span style='font-family:
+宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:"Times New Roman"'>默认通道用来传输</span><span
+lang=EN-US>RNC</span><span style='font-family:宋体;mso-ascii-font-family:"Times New Roman";
+mso-hansi-font-family:"Times New Roman"'>与</span><span lang=EN-US>NodeB</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>初始启动时最开始交互的</span><span lang=EN-US>IPOA</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>申请请求与</span><span lang=EN-US>IPOA</span><span
+style='font-family:宋体;mso-ascii-font-family:"Times New Roman";mso-hansi-font-family:
+"Times New Roman"'>申请响应。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='mso-bidi-font-size:10.5pt;
+font-family:"Arial Unicode MS","serif";mso-fareast-font-family:华文细黑'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
+ine;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-style-link:"标题 2 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:28.8pt;
+	text-indent:-28.8pt;
+	line-height:12.0pt;
+	mso-pagination:none;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-list:l4 level2 lfo1;
+	tab-stops:list 28.8pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";}
+h3
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 3 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:36.0pt;
+	text-indent:-36.0pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	mso-list:l4 level3 lfo1;
+	tab-stops:list 36.0pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;
+	mso-bidi-font-weight:normal;}
+h4
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 4 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:43.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-43.2pt;
+	line-height:156%;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	mso-list:l4 level4 lfo1;
+	tab-stops:list 43.2pt;
+	font-size:10.5pt;
+	font-family:宋体;
+	mso-bidi-font-weight:normal;}
+h5
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 5 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:50.4pt;
+	text-indent:-50.4pt;
+	mso-pagination:none;
+	page-break-after:avoid;
+	mso-outline-level:5;
+	mso-list:l4 level5 lfo1;
+	tab-stops:list 50.4pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+h6
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 6 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:57.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-57.6pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	mso-list:l4 level6 lfo1;
+	tab-stops:list 57.6pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 7 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:64.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-64.8pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:7;
+	mso-list:l4 level7 lfo1;
+	tab-stops:list 64.8pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 8 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:72.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-72.0pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:8;
+	mso-list:l4 level8 lfo1;
+	tab-stops:list 72.0pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"标题 9 Char";
+	mso-style-next:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:79.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-79.2pt;
+	mso-pagination:lines-together;
+	page-break-after:avoid;
+	mso-outline-level:9;
+	mso-list:l4 level9 lfo1;
+	tab-stops:list 79.2pt;
+	font-size:10.5pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial","sans-serif";
+	mso-fareast-font-family:宋体;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+p.MsoNormalIndent, li.MsoNormalIndent, div.MsoNormalIndent
+	{mso-style-name:"正文缩进\,正文（首行缩进两字） Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char\,正文（首行缩进两字） Char Char\,\D45C \BA38\B9AC\AE00\,表正文\,正文非缩进\,特点\,Normal Indent（正文缩进）\,段1\,正文不缩进\,特点 Char\,ALT+Z\,水上软件\,正文对齐\,正文缩进William\,body text\,Body Text\(ch\)\,bt\,\00E4ndrad\,四号\,缩进\,正文非缩进 Char Char\,d\,正文非缩进 Char\,首行缩进";
+	mso-style-update:auto;
+	mso-style-unhide:no;
+	mso-style-link:"正文缩进 Char1\,正文（首行缩进两字） Char Char Char Char Char Char\,正文（首行缩进两字） Char Char Char Char Char1\,正文（首行缩进两字） Char Char Char\,\D45C \BA38\B9AC\AE00 Char\,表正文 Char1\,正文非缩进 Char1\,特点 Char1\,Normal Indent（正文缩进） Char\,段1 Char1\,正文不缩进 Char1\,特点 Char Char\,ALT+Z Char\,水上软件 Char\,正文对齐 Char\,d Char";
+	margin-top:0cm;
+	margin-right:0cm;
+	marg

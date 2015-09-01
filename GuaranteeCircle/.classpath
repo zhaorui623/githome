@@ -7,5 +7,8 @@
 	<classpathentry kind="lib" path="lib/jgrapht-core-0.9.1.jar" sourcepath="D:/TDDOWNLOAD/软件开发/jgrapht-0.9.1/source"/>
 	<classpathentry kind="lib" path="lib/jgrapht-ext-0.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/jgraphx-2.0.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.6-20091214.jar"/>
+	<classpathentry kind="lib" path="lib/looks-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

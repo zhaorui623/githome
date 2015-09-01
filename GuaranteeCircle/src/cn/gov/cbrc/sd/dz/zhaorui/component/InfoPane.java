@@ -4,6 +4,7 @@ package cn.gov.cbrc.sd.dz.zhaorui.component;
  */
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,9 +31,10 @@ public class InfoPane extends JScrollPane{
 		super();
 		textarea=new JTextArea();
 		textarea.setEditable(false);
+		textarea.setLineWrap(true);
+		textarea.setBackground(Color.white);
 		this.setViewportView(textarea);
 		this.setAutoscrolls(true);
-		textarea.setBackground(Color.white);
 	}
 	
 	public void info(String info){

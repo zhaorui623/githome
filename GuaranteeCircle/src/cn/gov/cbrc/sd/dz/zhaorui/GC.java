@@ -105,13 +105,9 @@ public class GC {
 	 */
 	private static GC gc = null;
 
-	private Model model = null;
 
 	public static ImageIcon icon;
 
-	public enum Model {
-		TeacherModel, StudentModel;
-	}
 
 	/**
 	 * creating the bundle
@@ -338,10 +334,6 @@ public class GC {
 
 	public GalileoMenuBar getMenuBar() {
 		return menubar;
-	}
-
-	public Object getModel() {
-		return model;
 	}
 
 }

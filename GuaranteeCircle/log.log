@@ -1,2 +1,56 @@
-ERROR - java.lang.NullPointerException
-ERROR - java.lang.NullPointerException
+INFO - java.lang.NullPointerException
+INFO - null
+INFO - null
+INFO - 导入数据时发生异常！
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+INFO - 导入数据时发生异常！
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+ERROR - 导入数据时发生异常！ - java.lang.NullPointerException
+INFO - 用户选择取消
+INFO - 已选择“担保关系表”：D:\TDDOWNLOAD\eclipse\githome\GuaranteeCircle\客户信息表201506.xls
+INFO - 已选择“担保关系表”：D:\TDDOWNLOAD\eclipse\githome\GuaranteeCircle\担保关系表201506.xls
+INFO - 已选择“客户信息表”：D:\TDDOWNLOAD\eclipse\githome\GuaranteeCircle\客户信息表201506.xls
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream
+ERROR - 导入失败，导入数据时发生异常！ - jxl.read.biff.BiffException: Unable to recognize OLE stream

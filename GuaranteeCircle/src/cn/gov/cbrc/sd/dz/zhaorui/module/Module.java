@@ -71,7 +71,7 @@ public abstract class Module {
 				try {
 					Module module = (Module) Class.forName(className)
 							.getConstructor(classargs).newInstance(args);
-					modules.put(module.getName(), module);
+					modules.put(module.getId(), module);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -195,5 +195,9 @@ public abstract class Module {
 			Module m = (Module) ms[i];
 			m.refresh();
 		}
+	}
+
+	public static void gotoStep(int step) {
+		modules.get(String.valueOf(step)).getNavigatorButton().doClick();
 	}
 }

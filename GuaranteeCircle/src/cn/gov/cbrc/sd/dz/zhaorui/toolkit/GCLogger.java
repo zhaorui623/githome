@@ -7,7 +7,7 @@ import org.apache.log4j.SimpleLayout;
 
 public class GCLogger {
 
-	private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger("com");
+	private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger("cn.gov.cbrc.sd.dz.zhaorui");
 
 	static{
 		BasicConfigurator.configure();

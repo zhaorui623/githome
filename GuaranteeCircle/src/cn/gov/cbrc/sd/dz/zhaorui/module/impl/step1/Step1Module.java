@@ -109,7 +109,6 @@ public class Step1Module extends Module {
 					Corporation.addCorp(corp2);
 				}
 				//将担保人和借款人以及其担保关系加入总图中
-				System.out.println(corp1+","+corp2);
 				TotalGraphic.addVertex(corp1);
 				TotalGraphic.addVertex(corp2);
 				TotalGraphic.addEdge(corp1,corp2);

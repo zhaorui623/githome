@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import org.apache.log4j.Logger;
 
 import cn.gov.cbrc.sd.dz.zhaorui.component.GalileoMenuBar;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.component.NavigatorBar;
 import cn.gov.cbrc.sd.dz.zhaorui.component.WorkPane;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
@@ -203,6 +204,9 @@ public class GC {
 		// 右部主工作区
 		workPane = new WorkPane();
 		desktop.add(workPane, "Center");
+		
+		//下部日志区
+		desktop.add(InfoPane.getInstance(),"South");
 
 		Module.createModules(this);
 

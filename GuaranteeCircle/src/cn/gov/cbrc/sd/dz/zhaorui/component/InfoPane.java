@@ -29,7 +29,7 @@ public class InfoPane extends JScrollPane{
 	
 	private InfoPane(){
 		super();
-		textarea=new JTextArea();
+		textarea=new JTextArea(5,0);
 		textarea.setEditable(false);
 		textarea.setLineWrap(true);
 		textarea.setBackground(Color.white);

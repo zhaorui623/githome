@@ -31,50 +31,27 @@ public class DataSourcePanel extends JPanel {
 
 	private Step1Module step1Module = null;
 
-	private JSplitPane pane = null;
-
 	private String instructionText = "将“EAST模型”目录下的两个模型文件（“担保关系表.EDA”和“客户信息表.EDA”）导入综合办公平台EAST系统，连接“客户风险”数据库，分别运行模型，将最终结果导出为Excel格式（最终结果集节点已标黄），得到“担保关系表.xls”和“客户信息表.xls”。然后在下方分别选取两个文件，点击“导入”按钮即完成数据导入。";
 	
 	private String successMessage= "导入成功！";
 	private String failedMessage="导入失败，导入数据时发生异常！";
-
-	private static InfoPane infopane;
 
 	private JButton importButton, guaranteeInfoFileChooseButton, customerInfoFileChooseButton;
 
 	private JTextField textField1, textField2;
 
 	public DataSourcePanel(Step1Module step1Module) {
-		pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		this.step1Module = step1Module;
 		this.GC = step1Module.getGC();
 		this.setName(step1Module.getName());
+		
 		this.setLayout(new BorderLayout(5, 5));
-
-		// 上部主面板
-		JPanel topPanel = new JPanel(new BorderLayout(5, 5));
-		setTopComponent(pane, topPanel);
-
-		// 下部日志面板
-		infopane = InfoPane.getInstance();
-		setBottomComponent(pane, infopane);
-
-		this.add(pane);
-
+		addComponents();
+		
 		addListeners();
 	}
 
-	private void setBottomComponent(JSplitPane splitPane, Component comp) {
-		splitPane.setBottomComponent(comp);
-		// 设置分隔条位置
-		splitPane.setResizeWeight(0.7);
-	}
-
-	private void setTopComponent(JSplitPane splitPane, Component comp) {
-
-		Container c = (Container) comp;
-		c.setLayout(new BorderLayout());
-
+	private void addComponents() {
 		JPanel northPanel = new JPanel(new GridLayout(4, 1));
 		JTextArea instruction = new JTextArea();
 		instruction.setEditable(false);
@@ -100,13 +77,7 @@ public class DataSourcePanel extends JPanel {
 		importButton = new JButton("导入");
 		cp3.add(importButton,BorderLayout.CENTER);
 		northPanel.add(cp3);
-		c.add(northPanel, BorderLayout.NORTH);		
-
-		splitPane.setTopComponent(comp);
-
-		// 设置分隔条位置
-		splitPane.setResizeWeight(0.7);
-
+		this.add(northPanel, BorderLayout.NORTH);		
 	}
 
 	private void addListeners() {
@@ -119,7 +90,7 @@ public class DataSourcePanel extends JPanel {
 				if (file != null) {
 					step1Module.setGuaranteeInfoFile(file);
 					textField1.setText(file.getAbsolutePath());
-					infopane.info("已选择“担保关系表”：" + file.getAbsolutePath());
+					InfoPane.getInstance().info("已选择“担保关系表”：" + file.getAbsolutePath());
 				}
 			}
 		});
@@ -132,7 +103,7 @@ public class DataSourcePanel extends JPanel {
 				if (file != null) {
 					step1Module.setCustomerInfoFile(file);
 					textField2.setText(file.getAbsolutePath());
-					infopane.info("已选择“客户信息表”：" + file.getAbsolutePath());
+					InfoPane.getInstance().info("已选择“客户信息表”：" + file.getAbsolutePath());
 				}
 			}
 		});
@@ -144,14 +115,14 @@ public class DataSourcePanel extends JPanel {
 					if (isSuccess == true) {
 						JOptionPane.showMessageDialog(DataSourcePanel.this,successMessage, "提示",
 								JOptionPane.INFORMATION_MESSAGE);
-						infopane.info( successMessage);
+						InfoPane.getInstance().info( successMessage);
 						Module.gotoStep(2);
 					}
 				} catch (Exception exp) {
 					JOptionPane.showMessageDialog(DataSourcePanel.this, failedMessage, "错误",
 							JOptionPane.ERROR_MESSAGE);
-					infopane.error(failedMessage);
-					infopane.error(exp.toString());
+					InfoPane.getInstance().error(failedMessage);
+					InfoPane.getInstance().error(exp.toString());
 					exp.printStackTrace();
 				}
 			}

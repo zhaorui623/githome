@@ -1,38 +1,64 @@
 package cn.gov.cbrc.sd.dz.zhaorui.resource;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 
 public class Config {
 
-	public static final String CONFIG_FILE_NAME = "config.xml";
+	public static final File CONFIG_FILE = new File(System.getProperty("user.dir") + "\\" + "config.xml");
 
 	public static final String SPLIT_ALGORITHM_TAG = "algorithm";
 
 	private static Document doc;
+
 	private static List<HugeCircleSplitAlgorithm> hugeCircleSplitAlgorithmList;
 
-	public static Document getDoc() {
-		if (doc == null)
-			doc = ResourceManager.getXMLDocument(Config.CONFIG_FILE_NAME);
+	public static Document getDoc() throws Exception {
+		if (doc == null) {
+			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
+			doc = docBuild.parse(CONFIG_FILE.getAbsolutePath());
+		}
 		return doc;
 	}
+
+	public static void saveDoc() throws Exception {
+		TransformerFactory tfac = TransformerFactory.newInstance();
+		Transformer tra = tfac.newTransformer();
+		DOMSource doms = new DOMSource(doc);
+		FileOutputStream outstream = new FileOutputStream(CONFIG_FILE);
+		StreamResult sr = new StreamResult(outstream);
+		tra.transform(doms, sr);
+	}
+
 	/**
 	 * 根据配置文件，生成“超大圈拆分算法对象”们
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public static List<HugeCircleSplitAlgorithm> getHugeCircleSplitAlgorithms() throws Exception {
-		if (hugeCircleSplitAlgorithmList == null){
+		if (hugeCircleSplitAlgorithmList == null) {
 			hugeCircleSplitAlgorithmList = new ArrayList<HugeCircleSplitAlgorithm>();
 			NodeList algorithmElements = Config.getDoc().getElementsByTagName(Config.SPLIT_ALGORITHM_TAG);
 			for (int i = 0; i < algorithmElements.getLength(); i++) {
@@ -47,10 +73,11 @@ public class Config {
 				HugeCircleSplitAlgorithm hcsAlgm;
 				if ("".equals(algorithmClassStr))
 					algorithmClassStr = "cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm";
-				hcsAlgm = (HugeCircleSplitAlgorithm) Class.forName(algorithmClassStr).getConstructor(classes).newInstance(args);
-				if("".equals(configPanelClassStr))
-					configPanelClassStr="javax.swing.JPanel";
-				JPanel algorithmConfigPanel= (JPanel)Class.forName(configPanelClassStr).newInstance();
+				hcsAlgm = (HugeCircleSplitAlgorithm) Class.forName(algorithmClassStr).getConstructor(classes)
+						.newInstance(args);
+				if ("".equals(configPanelClassStr))
+					configPanelClassStr = "javax.swing.JPanel";
+				JPanel algorithmConfigPanel = (JPanel) Class.forName(configPanelClassStr).newInstance();
 				hcsAlgm.setAlgorithmConfigPanel(algorithmConfigPanel);
 				hugeCircleSplitAlgorithmList.add(hcsAlgm);
 			}

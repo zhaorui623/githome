@@ -1,6 +1,7 @@
 package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -62,14 +63,14 @@ public class ConfigPanel extends JPanel {
 		// 超大圈算法选择和配置面板
 		JPanel p1 = new JPanel(new BorderLayout(5, 5));
 		p1.setBorder(BorderFactory.createTitledBorder("超大圈拆分算法配置"));
-		JPanel algorithmChoosePanel = new JPanel();// 超大圈算法选择面板
+		JPanel algorithmChoosePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));// 超大圈算法选择面板
 		algorithmChoosePanel.add(new JLabel("超大圈拆分算法:"));
 		List<JRadioButton> algorithmChooseRadioButtons = createAlgorithmChooseRadioButtons();
 		for (JRadioButton button : algorithmChooseRadioButtons)
 			algorithmChoosePanel.add(button);
 		p1.add(algorithmChoosePanel, BorderLayout.NORTH);
-		algmConfigPanel = new JPanel();// 超大圈算法配置面板
-		p1.add(algmConfigPanel, BorderLayout.CENTER);
+		algmConfigPanel = new JPanel();
+		p1.add(algmConfigPanel, BorderLayout.CENTER);// 超大圈算法配置面板
 
 		this.add(p1, BorderLayout.CENTER);
 

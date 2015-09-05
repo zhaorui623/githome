@@ -12,10 +12,10 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private boolean guarantor_floor_selected;
 	private int mutually_guaranteed_floor_value;
 	private boolean mutually_guaranteed_floor_selected;
-	private double guaranteed_loan_balance_floor_value;
+	private int guaranteed_loan_balance_floor_value;
 	private Unit guaranteed_loan_balance_floor_unit;
 	private boolean guaranteed_loan_balance_floor_selected;
-	private double loan_balance_floor_value;
+	private int loan_balance_floor_value;
 	private Unit loan_balance_floor_unit;
 	private boolean loan_balance_floor_selected;
 	private boolean one_hand_vertex_all;
@@ -31,7 +31,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private boolean pick_mutually_guaranteed_corp;
 	private boolean pick_corecorp_loop;
 
-	public PickAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) {
+	public PickAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) throws Exception {
 
 		super(algorithm_name, algorithm_enable, algorithm_selected);
 
@@ -43,11 +43,11 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		mutually_guaranteed_floor_value = Integer.parseInt(doc.getElementById("7").getAttribute("value"));
 		mutually_guaranteed_floor_selected = Boolean.parseBoolean(doc.getElementById("7").getAttribute("selected"));
 
-		guaranteed_loan_balance_floor_value = Double.parseDouble(doc.getElementById("8").getAttribute("value"));
+		guaranteed_loan_balance_floor_value = Integer.parseInt(doc.getElementById("8").getAttribute("value"));
 		guaranteed_loan_balance_floor_unit = Unit.valueOf(doc.getElementById("8").getAttribute("unit"));
 		guaranteed_loan_balance_floor_selected = Boolean.parseBoolean(doc.getElementById("8").getAttribute("selected"));
 
-		loan_balance_floor_value = Double.parseDouble(doc.getElementById("9").getAttribute("value"));
+		loan_balance_floor_value = Integer.parseInt(doc.getElementById("9").getAttribute("value"));
 		loan_balance_floor_unit = Unit.valueOf(doc.getElementById("9").getAttribute("unit"));
 		loan_balance_floor_selected = Boolean.parseBoolean(doc.getElementById("9").getAttribute("selected"));
 
@@ -100,11 +100,11 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		this.mutually_guaranteed_floor_selected = mutually_guaranteed_floor_selected;
 	}
 
-	public double getGuaranteed_loan_balance_floor_value() {
+	public int getGuaranteed_loan_balance_floor_value() {
 		return guaranteed_loan_balance_floor_value;
 	}
 
-	public void setGuaranteed_loan_balance_floor_value(double guaranteed_loan_balance_floor_value) {
+	public void setGuaranteed_loan_balance_floor_value(int guaranteed_loan_balance_floor_value) {
 		this.guaranteed_loan_balance_floor_value = guaranteed_loan_balance_floor_value;
 	}
 
@@ -124,11 +124,11 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		this.guaranteed_loan_balance_floor_selected = guaranteed_loan_balance_floor_selected;
 	}
 
-	public double getLoan_balance_floor_value() {
+	public int getLoan_balance_floor_value() {
 		return loan_balance_floor_value;
 	}
 
-	public void setLoan_balance_floor_value(double loan_balance_floor_value) {
+	public void setLoan_balance_floor_value(int loan_balance_floor_value) {
 		this.loan_balance_floor_value = loan_balance_floor_value;
 	}
 

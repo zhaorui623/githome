@@ -40,13 +40,13 @@
 				<!-- 核心企业的认定标准,以下条件只要满足其中任意一个，即视为核心企业 -->
 				<core-corp id="5">
 					<!-- 条件1：如果企业被[guarantor-floor.value](含)家以上企业担保，则摘取以它为核心的担保圈 -->
-					<guarantor-floor id="6" value="5" selected="true" />
+					<guarantor-floor id="6" value="4" selected="true" />
 					<!-- 条件2：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
 					<mutually-guaranteed-floor id="7" value="2"
 						selected="true" />
 					<!-- 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
 					<guaranteed-loan-balance-floor id="8"
-						value="1" unit="亿元" selected="true" />
+						value="1" unit="亿元" selected="false" />
 					<!-- 条件4：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
 					<loan-balance-floor value="10" id="9" unit="亿元"
 						selected="true" />

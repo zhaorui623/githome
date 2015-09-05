@@ -2,6 +2,9 @@ package cn.gov.cbrc.sd.dz.zhaorui.algorithm;
 
 import javax.swing.JPanel;
 
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel;
+
 public class HugeCircleSplitAlgorithm {
 	
 	protected static int huge_circle_vertex_floor;
@@ -13,6 +16,8 @@ public class HugeCircleSplitAlgorithm {
 	protected boolean algorithm_selected;
 	
 	protected JPanel algorithmConfigPanel;
+	
+	protected boolean isAlgorithmConfigPanelInited=false;
 
 	public HugeCircleSplitAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) {
 		super();
@@ -46,14 +51,18 @@ public class HugeCircleSplitAlgorithm {
 	}
 
 	public JPanel getAlgorithmConfigPanel() {
+		if(isAlgorithmConfigPanelInited==false){
+			if(algorithmConfigPanel instanceof PickAlgorithmConfigPanel){
+				((PickAlgorithmConfigPanel)algorithmConfigPanel).init();
+			}
+			isAlgorithmConfigPanelInited=true;
+		}
 		return algorithmConfigPanel;
 	}
 
 	public void setAlgorithmConfigPanel(JPanel algorithmConfigPanel) {
 		this.algorithmConfigPanel = algorithmConfigPanel;
+		if(algorithmConfigPanel instanceof PickAlgorithmConfigPanel)
+			((PickAlgorithmConfigPanel)algorithmConfigPanel).setAlgorithm(this);
 	}
-	
-	
-	
-	
 }

@@ -43,7 +43,7 @@ public class XMLToolkit {
 	}
 
 	/**
-	 * 将Document对象输出为文�?
+	 * 将Document对象输出为文�?
 	 * 
 	 * @param doc
 	 * @param file
@@ -67,7 +67,7 @@ public class XMLToolkit {
 	}
 
 	/**
-	 * 根据id属�?获取root节点及其子节点中符合条件的节�?
+	 * 根据id属�?获取root节点及其子节点中符合条件的节�?
 	 * 
 	 * @param root
 	 * @param id
@@ -96,9 +96,16 @@ public class XMLToolkit {
 		}
 		return null;
 	}
+	
+	public static Element getElementById(Document doc,String id){
+		if (doc == null || id == null)
+			return null;
+		else
+			return getElementById(doc.getDocumentElement(), id);
+	}
 
 	/**
-	 * 根据TagName在root的一级子节点中查找符合条件的�?��节点
+	 * 根据TagName在root的一级子节点中查找符合条件的�?��节点
 	 * 
 	 * @param root
 	 * @param tag

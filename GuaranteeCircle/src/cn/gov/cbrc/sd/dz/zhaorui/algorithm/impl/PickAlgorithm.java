@@ -6,6 +6,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Unit;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
 public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private int guarantor_floor_value;
@@ -37,35 +38,40 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 
 		Document doc = Config.getDoc();
 
-		guarantor_floor_value = Integer.parseInt(doc.getElementById("6").getAttribute("value"));
-		guarantor_floor_selected = Boolean.parseBoolean(doc.getElementById("6").getAttribute("selected"));
+		guarantor_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "6").getAttribute("value"));
+		guarantor_floor_selected = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "6").getAttribute("selected"));
 
-		mutually_guaranteed_floor_value = Integer.parseInt(doc.getElementById("7").getAttribute("value"));
-		mutually_guaranteed_floor_selected = Boolean.parseBoolean(doc.getElementById("7").getAttribute("selected"));
+		mutually_guaranteed_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "7").getAttribute("value"));
+		mutually_guaranteed_floor_selected = Boolean
+				.parseBoolean(XMLToolkit.getElementById(doc, "7").getAttribute("selected"));
 
-		guaranteed_loan_balance_floor_value = Integer.parseInt(doc.getElementById("8").getAttribute("value"));
-		guaranteed_loan_balance_floor_unit = Unit.valueOf(doc.getElementById("8").getAttribute("unit"));
-		guaranteed_loan_balance_floor_selected = Boolean.parseBoolean(doc.getElementById("8").getAttribute("selected"));
+		guaranteed_loan_balance_floor_value = Integer
+				.parseInt(XMLToolkit.getElementById(doc, "8").getAttribute("value"));
+		guaranteed_loan_balance_floor_unit = Unit.valueOf(XMLToolkit.getElementById(doc, "8").getAttribute("unit"));
+		guaranteed_loan_balance_floor_selected = Boolean
+				.parseBoolean(XMLToolkit.getElementById(doc, "8").getAttribute("selected"));
 
-		loan_balance_floor_value = Integer.parseInt(doc.getElementById("9").getAttribute("value"));
-		loan_balance_floor_unit = Unit.valueOf(doc.getElementById("9").getAttribute("unit"));
-		loan_balance_floor_selected = Boolean.parseBoolean(doc.getElementById("9").getAttribute("selected"));
+		loan_balance_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "9").getAttribute("value"));
+		loan_balance_floor_unit = Unit.valueOf(XMLToolkit.getElementById(doc, "9").getAttribute("unit"));
+		loan_balance_floor_selected = Boolean
+				.parseBoolean(XMLToolkit.getElementById(doc, "9").getAttribute("selected"));
 
-		one_hand_vertex_all = Boolean.parseBoolean(doc.getElementById("12").getAttribute("selected"));
-		one_hand_vertex_in_only = Boolean.parseBoolean(doc.getElementById("13").getAttribute("selected"));
-		one_hand_vertex_none = Boolean.parseBoolean(doc.getElementById("14").getAttribute("selected"));
+		one_hand_vertex_all = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "12").getAttribute("selected"));
+		one_hand_vertex_in_only = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "13").getAttribute("selected"));
+		one_hand_vertex_none = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "14").getAttribute("selected"));
 
-		two_hand_vertex_all = Boolean.parseBoolean(doc.getElementById("16").getAttribute("selected"));
-		two_hand_vertex_in_only = Boolean.parseBoolean(doc.getElementById("17").getAttribute("selected"));
-		two_hand_vertex_none = Boolean.parseBoolean(doc.getElementById("18").getAttribute("selected"));
+		two_hand_vertex_all = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "16").getAttribute("selected"));
+		two_hand_vertex_in_only = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "17").getAttribute("selected"));
+		two_hand_vertex_none = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "18").getAttribute("selected"));
 
-		three_hand_vertex_all = Boolean.parseBoolean(doc.getElementById("20").getAttribute("selected"));
-		three_hand_vertex_in_only = Boolean.parseBoolean(doc.getElementById("21").getAttribute("selected"));
-		three_hand_vertex_none = Boolean.parseBoolean(doc.getElementById("22").getAttribute("selected"));
+		three_hand_vertex_all = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "20").getAttribute("selected"));
+		three_hand_vertex_in_only = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "21").getAttribute("selected"));
+		three_hand_vertex_none = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "22").getAttribute("selected"));
 
-		unpick_corecorp_son = Boolean.parseBoolean(doc.getElementById("23").getAttribute("selected"));
-		pick_mutually_guaranteed_corp = Boolean.parseBoolean(doc.getElementById("24").getAttribute("selected"));
-		pick_corecorp_loop = Boolean.parseBoolean(doc.getElementById("25").getAttribute("selected"));
+		unpick_corecorp_son = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "23").getAttribute("selected"));
+		pick_mutually_guaranteed_corp = Boolean
+				.parseBoolean(XMLToolkit.getElementById(doc, "24").getAttribute("selected"));
+		pick_corecorp_loop = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "25").getAttribute("selected"));
 	}
 
 	public int getGuarantor_floor_value() {
@@ -243,5 +249,44 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setPick_corecorp_loop(boolean pick_corecorp_loop) {
 		this.pick_corecorp_loop = pick_corecorp_loop;
 	}
-	
+
+	public boolean updateConfigCache() throws Exception {
+
+		Document doc = Config.getDoc();
+
+		XMLToolkit.getElementById(doc, "6").setAttribute("value", String.valueOf(guarantor_floor_value));
+		XMLToolkit.getElementById(doc, "6").setAttribute("selected", String.valueOf(guarantor_floor_selected));
+
+		XMLToolkit.getElementById(doc, "7").setAttribute("value", String.valueOf(mutually_guaranteed_floor_value));
+		XMLToolkit.getElementById(doc, "7").setAttribute("selected",
+				String.valueOf(mutually_guaranteed_floor_selected));
+
+		XMLToolkit.getElementById(doc, "8").setAttribute("value", String.valueOf(guaranteed_loan_balance_floor_value));
+		XMLToolkit.getElementById(doc, "8").setAttribute("unit", String.valueOf(guaranteed_loan_balance_floor_unit));
+		XMLToolkit.getElementById(doc, "8").setAttribute("selected",
+				String.valueOf(guaranteed_loan_balance_floor_selected));
+
+		XMLToolkit.getElementById(doc, "9").setAttribute("value", String.valueOf(loan_balance_floor_value));
+		XMLToolkit.getElementById(doc, "9").setAttribute("unit", String.valueOf(loan_balance_floor_unit));
+		XMLToolkit.getElementById(doc, "9").setAttribute("selected", String.valueOf(loan_balance_floor_selected));
+
+		XMLToolkit.getElementById(doc, "12").setAttribute("selected", String.valueOf(one_hand_vertex_all));
+		XMLToolkit.getElementById(doc, "13").setAttribute("selected", String.valueOf(one_hand_vertex_in_only));
+		XMLToolkit.getElementById(doc, "14").setAttribute("selected", String.valueOf(one_hand_vertex_none));
+
+		XMLToolkit.getElementById(doc, "16").setAttribute("selected", String.valueOf(two_hand_vertex_all));
+		XMLToolkit.getElementById(doc, "17").setAttribute("selected", String.valueOf(two_hand_vertex_in_only));
+		XMLToolkit.getElementById(doc, "18").setAttribute("selected", String.valueOf(two_hand_vertex_none));
+
+		XMLToolkit.getElementById(doc, "20").setAttribute("selected", String.valueOf(three_hand_vertex_all));
+		XMLToolkit.getElementById(doc, "21").setAttribute("selected", String.valueOf(three_hand_vertex_in_only));
+		XMLToolkit.getElementById(doc, "22").setAttribute("selected", String.valueOf(three_hand_vertex_none));
+
+		XMLToolkit.getElementById(doc, "23").setAttribute("selected", String.valueOf(unpick_corecorp_son));
+		XMLToolkit.getElementById(doc, "24").setAttribute("selected", String.valueOf(pick_mutually_guaranteed_corp));
+		XMLToolkit.getElementById(doc, "25").setAttribute("selected", String.valueOf(pick_corecorp_loop));
+
+		return true;
+	}
+
 }

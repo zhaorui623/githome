@@ -42,13 +42,14 @@ public class Config {
 		return doc;
 	}
 
-	public static void saveDoc() throws Exception {
+	public static boolean saveDoc() throws Exception {
 		TransformerFactory tfac = TransformerFactory.newInstance();
 		Transformer tra = tfac.newTransformer();
 		DOMSource doms = new DOMSource(doc);
 		FileOutputStream outstream = new FileOutputStream(CONFIG_FILE);
 		StreamResult sr = new StreamResult(outstream);
 		tra.transform(doms, sr);
+		return true;
 	}
 
 	/**

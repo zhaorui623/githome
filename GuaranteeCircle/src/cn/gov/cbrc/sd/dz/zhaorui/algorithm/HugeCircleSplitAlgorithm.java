@@ -63,6 +63,6 @@ public class HugeCircleSplitAlgorithm {
 	public void setAlgorithmConfigPanel(JPanel algorithmConfigPanel) {
 		this.algorithmConfigPanel = algorithmConfigPanel;
 		if(algorithmConfigPanel instanceof PickAlgorithmConfigPanel)
-			((PickAlgorithmConfigPanel)algorithmConfigPanel).setAlgorithm(this);
+			((PickAlgorithmConfigPanel)algorithmConfigPanel).setAlgorithm((PickAlgorithm)this);
 	}
 }

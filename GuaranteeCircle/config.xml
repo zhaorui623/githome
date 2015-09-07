@@ -1,96 +1,61 @@
-<?xml version="1.0" ?>
-<!DOCTYPE root [
-  <!ELEMENT root ANY>    
-  <!ATTLIST huge-circle-split-algorithm  id ID #REQUIRED >
-  <!ATTLIST vertex-floor  id ID #REQUIRED >
-  <!ATTLIST algorithms  id ID #REQUIRED >
-  <!ATTLIST core-corp  id ID #REQUIRED >
-  <!ATTLIST guarantor-floor  id ID #REQUIRED >
-  <!ATTLIST mutually-guaranteed-floor  id ID #REQUIRED >
-  <!ATTLIST guaranteed-loan-balance-floor  id ID #REQUIRED >
-  <!ATTLIST loan-balance-floor  id ID #REQUIRED >
-  <!ATTLIST scale-control  id ID #REQUIRED >
-  <!ATTLIST one-hand-vertex  id ID #REQUIRED >
-  <!ATTLIST two-hand-vertex  id ID #REQUIRED >
-  <!ATTLIST three-hand-vertex  id ID #REQUIRED >
-  <!ATTLIST all  id ID #REQUIRED >
-  <!ATTLIST in-only  id ID #REQUIRED >
-  <!ATTLIST none  id ID #REQUIRED >
-  <!ATTLIST unpick-corecorp-son  id ID #REQUIRED >
-  <!ATTLIST pick-mutually-guaranteed-corp  id ID #REQUIRED >
-  <!ATTLIST pick-corecorp-loop  id ID #REQUIRED >
-  <!ATTLIST circle-classify  id ID #REQUIRED >
-  <!ATTLIST scale-dimension  id ID #REQUIRED >
-  <!ATTLIST scale  id ID #REQUIRED >
-  <!ATTLIST risk-dimension  id ID #REQUIRED >
-]>
-<config>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
 	<!-- 超大圈拆分算法 -->
-	<huge-circle-split-algorithm id="1" name="超大圈拆分算法"
-		class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm">
+	<huge-circle-split-algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm" id="1" name="超大圈拆分算法">
 		<!-- 超大圈认定规则：当“圈内节点数>=[vertex-floor.value]”时，则认定为超大圈 -->
-		<vertex-floor id="2" value="50" />
+		<vertex-floor id="2" value="50"/>
 		<!-- 拆分算法 -->
 		<algorithms id="3">
 			<!-- 拆分算法1：摘取法 -->
-			<algorithm id="4" name="摘取法"
-				class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm"
-				component="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel"
-				enable="true" selected="true">
+			<algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm" component="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel" enable="true" id="4" name="摘取法" selected="true">
 				<!-- 核心企业的认定标准,以下条件只要满足其中任意一个，即视为核心企业 -->
 				<core-corp id="5">
 					<!-- 条件1：如果企业被[guarantor-floor.value](含)家以上企业担保，则摘取以它为核心的担保圈 -->
-					<guarantor-floor id="6" value="4" selected="true" />
+					<guarantor-floor id="6" selected="true" value="5"/>
 					<!-- 条件2：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
-					<mutually-guaranteed-floor id="7" value="2"
-						selected="true" />
+					<mutually-guaranteed-floor id="7" selected="true" value="2"/>
 					<!-- 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<guaranteed-loan-balance-floor id="8"
-						value="1" unit="亿元" selected="false" />
+					<guaranteed-loan-balance-floor id="8" selected="false" unit="亿元" value="1"/>
 					<!-- 条件4：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<loan-balance-floor value="10" id="9" unit="亿元"
-						selected="true" />
+					<loan-balance-floor id="9" selected="true" unit="亿元" value="10"/>
 				</core-corp>
 				<!-- 担保圈摘取时的规模控制 -->
 				<scale-control id="10">
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="true" />
+						<all id="12" selected="true"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
-						<in-only id="13" selected="false" />
+						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="14" selected="false" />
+						<none id="14" selected="false"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
 						<!-- 规则1：摘取全部2手节点企业（含担保和被担保） -->
-						<all id="16" selected="false" />
+						<all id="16" selected="false"/>
 						<!-- 规则2：只取为1手企业提供担保的企业 -->
-						<in-only id="17" selected="true" />
+						<in-only id="17" selected="true"/>
 						<!-- 规则3：全不取 -->
-						<none id="18" selected="false" />
+						<none id="18" selected="false"/>
 					</two-hand-vertex>
 					<!-- 3手节点企业摘取规则，以下规则只能选择1个 -->
 					<three-hand-vertex id="19">
 						<!-- 规则1：摘取全部3手节点企业（含担保和被担保） -->
-						<all id="20" selected="false" />
+						<all id="20" selected="false"/>
 						<!-- 规则2：只取为2手企业提供担保的企业 -->
-						<in-only id="21" selected="false" />
+						<in-only id="21" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="22" selected="true" />
+						<none id="22" selected="true"/>
 					</three-hand-vertex>
 					<!-- 如果N手企业也被认定为“核心企业”，则不取它的后手 -->
-					<unpick-corecorp-son id="23" selected="true" />
+					<unpick-corecorp-son id="23" selected="true"/>
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
-					<pick-mutually-guaranteed-corp id="24"
-						selected="true" />
+					<pick-mutually-guaranteed-corp id="24" selected="true"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
-					<pick-corecorp-loop id="25" selected="true" />
+					<pick-corecorp-loop id="25" selected="true"/>
 				</scale-control>
 			</algorithm>
-			<algorithm id="32" name="其他（欢迎集思广益）" class="" component=""
-				enable="false" selected="false">
+			<algorithm class="" component="" enable="false" id="32" name="其他（欢迎集思广益）" selected="false">
 			</algorithm>
 		</algorithms>
 	</huge-circle-split-algorithm>
@@ -98,12 +63,11 @@
 	<circle-classify id="26">
 		<!-- 规模维度 -->
 		<scale-dimension id="27">
-			<scale id="28" level="A" />
-			<scale id="29" level="B" loan-balance-floor="1"
-				loan-balance-ceiling="5" />
-			<scale id="30" level="C" />
+			<scale id="28" level="A"/>
+			<scale id="29" level="B" loan-balance-ceiling="5" loan-balance-floor="1"/>
+			<scale id="30" level="C"/>
 		</scale-dimension>
 		<!-- 风险维度 -->
-		<risk-dimension id="31"></risk-dimension>
+		<risk-dimension id="31"/>
 	</circle-classify>
 </config>

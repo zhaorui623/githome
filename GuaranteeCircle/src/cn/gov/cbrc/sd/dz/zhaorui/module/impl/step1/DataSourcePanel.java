@@ -111,12 +111,11 @@ public class DataSourcePanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					boolean isSuccess = step1Module.doImport();
-					if (isSuccess == true) {
+					boolean success = step1Module.doImport();
+					if (success) {
 						JOptionPane.showMessageDialog(DataSourcePanel.this,successMessage, "提示",
 								JOptionPane.INFORMATION_MESSAGE);
 						InfoPane.getInstance().info( successMessage);
-						Module.gotoStep(2);
 					}
 				} catch (Exception exp) {
 					JOptionPane.showMessageDialog(DataSourcePanel.this, failedMessage, "错误",
@@ -125,6 +124,7 @@ public class DataSourcePanel extends JPanel {
 					InfoPane.getInstance().error(exp.toString());
 					exp.printStackTrace();
 				}
+				Module.gotoStep(2);
 			}
 		});
 	}

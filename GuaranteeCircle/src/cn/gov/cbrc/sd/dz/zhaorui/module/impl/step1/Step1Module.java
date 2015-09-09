@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
-import cn.gov.cbrc.sd.dz.zhaorui.model.TotalGraphic;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -27,6 +27,9 @@ public class Step1Module extends Module {
 	private Workbook guaranteeInfoBook, customerInfo;
 
 	private DataSourcePanel cmPanel;
+	
+
+	private Graphic totalGraphic;
 
 	public Step1Module(String id, GC gc, String name, String iconName) {
 		super(id, gc, name, iconName);
@@ -89,7 +92,7 @@ public class Step1Module extends Module {
 	}
 
 	private void initGraphic(Collection<Corporation> corps, Workbook book) {
-		TotalGraphic.init();
+		totalGraphic=new Graphic();
 		//解析“担保关系表”
 		Sheet sheet=book.getSheet(0);
 		int rowCount = sheet.getRows();
@@ -109,11 +112,11 @@ public class Step1Module extends Module {
 					Corporation.addCorp(corp2);
 				}
 				//将担保人和借款人以及其担保关系加入总图中
-				TotalGraphic.addVertex(corp1);
-				TotalGraphic.addVertex(corp2);
-				TotalGraphic.addEdge(corp1,corp2);
+				totalGraphic.addVertex(corp1);
+				totalGraphic.addVertex(corp2);
+				totalGraphic.addEdge(corp1,corp2);
 		}
-		TotalGraphic.printBasicInfo();
+		totalGraphic.printBasicInfo();
 	}
 
 	private void initCorps(Workbook book) {
@@ -137,6 +140,10 @@ public class Step1Module extends Module {
 			corp = new Corporation(datas);
 			Corporation.addCorp(corp);
 		}		
+	}
+
+	public Graphic getTotalGraphic() {
+		return this.totalGraphic;
 	}
 
 }

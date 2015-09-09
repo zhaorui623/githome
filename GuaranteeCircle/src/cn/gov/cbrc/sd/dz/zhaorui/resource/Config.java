@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
 public class Config {
 
@@ -80,6 +81,8 @@ public class Config {
 					configPanelClassStr = "javax.swing.JPanel";
 				JPanel algorithmConfigPanel = (JPanel) Class.forName(configPanelClassStr).newInstance();
 				hcsAlgm.setAlgorithmConfigPanel(algorithmConfigPanel);
+				hcsAlgm.setHuge_circle_vertex_floor(
+						Integer.parseInt(XMLToolkit.getElementById(doc, "2").getAttribute("value")));
 				hugeCircleSplitAlgorithmList.add(hcsAlgm);
 			}
 		}

@@ -2,7 +2,7 @@
 	<!-- 超大圈拆分算法 -->
 	<huge-circle-split-algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm" id="1" name="超大圈拆分算法">
 		<!-- 超大圈认定规则：当“圈内节点数>=[vertex-floor.value]”时，则认定为超大圈 -->
-		<vertex-floor id="2" value="50"/>
+		<vertex-floor id="2" value="100"/>
 		<!-- 拆分算法 -->
 		<algorithms id="3">
 			<!-- 拆分算法1：摘取法 -->

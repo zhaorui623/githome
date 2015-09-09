@@ -93,4 +93,8 @@ public class Corporation {
 		Corporation corp = new Corporation(datas);
 		return corp;
 	}
+
+	public String getName() {
+		return getStringValue(NAME_COL);
+	}
 }

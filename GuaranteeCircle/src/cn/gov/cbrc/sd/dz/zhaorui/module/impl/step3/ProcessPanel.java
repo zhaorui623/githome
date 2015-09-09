@@ -111,4 +111,8 @@ public class ProcessPanel extends JPanel {
 		});
 	}
 
+	public String[] getLabeltexts() {
+		return labeltexts;
+	}
+
 }

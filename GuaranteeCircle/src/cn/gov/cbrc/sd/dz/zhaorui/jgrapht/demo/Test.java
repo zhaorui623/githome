@@ -27,13 +27,13 @@ public class Test {
 		g.addEdge(v3, v5);
 		g.addEdge(v4, v5);
 
-		System.out.println("¹ã¶ÈÓÅÏÈ£º");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½");
 		BreadthFirstIterator<String, DefaultWeightedEdge> bit = new BreadthFirstIterator<String, DefaultWeightedEdge>(
 				g);
-		bit.setCrossComponentTraversal(false);
+		bit.setCrossComponentTraversal(true);
 		while (bit.hasNext())
 			System.out.println(bit.next());
-		System.out.println("±éÀú½áÊø¡£");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
 		System.out.println(g.incomingEdgesOf(v2));
 		System.out.println(g.outgoingEdgesOf(v2));

@@ -74,7 +74,7 @@ public class Config {
 				Object args[] = { algorithmName, enable, selected };
 				HugeCircleSplitAlgorithm hcsAlgm;
 				if ("".equals(algorithmClassStr))
-					algorithmClassStr = "cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm";
+					algorithmClassStr = "cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.DefaultAlgorithm";
 				hcsAlgm = (HugeCircleSplitAlgorithm) Class.forName(algorithmClassStr).getConstructor(classes)
 						.newInstance(args);
 				if ("".equals(configPanelClassStr))

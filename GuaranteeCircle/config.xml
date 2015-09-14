@@ -7,8 +7,10 @@
 		<algorithms id="3">
 			<!-- 拆分算法1：摘取法 -->
 			<algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm" component="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel" enable="true" id="4" name="摘取法" selected="true">
-				<!-- 核心企业的认定标准,以下条件只要满足其中任意一个，即视为核心企业 -->
+				<!-- 核心企业的认定标准,以下条件只要满足其中[condition-number]个，即视为核心企业 -->
 				<core-corp id="5">
+					<!-- 要被认定为核心企业需要满足的条件个数 -->
+					<condition-number id="32" value="3"/>
 					<!-- 条件1：如果企业被[guarantor-floor.value](含)家以上企业担保，则摘取以它为核心的担保圈 -->
 					<guarantor-floor id="6" selected="true" value="5"/>
 					<!-- 条件2：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
@@ -16,27 +18,27 @@
 					<!-- 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
 					<guaranteed-loan-balance-floor id="8" selected="false" unit="亿元" value="1"/>
 					<!-- 条件4：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<loan-balance-floor id="9" selected="true" unit="亿元" value="10"/>
+					<loan-balance-floor id="9" selected="true" unit="万元" value="500"/>
 				</core-corp>
 				<!-- 担保圈摘取时的规模控制 -->
 				<scale-control id="10">
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="true"/>
+						<all id="12" selected="false"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
 						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="14" selected="false"/>
+						<none id="14" selected="true"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
 						<!-- 规则1：摘取全部2手节点企业（含担保和被担保） -->
 						<all id="16" selected="false"/>
 						<!-- 规则2：只取为1手企业提供担保的企业 -->
-						<in-only id="17" selected="true"/>
+						<in-only id="17" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="18" selected="false"/>
+						<none id="18" selected="true"/>
 					</two-hand-vertex>
 					<!-- 3手节点企业摘取规则，以下规则只能选择1个 -->
 					<three-hand-vertex id="19">

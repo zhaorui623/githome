@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -73,37 +75,67 @@ public class Step3Module extends Module {
 		InfoPane.getInstance().info("共识别出连通子图" + graphics.size() + "个");
 	}
 
+	/**
+	 * 第二步：对超大圈进行拆分
+	 * 
+	 * @throws Exception
+	 */
 	public void procedure2() throws Exception {
-		InfoPane.getInstance().info("执行procedure2！");
+		List<Graphic> gs = new ArrayList<Graphic>();
+		for (Graphic graphic : graphics) {
+			List<Graphic> sonGrapihcs = hcsAlgm.splitHugeCircle(graphic);
+			gs.addAll(sonGrapihcs);
+		}
+		graphics = gs;
 	}
 
 	/**
-	 * 过滤掉非圈非链、小圈小链
+	 * 第三部：过滤掉非圈非链、小圈小链
 	 * 
 	 * @throws Exception
 	 */
 	public void procedure3() throws Exception {
-		int size1=graphics.size();
+		int size1 = graphics.size();
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
 			Graphic g = iterator.next();
 			int vertexCount = g.vertexSet().size();
 			int edgeCount = g.edgeSet().size();
-			//如果平均每个节点超过1.5条边  或者  点+边总数超过10的话，则保留
-			if (edgeCount * 1.0 / vertexCount > 1.5||edgeCount+vertexCount>10)
+			// 如果平均每个节点超过1.5条边 或者 点+边总数超过10的话，则保留
+			if (edgeCount * 1.0 / vertexCount > 1.5 || edgeCount + vertexCount > 10)
 				;
-			else//否则，丢弃
+			else// 否则，丢弃
 				iterator.remove();
-		}		
-		int size2=graphics.size();
-		InfoPane.getInstance().info("共过滤掉" + (size1-size2) + "个非圈非链、小圈小链，最终剩余担保圈"+size2+"个");
+		}
+		int size2 = graphics.size();
+		InfoPane.getInstance().info("共过滤掉" + (size1 - size2) + "个非圈非链、小圈小链，最终剩余担保圈" + size2 + "个");
 	}
 
+	/**
+	 * 第四步：
+	 * 
+	 * @throws Exception
+	 */
 	public void procedure4() throws Exception {
-		Iterator<Graphic> iterator = graphics.iterator();
-		while (iterator.hasNext()) {
-			Graphic g = iterator.next();
-			g.toFile(new File(System.getProperty("user.dir")+"\\担保圈图\\"));
+		InfoPane.getInstance().info("为" + graphics.size() + "个担保圈生成图像文件……");
+		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
+		for (Graphic g : graphics)
+			queue.put(g);
+		new Thread() {
+			public void run() {
+				while (queue.isEmpty() == false) {
+					getProcedure().setPercent((int) ((1 - queue.size() * 1.0 / graphics.size()) * 100));
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+		while (queue.isEmpty() == false) {
+			Graphic g = queue.take();
+			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
 		}
 	}
 

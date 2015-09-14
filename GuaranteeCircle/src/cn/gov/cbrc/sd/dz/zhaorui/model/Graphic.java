@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -141,7 +142,7 @@ public class Graphic {
 	}
 
 	public File toFile(File dir)
-			throws IOException {
+			throws Exception {
 		String s = this.toDotCode();
 		dir = new File(dir.getAbsolutePath() );
 		if (dir.exists() == false)
@@ -155,7 +156,7 @@ public class Graphic {
 		String cmd2 = "cmd /c dot " + file.getAbsolutePath() + " -Tsvg -o "
 				+ file.getAbsolutePath().replace(".dot", ".svg");
 		String cmd3 = cmd2.replaceAll("svg", "png");
-		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3);
+		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();;
 
 		return file;
 	}
@@ -165,5 +166,47 @@ public class Graphic {
 	}
 	public String getName(){
 		return this.name;
+	}
+
+	/**
+	 * 得到某节点的互保节点个数
+	 * @param corp
+	 */
+	public int  mutuallyDegreeOf(Corporation v) {
+		int result= mutuallyVertexsOf(v).size();
+//		System.out.println(v.getName()+".互保企业个数="+result);
+		return result;
+	}
+
+	/**
+	 * 得到某节点的互保节点集合
+	 * @return
+	 */
+	public Set<Corporation> mutuallyVertexsOf(Corporation v) {
+		Set<Corporation> mutuallyVertexsSet=new HashSet<Corporation>();
+		//得到所有指向该节点的节点
+		Set<Corporation> inVertexsSet=incomingVertexsOf(v);
+		//得到所有该节点 指向的节点
+		Set<Corporation> outVertexsSet=outgoingVertexsOf(v);
+		//取两个集合的交集
+		mutuallyVertexsSet.addAll(inVertexsSet);
+		mutuallyVertexsSet.retainAll(outVertexsSet);
+		return mutuallyVertexsSet;
+	}
+
+	public Set<Corporation> outgoingVertexsOf(Corporation v) {
+		Set<Corporation> outVertexsSet=new HashSet<Corporation>();
+		Set<DefaultWeightedEdge>  outEdges=this.outgoingEdgesOf(v);
+		for(DefaultWeightedEdge edge:outEdges)
+			outVertexsSet.add(this.getEdgeTarget(edge));
+		return outVertexsSet;
+	}
+
+	public Set<Corporation> incomingVertexsOf(Corporation v) {
+		Set<Corporation> inVertexsSet=new HashSet<Corporation>();
+		Set<DefaultWeightedEdge>  inEdges=this.incomingEdgesOf(v);
+		for(DefaultWeightedEdge edge:inEdges)
+			inVertexsSet.add(this.getEdgeSource(edge));
+		return inVertexsSet;
 	}
 }

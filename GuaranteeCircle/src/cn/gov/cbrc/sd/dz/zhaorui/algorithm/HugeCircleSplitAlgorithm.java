@@ -11,12 +11,13 @@ import javax.swing.JPanel;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel;
 
-public class HugeCircleSplitAlgorithm {
-	
+public abstract class HugeCircleSplitAlgorithm {
+
 	protected static int huge_circle_vertex_floor;
 
 	protected String algorithm_name;
@@ -24,10 +25,10 @@ public class HugeCircleSplitAlgorithm {
 	protected boolean algorithm_enable;
 
 	protected boolean algorithm_selected;
-	
+
 	protected JPanel algorithmConfigPanel;
-	
-	protected boolean isAlgorithmConfigPanelInited=false;
+
+	protected boolean isAlgorithmConfigPanelInited = false;
 
 	public HugeCircleSplitAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) {
 		super();
@@ -69,27 +70,27 @@ public class HugeCircleSplitAlgorithm {
 	}
 
 	public JPanel getAlgorithmConfigPanel() {
-		if(isAlgorithmConfigPanelInited==false){
-			if(algorithmConfigPanel instanceof PickAlgorithmConfigPanel){
-				((PickAlgorithmConfigPanel)algorithmConfigPanel).init();
+		if (isAlgorithmConfigPanelInited == false) {
+			if (algorithmConfigPanel instanceof PickAlgorithmConfigPanel) {
+				((PickAlgorithmConfigPanel) algorithmConfigPanel).init();
 			}
-			isAlgorithmConfigPanelInited=true;
+			isAlgorithmConfigPanelInited = true;
 		}
 		return algorithmConfigPanel;
 	}
 
 	public void setAlgorithmConfigPanel(JPanel algorithmConfigPanel) {
 		this.algorithmConfigPanel = algorithmConfigPanel;
-		if(algorithmConfigPanel instanceof PickAlgorithmConfigPanel)
-			((PickAlgorithmConfigPanel)algorithmConfigPanel).setAlgorithm((PickAlgorithm)this);
+		if (algorithmConfigPanel instanceof PickAlgorithmConfigPanel)
+			((PickAlgorithmConfigPanel) algorithmConfigPanel).setAlgorithm((PickAlgorithm) this);
 	}
+
 	/**
 	 * 用广度优先搜索的方法，识别传入参数graphic的所有连通子图，放到一个List里返回
 	 * 
 	 * @return
 	 */
-	public static List<Graphic> split(
-			Graphic graphic) {
+	public static List<Graphic> split(Graphic graphic) {
 		// 用来存放待会拆出来的所有子图
 		List<Graphic> result = new ArrayList<Graphic>();
 		// 当graphic里尚有节点时，就一直做这个循环，这是为了拆出所有连通子图
@@ -141,5 +142,47 @@ public class HugeCircleSplitAlgorithm {
 			return q.add(obj);
 		else
 			return true;
+	}
+
+	/**
+	 * 超大圈拆分算法
+	 * 
+	 * @param graphic
+	 *            超大圈
+	 * @return 如果graphic是超大圈，则返回拆分后的子图集合；如果graphic不是超大圈，则返回的集合中只包含graphic自己
+	 * @throws Exception 
+	 */
+	public List<Graphic> splitHugeCircle(Graphic graphic) throws Exception {
+		List<Graphic> gs = new ArrayList<Graphic>();
+		if (isHugeCircle(graphic)) {// 如果确实是超大圈，则拆分之
+			List<Graphic> sonGrpahicsOfHugeCircle=splitHugeCircleImpl(graphic);
+			InfoPane.getInstance().info("发现超大圈，它最终被拆分成了"+sonGrpahicsOfHugeCircle.size()+"个子圈");
+			gs.addAll(sonGrpahicsOfHugeCircle);
+			
+		} else {// 如果不是超大圈，则直接加入到结果集合中
+			gs.add(graphic);
+		}
+		return gs;
+	}
+
+	/**具体拆分算法，此方法需要调用具体实现类的方法
+	 * 	
+	 * @param graphic
+	 * @throws Exception 
+	 */
+	protected abstract List<Graphic> splitHugeCircleImpl(Graphic graphic) throws Exception;
+
+	/**
+	 * 判断一个圈是不是超大圈
+	 * 
+	 * @param graphic
+	 * @return
+	 */
+	private boolean isHugeCircle(Graphic graphic) {
+		//如果圈内节点数超过了[超大圈节点数下限]，则说明可以认定为超大圈
+		if (graphic.vertexSet().size() >= this.getHuge_circle_vertex_floor())
+			return true;
+		else
+			return false;
 	}
 }

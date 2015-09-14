@@ -10,11 +10,15 @@ import java.util.Set;
 public class Corporation {
 
 	public static final String NAME_COL = "客户名称";
+	public static final String LOAN_BALANCE_COL = "贷款余额";
 
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;
 
 	private static Map<String, Corporation> corps;
+	
+	//摘取法中，用来标记该企业是否为核心企业
+	private boolean isCore=false;
 
 	public Corporation(LinkedHashMap<String, Object> datas) {
 		this.datas = datas;
@@ -94,7 +98,18 @@ public class Corporation {
 		return corp;
 	}
 
+	
+	
+	public boolean isCore() {
+		return isCore;
+	}
+
+	public void setCore(boolean isCore) {
+		this.isCore = isCore;
+	}
+
 	public String getName() {
 		return getStringValue(NAME_COL);
 	}
+	
 }

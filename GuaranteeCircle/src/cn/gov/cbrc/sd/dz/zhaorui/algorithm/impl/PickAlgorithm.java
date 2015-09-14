@@ -1,6 +1,9 @@
 package cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -18,6 +21,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
 public class PickAlgorithm extends HugeCircleSplitAlgorithm {
+	private int condition_number_value;
 	private int guarantor_floor_value;
 	private boolean guarantor_floor_selected;
 	private int mutually_guaranteed_floor_value;
@@ -46,6 +50,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		super(algorithm_name, algorithm_enable, algorithm_selected);
 
 		Document doc = Config.getDoc();
+
+		condition_number_value = Integer.parseInt(XMLToolkit.getElementById(doc, "32").getAttribute("value"));
 
 		guarantor_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "6").getAttribute("value"));
 		guarantor_floor_selected = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "6").getAttribute("selected"));
@@ -259,9 +265,19 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		this.pick_corecorp_loop = pick_corecorp_loop;
 	}
 
+	public int getCondition_number_value() {
+		return condition_number_value;
+	}
+
+	public void setCondition_number_value(int condition_number_value) {
+		this.condition_number_value = condition_number_value;
+	}
+
 	public boolean updateConfigCache() throws Exception {
 
 		Document doc = Config.getDoc();
+
+		XMLToolkit.getElementById(doc, "32").setAttribute("value", String.valueOf(condition_number_value));
 
 		XMLToolkit.getElementById(doc, "6").setAttribute("value", String.valueOf(guarantor_floor_value));
 		XMLToolkit.getElementById(doc, "6").setAttribute("selected", String.valueOf(guarantor_floor_selected));
@@ -297,5 +313,173 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 
 		return true;
 	}
-	
+
+	/**
+	 * 对超大圈拆分的具体工作在这里进行
+	 * 
+	 * @return
+	 * 
+	 * @throws Exception
+	 */
+	@Override
+	protected List<Graphic> splitHugeCircleImpl(Graphic graphic) throws Exception {
+		List<Graphic> gs = new ArrayList<Graphic>();
+		// 对核心企业节点进行标记
+		markCoreCorp(graphic);
+		// 获取所有核心企业
+		Set<Corporation> coreCorps = getCoreCorps(graphic);
+		// 对每个核心企业，拉取其担保圈
+		for (Corporation corp : coreCorps) {
+			Graphic g = dragCircleOf(graphic, corp);
+			gs.add(g);
+		}
+		return gs;
+	}
+
+	/**
+	 * 在超大圈graphic中拉取以core为核心节点的担保圈
+	 * 
+	 * @param graphic
+	 * @param corp
+	 * @return
+	 * @throws Exception
+	 */
+	private Graphic dragCircleOf(Graphic graphic, Corporation core) throws Exception {
+		// 用来存放待会拉出来的担保圈图
+		Graphic g = new Graphic();
+		g.setNameSuffix(core.getName());
+		// 先把核心节点放到g里
+		g.addVertex(core);
+		// 拉取第一层节点
+		Set<Corporation> corpsOfLevel1 = dragNextLevel(graphic, g, g.vertexSet(), "One");
+		// 拉取第二层节点
+		Set<Corporation> corpsOfLevel2 = dragNextLevel(graphic, g, corpsOfLevel1, "Two");
+		// 拉取第三层节点
+		Set<Corporation> corpsOfLevel3 = dragNextLevel(graphic, g, corpsOfLevel2, "Three");
+		return g;
+	}
+
+	/**
+	 * 拉取corps的下一层圈，通常corps是某层圈的所有企业集合
+	 * 
+	 * @param graphic
+	 * @param g
+	 * @param levelToBeDrag
+	 * @param core
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 */
+	private Set<Corporation> dragNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToBeDrag)
+			throws Exception {
+		int levelToDrag = levelToBeDrag.equals("One") ? 1 : (levelToBeDrag.equals("Two") ? 2 : 3);
+		Set<Corporation> corpsOfLevelX = new HashSet<Corporation>();
+		// 如果是“全不取”被选中
+		if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_none").invoke(this))
+			return corpsOfLevelX;// 直接返回空集
+		else {
+			for (Corporation corp : corps) {// 对于每一个节点
+				//如果用户选择“不取核心节点的后手的话”，就不取核心节点的后手
+				if (this.isUnpick_corecorp_son() == true && levelToDrag > 1 && corp.isCore() == true)
+					continue;
+				// 获取与该点接触的所有边
+				Set<DefaultWeightedEdge> edges = graphic.edgesOf(corp);
+				for (DefaultWeightedEdge edge : edges) {// 对每一条边
+					Corporation corpS = graphic.getEdgeSource(edge);// 边的头顶点
+					Corporation corpT = graphic.getEdgeTarget(edge);// 边的尾顶点
+					Corporation corp2 = corpS.equals(corp) == false ? corpS : corpT;// core的对端顶点
+					// 如果是“全部”被选中
+					if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_all").invoke(this)) {
+						if (g.containsVertex(corp2) == false) {
+							// 将每条边的另一端的那个节点加到g中
+							g.addVertex(corp2);
+							corpsOfLevelX.add(corp2);
+						}
+						// 将每条边加入到g中
+						g.addEdge(corpS, corpT);
+					}
+					// 如果是“只取为核心企业提供担保的企业”
+					if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_in_only").invoke(this)) {
+						if (corpT == corp) {
+							if (g.containsVertex(corpS) == false) {
+								// 将core作为尾顶点时的对端顶点加入g中
+								g.addVertex(corpS);
+								corpsOfLevelX.add(corpS);
+							}
+							// 将这条边也加入到g中
+							g.addEdge(corpS, corpT);
+						}
+					}
+				}
+			}
+			return corpsOfLevelX;
+		}
+	}
+
+	private void markCoreCorp(Graphic graphic) throws Exception {
+		Iterator<Corporation> iterator = graphic.vertexSet().iterator();
+		while (iterator.hasNext()) {
+			Corporation corp = iterator.next();
+			int conditionMeetCount = 0;// 实际满足的条件个数
+			if (this.isGuarantor_floor_selected()) {// 若条件1被启用的话
+				// 如果企业被[guarantor-floor.value](含)家以上企业担保，则可以认定为核心企业
+				if (graphic.inDegreeOf(corp) >= this.getGuarantor_floor_value()) {
+					conditionMeetCount++;
+				}
+			}
+			if (this.isMutually_guaranteed_floor_selected()) {// 若条件2被启用的话
+				// 如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则可以认定为核心企业
+				if (graphic.mutuallyDegreeOf(corp) >= this.getMutually_guaranteed_floor_value()) {
+					conditionMeetCount++;
+				}
+			}
+			// 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”,则认定为核心企业
+			// TODO 条件3暂未启用
+			if (this.isLoan_balance_floor_selected()) {// 若条件4被启用的话
+				// 如果“企业的贷款余额>=[loan-balance-floor.value]”，则可以认定为 核心企业
+				if (corp.getDoubleValue(Corporation.LOAN_BALANCE_COL) >= this.getLoan_balance_floor_value()
+						* this.getLoan_balance_floor_unit().getMultiple()) {
+					conditionMeetCount++;
+				}
+			}
+			// 如果实际满足的条件个数超过用户定义的下限的话，则认定为核心企业
+			if (conditionMeetCount >= this.getCondition_number_value())
+				corp.setCore(true);
+			else
+				corp.setCore(false);
+		}
+
+		System.out.println("核心企业数为：" + getCoreCorpCount(graphic));
+	}
+
+	/**
+	 * 在调用此方法前要确保调用过markCoreCorp()方法。
+	 * 
+	 * @param graphic
+	 * @return
+	 */
+	public int getCoreCorpCount(Graphic graphic) {
+		return getCoreCorps(graphic).size();
+	}
+
+	/**
+	 * 在调用此方法前要确保调用过markCoreCorp()方法。
+	 * 
+	 * @param graphic
+	 * @return
+	 */
+	public Set<Corporation> getCoreCorps(Graphic graphic) {
+		Set<Corporation> result = new HashSet<Corporation>();
+		Iterator<Corporation> iterator = graphic.vertexSet().iterator();
+		while (iterator.hasNext()) {
+			Corporation corp = iterator.next();
+			if (corp.isCore())
+				result.add(corp);
+		}
+		return result;
+	}
+
 }

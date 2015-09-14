@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -80,8 +82,9 @@ public class ConfigPanel extends JPanel {
 		JPanel algorithmChoosePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));// 超大圈算法选择面板
 		algorithmChoosePanel.add(new JLabel("超大圈拆分算法:"));
 		List<JRadioButton> algorithmChooseRadioButtons = createAlgorithmChooseRadioButtons();
-		for (JRadioButton button : algorithmChooseRadioButtons)
+		for (JRadioButton button : algorithmChooseRadioButtons){
 			algorithmChoosePanel.add(button);
+		}
 		p1.add(algorithmChoosePanel, BorderLayout.NORTH);
 		algmConfigPanel = new JPanel();
 		p1.add(algmConfigPanel, BorderLayout.CENTER);// 超大圈算法配置面板
@@ -101,8 +104,9 @@ public class ConfigPanel extends JPanel {
 
 		this.add(centerPanel, BorderLayout.CENTER);
 	}
-
+	Map<JRadioButton,HugeCircleSplitAlgorithm> map;
 	private List<JRadioButton> createAlgorithmChooseRadioButtons() throws Exception {
+		map=new HashMap<JRadioButton, HugeCircleSplitAlgorithm>();
 		ButtonGroup algorithmChooseRadioButtonGroup = new ButtonGroup();
 		algorithmChooseRadioButtons = new ArrayList<JRadioButton>();
 		algms = Config.getHugeCircleSplitAlgorithms();
@@ -112,6 +116,7 @@ public class ConfigPanel extends JPanel {
 			button.setSelected(algm.isAlgorithm_selected());
 			algorithmChooseRadioButtonGroup.add(button);
 			algorithmChooseRadioButtons.add(button);
+			map.put(button,algm);
 		}
 
 		return algorithmChooseRadioButtons;
@@ -120,11 +125,11 @@ public class ConfigPanel extends JPanel {
 	private void addListeners() {
 		for (int i = 0; i < algorithmChooseRadioButtons.size(); i++) {
 			JRadioButton button = algorithmChooseRadioButtons.get(i);
-			step2Module.setHcsAlgm(algms.get(i));
 			button.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					if (e.getStateChange() == ItemEvent.SELECTED) {
+					if (e.getStateChange() == ItemEvent.SELECTED) {						
+						step2Module.setHcsAlgm(map.get(e.getSource()));
 						JPanel p = step2Module.getHcsAlgm().getAlgorithmConfigPanel();
 						algmConfigPanel.removeAll();
 						algmConfigPanel.add(p);
@@ -133,7 +138,8 @@ public class ConfigPanel extends JPanel {
 			});
 			if (i == 0) {
 				button.doClick();
-				algmConfigPanel.removeAll();
+				algmConfigPanel.removeAll();			
+				step2Module.setHcsAlgm(map.get(button));
 				algmConfigPanel.add(step2Module.getHcsAlgm().getAlgorithmConfigPanel());
 			}
 		}
@@ -149,12 +155,14 @@ public class ConfigPanel extends JPanel {
 							PickAlgorithm palgm = pacPanel.getAlgorithm();
 
 							palgm.setAlgorithm_selected(true);
+							
+							palgm.setCondition_number_value(pacPanel.getCondition_number_value());
 
 							palgm.setGuaranteed_loan_balance_floor_selected(
-									palgm.isGuaranteed_loan_balance_floor_selected());
-							palgm.setGuaranteed_loan_balance_floor_unit(palgm.getGuaranteed_loan_balance_floor_unit());
+									pacPanel.isGuaranteed_loan_balance_floor_selected());
+							palgm.setGuaranteed_loan_balance_floor_unit(pacPanel.getGuaranteed_loan_balance_floor_unit());
 							palgm.setGuaranteed_loan_balance_floor_value(
-									palgm.getGuaranteed_loan_balance_floor_value());
+									pacPanel.getGuaranteed_loan_balance_floor_value());
 
 							palgm.setGuarantor_floor_selected(pacPanel.isGuarantorFloorSelected());
 							palgm.setGuarantor_floor_value(pacPanel.getGuarantorFloor());

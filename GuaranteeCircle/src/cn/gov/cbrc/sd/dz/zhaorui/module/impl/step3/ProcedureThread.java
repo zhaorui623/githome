@@ -24,6 +24,7 @@ public class ProcedureThread extends Thread {
 				obj.getProcedure().setPercent(0);
 				Step3Module.class.getMethod("procedure" + i).invoke(obj);
 				obj.getProcedure().setPercent(100);
+				Thread.sleep(500);
 
 			}
 		} catch (Exception e) {

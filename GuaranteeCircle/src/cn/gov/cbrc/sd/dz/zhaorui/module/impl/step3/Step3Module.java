@@ -69,7 +69,7 @@ public class Step3Module extends Module {
 	@SuppressWarnings("static-access")
 	public void procedure1() throws Exception {
 		this.hcsAlgm = ((Step2Module) Module.getModule("2")).getHcsAlgm();
-		this.totalGraphic = ((Step1Module) Module.getModule("1")).getTotalGraphic();
+		this.totalGraphic = ((Step1Module) Module.getModule("1")).getTotalGraphic().clone();
 		// 得到独立连通子图们
 		graphics = hcsAlgm.split(totalGraphic);
 		InfoPane.getInstance().info("共识别出连通子图" + graphics.size() + "个");
@@ -90,7 +90,7 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第三部：过滤掉非圈非链、小圈小链
+	 * 第三步：过滤掉非圈非链、小圈小链
 	 * 
 	 * @throws Exception
 	 */
@@ -112,7 +112,7 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第四步：
+	 * 第四步：生成每个担保圈的拓扑图
 	 * 
 	 * @throws Exception
 	 */
@@ -139,16 +139,28 @@ public class Step3Module extends Module {
 		}
 	}
 
+	/**
+	 * 第5步：从地区分布维度分析
+	 * @throws Exception
+	 */
 	public void procedure5() throws Exception {
+		
 		InfoPane.getInstance().info("执行procedure5！");
 
 	}
 
+	/**
+	 * 第6步：从重点客户维度分析
+	 * @throws Exception
+	 */
 	public void procedure6() throws Exception {
 		InfoPane.getInstance().info("执行procedure6！");
 
 	}
-
+	/**
+	 * 第7步：从风险分类维度分析
+	 * @throws Exception
+	 */
 	public void procedure7() throws Exception {
 		InfoPane.getInstance().info("执行procedure7！");
 	}

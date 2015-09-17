@@ -167,6 +167,10 @@ public class Graphic {
 	public void setNameSuffix(String name) {
 		this.name = name + this.toString().replaceAll(this.getClass().getName(), "");
 	}
+	
+	public void setName(String name){
+		this.name=name;
+	}
 
 	public String getName() {
 		return this.name;
@@ -233,7 +237,7 @@ public class Graphic {
 		// }
 		// return loops;
 
-//		System.out.println("开始查找" + v.getName() + "所在的环");
+		// System.out.println("开始查找" + v.getName() + "所在的环");
 		Set<Loop> loops = new HashSet<Loop>();
 		List<Corporation> currentPath = new LinkedList<Corporation>();
 		List<DefaultWeightedEdge> edgesOfCurrentPath = new LinkedList<DefaultWeightedEdge>();
@@ -251,9 +255,9 @@ public class Graphic {
 	 * @param core
 	 * @return
 	 */
-	 public Set<Loop> loopsOf(Corporation v) {
-		 return loopsOf(v,Integer.MAX_VALUE);
-	 }
+	public Set<Loop> loopsOf(Corporation v) {
+		return loopsOf(v, Integer.MAX_VALUE);
+	}
 
 	private void dfs(Corporation currentVertex, List<Corporation> currentPath,
 			List<DefaultWeightedEdge> edgesOfCurrentPath, Corporation startVertex, Set<Loop> loops,
@@ -272,7 +276,7 @@ public class Graphic {
 					loop.addVertex(c);
 				loop.addEdgesFrom(this);// 将所有边加入回路
 				loops.add(loop);
-//				System.out.println("找到一个环" + loop);
+				// System.out.println("找到一个环" + loop);
 				// 移除最后一个节点
 				currentPath.remove(currentPath.size() - 1);
 				edgesOfCurrentPath.remove(edgesOfCurrentPath.size() - 1);
@@ -312,7 +316,7 @@ public class Graphic {
 
 		g.printBasicInfo();
 
-		g.loopsOf(v0,7);
+		g.loopsOf(v0, 7);
 	}
 
 	/**
@@ -337,4 +341,33 @@ public class Graphic {
 		}
 	}
 
+	public Graphic clone() {
+		Graphic graphicClone=new Graphic();
+		if(this.getName()!=null)
+			graphicClone.setName(new String(this.getName()));
+		Set<Corporation> vertexSet=this.vertexSet();
+		for(Corporation vertex:vertexSet){
+			Corporation vertexClone=vertex.clone();
+			graphicClone.addVertex(vertexClone);
+		}
+		Set<DefaultWeightedEdge> edgeSet=this.edgeSet();
+		for(DefaultWeightedEdge edge:edgeSet){
+			Corporation corpSource=this.getEdgeSource(edge);
+			Corporation corpTarget=this.getEdgeTarget(edge);
+			Corporation corpSourceClone=graphicClone.getVertexByName(corpSource.getName());
+			Corporation corpTargetClone=graphicClone.getVertexByName(corpTarget.getName());
+			graphicClone.addEdge(corpSourceClone, corpTargetClone);
+		}
+		
+		return graphicClone;
+	}
+
+	private Corporation getVertexByName(String name) {
+		Set<Corporation> vertexs=this.vertexSet();
+		for(Corporation v:vertexs){
+			if(v.getName().equals(name))
+				return v;
+		}
+		return null;
+	}
 }

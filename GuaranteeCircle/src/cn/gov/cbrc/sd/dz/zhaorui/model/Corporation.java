@@ -15,7 +15,7 @@ public class Corporation {
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;
 
-	private static Map<String, Corporation> corps;
+//	private static Map<String, Corporation> corps;
 	
 	//摘取法中，用来标记该企业是否为核心企业
 	private boolean isCore=false;
@@ -25,16 +25,16 @@ public class Corporation {
 		this.datas = datas;
 	}
 
-	public static void addCorp(Corporation corp) {
-		if (corps == null)
-			corps = new HashMap<String, Corporation>();
-		corps.put(corp.getStringValue(NAME_COL), corp);
-	}
-
-	public static void initCorps() {
-		if (corps != null)
-			corps.clear();
-	}
+//	public static void addCorp(Corporation corp) {
+//		if (corps == null)
+//			corps = new HashMap<String, Corporation>();
+//		corps.put(corp.getStringValue(NAME_COL), corp);
+//	}
+//
+//	public static void initCorps() {
+//		if (corps != null)
+//			corps.clear();
+//	}
 
 	public String getStringValue(String key) {
 		return String.valueOf(datas.get(key));
@@ -58,17 +58,17 @@ public class Corporation {
 		return value;
 	}
 
-	public static void printCorps() {
-		if (corps == null) {
-			System.out.println("Corporation.corps is null");
-		} else {
-			System.out.println("Corporation.corps={");
-			Set<String> keys = corps.keySet();
-			for (String key : keys)
-				System.out.println(key + "->" + corps.get(key));
-			System.out.println("}");
-		}
-	}
+//	public static void printCorps() {
+//		if (corps == null) {
+//			System.out.println("Corporation.corps is null");
+//		} else {
+//			System.out.println("Corporation.corps={");
+//			Set<String> keys = corps.keySet();
+//			for (String key : keys)
+//				System.out.println(key + "->" + corps.get(key));
+//			System.out.println("}");
+//		}
+//	}
 
 	public String toString() {
 		StringBuffer str = new StringBuffer("[");
@@ -80,16 +80,16 @@ public class Corporation {
 		return str.toString();
 	}
 
-	public static Collection<Corporation> getAllCorps() {
-		return corps.values();
-	}
+//	public static Collection<Corporation> getAllCorps() {
+//		return corps.values();
+//	}
 
-	public static Corporation getCorpByName(String name) {
-		if (corps != null)
-			return corps.get(name);
-		else
-			return null;
-	}
+//	public static Corporation getCorpByName(String name) {
+//		if (corps != null)
+//			return corps.get(name);
+//		else
+//			return null;
+//	}
 
 	public static Corporation createDefaultCorp(String corpName) {
 
@@ -119,5 +119,19 @@ public class Corporation {
 	public int getLevel(){
 		return level;
 	}
-	
+	public Corporation clone(){
+		Corporation corpClone;
+		LinkedHashMap<String, Object> datasClone = new LinkedHashMap<String, Object>();
+		
+		Set<String> keys=this.datas.keySet();
+		for(String key:keys){
+			Object value=this.datas.get(key);
+			Object valueClone=new String(String.valueOf(value));
+			datasClone.put(new String(key), valueClone);
+		}
+		
+		corpClone = new Corporation(datasClone);
+		
+		return corpClone;
+	}
 }

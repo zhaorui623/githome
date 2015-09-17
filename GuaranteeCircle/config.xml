@@ -25,9 +25,9 @@
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="false"/>
+						<all id="12" selected="true"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
-						<in-only id="13" selected="true"/>
+						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
 						<none id="14" selected="false"/>
 					</one-hand-vertex>

@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,15 +84,15 @@ public class Step1Module extends Module {
 			customerInfo = Workbook.getWorkbook(customerInfoFile);
 
 			// 导入所有“客户信息表”中所有客户到内存中，形成“客户对象总表”
-			initCorps(customerInfo);//存储在Corportion.corps里
+			Map<String, Corporation> corps=initCorps(customerInfo);//存储在Corportion.corps里
 			//在内存构建整张担保关系拓扑图对象
-			initGraphic(Corporation.getAllCorps(),guaranteeInfoBook);//存储在TotalGraphic.graphic里
+			initGraphic(corps,guaranteeInfoBook);//存储在TotalGraphic.graphic里
 			return true;
 		}
 		return false;
 	}
 
-	private void initGraphic(Collection<Corporation> corps, Workbook book) {
+	private void initGraphic(Map<String, Corporation> corps, Workbook book) {
 		totalGraphic=new Graphic();
 		//解析“担保关系表”
 		Sheet sheet=book.getSheet(0);
@@ -99,17 +100,17 @@ public class Step1Module extends Module {
 		for (int row = 1; row < rowCount; row++) {
 				String corpName1=sheet.getCell(0,row).getContents();//担保人
 				String corpName2=sheet.getCell(1,row).getContents();//借款人
-				Corporation corp1=Corporation.getCorpByName(corpName1);//担保人
+				Corporation corp1=corps.get(corpName1);//担保人
 				if(corp1==null){//说明担保人未在银行办理过信贷类业务
 					//则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
 					corp1=Corporation.createDefaultCorp(corpName1);
-					Corporation.addCorp(corp1);
+					corps.put(corp1.getName(),corp1);
 				}
-				Corporation corp2=Corporation.getCorpByName(corpName2);//借款人
+				Corporation corp2=corps.get(corpName2);//借款人
 				if(corp2==null){//说明借款人未在银行办理过信贷类业务----------------很奇怪，查查原因---------------
 					//则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
 					corp2=Corporation.createDefaultCorp(corpName2);
-					Corporation.addCorp(corp2);
+					corps.put(corp2.getName(),corp2);
 				}
 				//将担保人和借款人以及其担保关系加入总图中
 				totalGraphic.addVertex(corp1);
@@ -119,8 +120,8 @@ public class Step1Module extends Module {
 		totalGraphic.printBasicInfo();
 	}
 
-	private void initCorps(Workbook book) {
-		Corporation.initCorps();
+	private Map<String, Corporation> initCorps(Workbook book) {
+		Map<String, Corporation> corps = new HashMap<String, Corporation>();
 		//解析“客户信息表”
 		Sheet sheet = book.getSheet(0);
 		int rowCount = sheet.getRows(), colCount = sheet.getColumns();
@@ -138,8 +139,9 @@ public class Step1Module extends Module {
 				datas.put(key, value);
 			}
 			corp = new Corporation(datas);
-			Corporation.addCorp(corp);
+			corps.put(corp.getName(), corp);
 		}		
+		return corps;
 	}
 
 	public Graphic getTotalGraphic() {

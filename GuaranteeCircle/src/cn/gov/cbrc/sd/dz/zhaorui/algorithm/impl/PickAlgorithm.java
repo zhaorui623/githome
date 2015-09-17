@@ -9,16 +9,20 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import org.jgraph.graph.Edge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.w3c.dom.Document;
 
+import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Loop;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Unit;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;;
 
 public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private int condition_number_value;
@@ -329,8 +333,12 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		// 获取所有核心企业
 		Set<Corporation> coreCorps = getCoreCorps(graphic);
 		// 对每个核心企业，拉取其担保圈
+		int i = 0;
 		for (Corporation corp : coreCorps) {
-			Graphic g = dragCircleOf(graphic, corp);
+			i++;
+			Graphic g = pickCircleOf(graphic, corp);
+			((Step3Module) (GC.getGalileo().getModule("3"))).getProcedure()
+					.setPercent((int) (i * 1.0 / coreCorps.size() * 100));
 			gs.add(g);
 		}
 		return gs;
@@ -340,50 +348,81 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * 在超大圈graphic中拉取以core为核心节点的担保圈
 	 * 
 	 * @param graphic
+	 *            超大圈
 	 * @param corp
 	 * @return
 	 * @throws Exception
 	 */
-	private Graphic dragCircleOf(Graphic graphic, Corporation core) throws Exception {
+	private Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
 		// 用来存放待会拉出来的担保圈图
 		Graphic g = new Graphic();
 		g.setNameSuffix(core.getName());
 		// 先把核心节点放到g里
 		g.addVertex(core);
 		// 拉取第一层节点
-		Set<Corporation> corpsOfLevel1 = dragNextLevel(graphic, g, g.vertexSet(), "One");
+		Set<Corporation> corpsOfLevel1 = pickNextLevel(graphic, g, g.vertexSet(), "One");
 		// 拉取第二层节点
-		Set<Corporation> corpsOfLevel2 = dragNextLevel(graphic, g, corpsOfLevel1, "Two");
+		Set<Corporation> corpsOfLevel2 = pickNextLevel(graphic, g, corpsOfLevel1, "Two");
 		// 拉取第三层节点
-		Set<Corporation> corpsOfLevel3 = dragNextLevel(graphic, g, corpsOfLevel2, "Three");
+		Set<Corporation> corpsOfLevel3 = pickNextLevel(graphic, g, corpsOfLevel2, "Three");
+		// 如果“互保企业必取之”的条件被选中的话，则拉取核心企业及其N手互保企业的所有互保企业
+		if (this.isPick_mutually_guaranteed_corp()) {
+			pickMutuallyGuaranteedCorps(graphic, g, core);
+		}
+		// 如果“环上企业必取之”的条件被选中的话，则拉取核心企业所在环上的所有企业
+		if (this.isPick_corecorp_loop()) {
+			pickCorecorpLoop(graphic, g, core);
+		}
+
+		// 尝试将g中企业的每一条边加入g中
+		g.addEdgesFrom(graphic);
+
 		return g;
+	}
+
+	/**
+	 * 拉取核心企业所在环上的所有企业（只取环路径长度≤loopLengthCeilling的环）
+	 * 
+	 * @param graphic
+	 * @param g
+	 * @param core
+	 */
+	private void pickCorecorpLoop(Graphic graphic, Graphic g, Corporation core) {
+		int loopLengthCeilling = 4;
+		Set<Loop> loops = graphic.loopsOf(core, loopLengthCeilling);
+		for (Graphic loop : loops) {
+			Set<Corporation> vs = loop.vertexSet();
+			for (Corporation v : vs) {
+				g.addVertex(v);
+			}
+		}
 	}
 
 	/**
 	 * 拉取corps的下一层圈，通常corps是某层圈的所有企业集合
 	 * 
 	 * @param graphic
+	 *            超大圈
 	 * @param g
-	 * @param levelToBeDrag
+	 *            核心企业担保圈
+	 * @param levelToPick
+	 *            待拉取层次
 	 * @param core
+	 *            核心企业
 	 * @return
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
+	 * @throws Exception
 	 */
-	private Set<Corporation> dragNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToBeDrag)
+	private Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToPick)
 			throws Exception {
-		int levelToDrag = levelToBeDrag.equals("One") ? 1 : (levelToBeDrag.equals("Two") ? 2 : 3);
+		int levelTopick = levelToPick.equals("One") ? 1 : (levelToPick.equals("Two") ? 2 : 3);
 		Set<Corporation> corpsOfLevelX = new HashSet<Corporation>();
 		// 如果是“全不取”被选中
-		if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_none").invoke(this))
+		if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_none").invoke(this))
 			return corpsOfLevelX;// 直接返回空集
 		else {
 			for (Corporation corp : corps) {// 对于每一个节点
-				//如果用户选择“不取核心节点的后手的话”，就不取核心节点的后手
-				if (this.isUnpick_corecorp_son() == true && levelToDrag > 1 && corp.isCore() == true)
+				// 如果用户选择“不取核心节点的后手的话”，就不取核心节点的后手
+				if (this.isUnpick_corecorp_son() == true && levelTopick > 1 && corp.isCore() == true)
 					continue;
 				// 获取与该点接触的所有边
 				Set<DefaultWeightedEdge> edges = graphic.edgesOf(corp);
@@ -392,31 +431,64 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 					Corporation corpT = graphic.getEdgeTarget(edge);// 边的尾顶点
 					Corporation corp2 = corpS.equals(corp) == false ? corpS : corpT;// core的对端顶点
 					// 如果是“全部”被选中
-					if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_all").invoke(this)) {
+					if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_all").invoke(this)) {
 						if (g.containsVertex(corp2) == false) {
 							// 将每条边的另一端的那个节点加到g中
 							g.addVertex(corp2);
 							corpsOfLevelX.add(corp2);
 						}
-						// 将每条边加入到g中
-						g.addEdge(corpS, corpT);
 					}
 					// 如果是“只取为核心企业提供担保的企业”
-					if ((Boolean) getClass().getMethod("is" + levelToBeDrag + "_hand_vertex_in_only").invoke(this)) {
+					if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_in_only").invoke(this)) {
 						if (corpT == corp) {
 							if (g.containsVertex(corpS) == false) {
 								// 将core作为尾顶点时的对端顶点加入g中
 								g.addVertex(corpS);
 								corpsOfLevelX.add(corpS);
 							}
-							// 将这条边也加入到g中
-							g.addEdge(corpS, corpT);
 						}
 					}
 				}
 			}
 			return corpsOfLevelX;
 		}
+	}
+
+	/**
+	 * 拉取核心企业及其N手互保企业的所有互保企业
+	 * 
+	 * @param graphic
+	 *            超大圈
+	 * @param g
+	 *            核心企业担保圈
+	 * @param core
+	 *            核心企业
+	 */
+	private void pickMutuallyGuaranteedCorps(Graphic graphic, Graphic g, Corporation core) {
+		Queue<Corporation> queue = new LinkedList<Corporation>();
+		// 将核心节点加入队列中
+		addToQueue(queue, core);
+		core.setLevel(0);
+		// 将核心节点加入g中
+		g.addVertex(core);
+		while (queue.isEmpty() == false) {// 当队列不为空，就一直做
+			Corporation corp = queue.poll();// 从队列中取出一个企业
+			int corpLevel = corp.getLevel();
+			if (corpLevel >= 3) // 如果层级超出设定值，则不取它的后手
+				continue;
+			Set<Corporation> mutuallyVertexs = graphic.mutuallyVertexsOf(corp);// 取该企业的所有互保企业
+			for (Corporation mutuallyVertex : mutuallyVertexs) {
+				if (g.containsVertex(mutuallyVertex) == false) {// 如果互保企业尚未被加入到g中的话
+					// 将互保企业加入g中
+					g.addVertex(mutuallyVertex);
+					if (mutuallyVertex.isCore() == false) {// 将非核心互保企业加入队列中
+						addToQueue(queue, mutuallyVertex);
+						mutuallyVertex.setLevel(corpLevel + 1);
+					}
+				}
+			}
+		}
+
 	}
 
 	private void markCoreCorp(Graphic graphic) throws Exception {

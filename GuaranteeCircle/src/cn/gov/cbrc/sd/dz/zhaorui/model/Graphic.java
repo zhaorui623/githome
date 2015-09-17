@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -141,10 +144,9 @@ public class Graphic {
 		return code.toString();
 	}
 
-	public File toFile(File dir)
-			throws Exception {
+	public File toFile(File dir) throws Exception {
 		String s = this.toDotCode();
-		dir = new File(dir.getAbsolutePath() );
+		dir = new File(dir.getAbsolutePath());
 		if (dir.exists() == false)
 			dir.mkdir();
 		File file = new File(dir.getAbsolutePath() + "\\" + this.getName() + ".dot");
@@ -156,57 +158,183 @@ public class Graphic {
 		String cmd2 = "cmd /c dot " + file.getAbsolutePath() + " -Tsvg -o "
 				+ file.getAbsolutePath().replace(".dot", ".svg");
 		String cmd3 = cmd2.replaceAll("svg", "png");
-		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();;
+		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();
+		;
 
 		return file;
 	}
 
 	public void setNameSuffix(String name) {
-		this.name=name+this.toString().replaceAll(this.getClass().getName(), "");
+		this.name = name + this.toString().replaceAll(this.getClass().getName(), "");
 	}
-	public String getName(){
+
+	public String getName() {
 		return this.name;
 	}
 
 	/**
 	 * 得到某节点的互保节点个数
+	 * 
 	 * @param corp
 	 */
-	public int  mutuallyDegreeOf(Corporation v) {
-		int result= mutuallyVertexsOf(v).size();
-//		System.out.println(v.getName()+".互保企业个数="+result);
+	public int mutuallyDegreeOf(Corporation v) {
+		int result = mutuallyVertexsOf(v).size();
+		// System.out.println(v.getName()+".互保企业个数="+result);
 		return result;
 	}
 
 	/**
 	 * 得到某节点的互保节点集合
+	 * 
 	 * @return
 	 */
 	public Set<Corporation> mutuallyVertexsOf(Corporation v) {
-		Set<Corporation> mutuallyVertexsSet=new HashSet<Corporation>();
-		//得到所有指向该节点的节点
-		Set<Corporation> inVertexsSet=incomingVertexsOf(v);
-		//得到所有该节点 指向的节点
-		Set<Corporation> outVertexsSet=outgoingVertexsOf(v);
-		//取两个集合的交集
+		Set<Corporation> mutuallyVertexsSet = new HashSet<Corporation>();
+		// 得到所有指向该节点的节点
+		Set<Corporation> inVertexsSet = incomingVertexsOf(v);
+		// 得到所有该节点 指向的节点
+		Set<Corporation> outVertexsSet = outgoingVertexsOf(v);
+		// 取两个集合的交集
 		mutuallyVertexsSet.addAll(inVertexsSet);
 		mutuallyVertexsSet.retainAll(outVertexsSet);
 		return mutuallyVertexsSet;
 	}
 
 	public Set<Corporation> outgoingVertexsOf(Corporation v) {
-		Set<Corporation> outVertexsSet=new HashSet<Corporation>();
-		Set<DefaultWeightedEdge>  outEdges=this.outgoingEdgesOf(v);
-		for(DefaultWeightedEdge edge:outEdges)
+		Set<Corporation> outVertexsSet = new HashSet<Corporation>();
+		Set<DefaultWeightedEdge> outEdges = this.outgoingEdgesOf(v);
+		for (DefaultWeightedEdge edge : outEdges)
 			outVertexsSet.add(this.getEdgeTarget(edge));
 		return outVertexsSet;
 	}
 
 	public Set<Corporation> incomingVertexsOf(Corporation v) {
-		Set<Corporation> inVertexsSet=new HashSet<Corporation>();
-		Set<DefaultWeightedEdge>  inEdges=this.incomingEdgesOf(v);
-		for(DefaultWeightedEdge edge:inEdges)
+		Set<Corporation> inVertexsSet = new HashSet<Corporation>();
+		Set<DefaultWeightedEdge> inEdges = this.incomingEdgesOf(v);
+		for (DefaultWeightedEdge edge : inEdges)
 			inVertexsSet.add(this.getEdgeSource(edge));
 		return inVertexsSet;
 	}
+
+	/**
+	 * 得到某节点所在的所有环（只取环路径长度≤loopLengthCeilling的环）
+	 * 
+	 * @param core
+	 * @param loopLengthCeilling
+	 * @return
+	 */
+	public Set<Loop> loopsOf(Corporation v, int loopLengthCeilling) {
+		// Set<Loop> loops = loopsOf(v);
+		// Iterator<Loop> loopsIterator = loops.iterator();
+		// while (loopsIterator.hasNext()) {
+		// Loop loop = loopsIterator.next();
+		// if (loop.getLength() > loopLengthCeilling)
+		// loopsIterator.remove();
+		// }
+		// return loops;
+
+//		System.out.println("开始查找" + v.getName() + "所在的环");
+		Set<Loop> loops = new HashSet<Loop>();
+		List<Corporation> currentPath = new LinkedList<Corporation>();
+		List<DefaultWeightedEdge> edgesOfCurrentPath = new LinkedList<DefaultWeightedEdge>();
+		// 将当前节点设置为根节点
+		Corporation currentVertex = v;
+		// 将当前节点加入当前路径
+		currentPath.add(currentVertex);
+		dfs(currentVertex, currentPath, edgesOfCurrentPath, v, loops, loopLengthCeilling);
+		return loops;
+	}
+
+	/**
+	 * 得到某节点所在的所有环
+	 * 
+	 * @param core
+	 * @return
+	 */
+	 public Set<Loop> loopsOf(Corporation v) {
+		 return loopsOf(v,Integer.MAX_VALUE);
+	 }
+
+	private void dfs(Corporation currentVertex, List<Corporation> currentPath,
+			List<DefaultWeightedEdge> edgesOfCurrentPath, Corporation startVertex, Set<Loop> loops,
+			int loopLengthCeilling) {
+		// 取当前节点的所有子节点
+		Set<Corporation> outVs = this.outgoingVertexsOf(currentVertex);
+		for (Corporation outV : outVs) {// 对每一个子节点
+			if (edgesOfCurrentPath.contains(this.getEdge(currentVertex, outV))
+					|| edgesOfCurrentPath.size() >= loopLengthCeilling)
+				continue;
+			currentPath.add(outV);// 将子节点加入当前路径
+			edgesOfCurrentPath.add(this.getEdge(currentVertex, outV));
+			if (outV.equals(startVertex)) {// 如果该子节点与起始节点相同，说明找到了一个回路
+				Loop loop = new Loop(edgesOfCurrentPath);// 新建一个回路对象
+				for (Corporation c : currentPath)// 将当前路径上的所有节点加入到回路中
+					loop.addVertex(c);
+				loop.addEdgesFrom(this);// 将所有边加入回路
+				loops.add(loop);
+//				System.out.println("找到一个环" + loop);
+				// 移除最后一个节点
+				currentPath.remove(currentPath.size() - 1);
+				edgesOfCurrentPath.remove(edgesOfCurrentPath.size() - 1);
+				continue;
+			}
+			// 继续深度遍历
+			dfs(outV, currentPath, edgesOfCurrentPath, startVertex, loops, loopLengthCeilling);
+			// 移除最后一个节点
+			currentPath.remove(currentPath.size() - 1);
+			edgesOfCurrentPath.remove(edgesOfCurrentPath.size() - 1);
+		}
+
+	}
+
+	public static void main(String[] args) {
+		Graphic g = new Graphic();
+		Corporation v0 = Corporation.createDefaultCorp("0");
+		Corporation v1 = Corporation.createDefaultCorp("1");
+		Corporation v2 = Corporation.createDefaultCorp("2");
+		Corporation v3 = Corporation.createDefaultCorp("3");
+		Corporation v4 = Corporation.createDefaultCorp("4");
+
+		g.addVertex(v0);
+		g.addVertex(v1);
+		g.addVertex(v2);
+		g.addVertex(v3);
+		g.addVertex(v4);
+
+		g.addEdge(v0, v1);
+		g.addEdge(v1, v0);
+		g.addEdge(v4, v0);
+		g.addEdge(v1, v4);
+		g.addEdge(v2, v1);
+		g.addEdge(v1, v2);
+		g.addEdge(v2, v3);
+		g.addEdge(v3, v2);
+
+		g.printBasicInfo();
+
+		g.loopsOf(v0,7);
+	}
+
+	/**
+	 * 尝试把g的所有节点的所有边（Graphic中的边）加入g中
+	 * 
+	 * @param graphic
+	 *            节点原来所属图
+	 * @param g
+	 *            新生成的图
+	 */
+	public void addEdgesFrom(Graphic graphic) {
+		Set<Corporation> vs = this.vertexSet();
+		for (Corporation v : vs) {
+			Set<DefaultWeightedEdge> edges = graphic.edgesOf(v);
+			for (DefaultWeightedEdge edge : edges) {
+				try {
+					this.addEdge(graphic.getEdgeSource(edge), graphic.getEdgeTarget(edge));
+				} catch (IllegalArgumentException e) {
+					// 如果该边加不进来，说明对端节点未被拉取，所以自然就不用加
+				}
+			}
+		}
+	}
+
 }

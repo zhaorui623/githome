@@ -19,6 +19,7 @@ public class Corporation {
 	
 	//摘取法中，用来标记该企业是否为核心企业
 	private boolean isCore=false;
+	private int level;
 
 	public Corporation(LinkedHashMap<String, Object> datas) {
 		this.datas = datas;
@@ -110,6 +111,13 @@ public class Corporation {
 
 	public String getName() {
 		return getStringValue(NAME_COL);
+	}
+
+	public void setLevel(int level) {
+		this.level=level;		
+	}
+	public int getLevel(){
+		return level;
 	}
 	
 }

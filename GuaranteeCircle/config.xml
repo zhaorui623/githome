@@ -18,7 +18,7 @@
 					<!-- 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
 					<guaranteed-loan-balance-floor id="8" selected="false" unit="亿元" value="1"/>
 					<!-- 条件4：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<loan-balance-floor id="9" selected="true" unit="万元" value="500"/>
+					<loan-balance-floor id="9" selected="true" unit="万元" value="1000"/>
 				</core-corp>
 				<!-- 担保圈摘取时的规模控制 -->
 				<scale-control id="10">
@@ -27,9 +27,9 @@
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
 						<all id="12" selected="false"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
-						<in-only id="13" selected="false"/>
+						<in-only id="13" selected="true"/>
 						<!-- 规则3：全不取 -->
-						<none id="14" selected="true"/>
+						<none id="14" selected="false"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
@@ -50,11 +50,11 @@
 						<none id="22" selected="true"/>
 					</three-hand-vertex>
 					<!-- 如果N手企业也被认定为“核心企业”，则不取它的后手 -->
-					<unpick-corecorp-son id="23" selected="true"/>
+					<unpick-corecorp-son id="23" selected="false"/>
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
-					<pick-mutually-guaranteed-corp id="24" selected="true"/>
+					<pick-mutually-guaranteed-corp id="24" selected="false"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
-					<pick-corecorp-loop id="25" selected="true"/>
+					<pick-corecorp-loop id="25" selected="false"/>
 				</scale-control>
 			</algorithm>
 			<algorithm class="" component="" enable="false" id="32" name="其他（欢迎集思广益）" selected="false">

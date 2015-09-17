@@ -172,19 +172,19 @@ public class PickAlgorithmConfigPanel extends JPanel {
 		p2.add(p2_3);
 		// =====================================================
 		JPanel p2_4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		unpickCorecorpSonCheck = new JCheckBox("如果第N(0<N<∞)手企业也被认定为“核心企业”，则不取它的后手");
+		unpickCorecorpSonCheck = new JCheckBox("如果第N(0<N≤3)手企业也被认定为“核心企业”，则不取它的后手");
 		unpickCorecorpSonCheck.setSelected(algorithm.isUnpick_corecorp_son());
 		p2_4.add(unpickCorecorpSonCheck);
 		p2.add(p2_4);
 		// =====================================================
 		JPanel p2_5 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		pickMutuallyGuaranteedCorp = new JCheckBox("如果第N(0<N<∞)手企业与第N-1手企业存在互保关系，则必取之");
+		pickMutuallyGuaranteedCorp = new JCheckBox("如果第N(0<N≤3)手企业与第N-1手企业存在互保关系，则必取之");
 		pickMutuallyGuaranteedCorp.setSelected(algorithm.isPick_mutually_guaranteed_corp());
 		p2_5.add(pickMutuallyGuaranteedCorp);
 		p2.add(p2_5);
 		// =====================================================
 		JPanel p2_6 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		pickCorecorpLoop = new JCheckBox("如果核心企业位于一个环(LOOP)中，则取该环(LOOP)上的所有企业");
+		pickCorecorpLoop = new JCheckBox("如果核心企业位于一个环中(环路径长度≤4)，则取该环上的所有企业");
 		pickCorecorpLoop.setSelected(algorithm.isPick_corecorp_loop());
 		p2_6.add(pickCorecorpLoop);
 		p2.add(p2_6);

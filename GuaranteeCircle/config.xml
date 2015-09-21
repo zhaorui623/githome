@@ -25,11 +25,11 @@
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="true"/>
+						<all id="12" selected="false"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
 						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="14" selected="false"/>
+						<none id="14" selected="true"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
@@ -54,7 +54,7 @@
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
 					<pick-mutually-guaranteed-corp id="24" selected="false"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
-					<pick-corecorp-loop id="25" selected="false"/>
+					<pick-corecorp-loop id="25" selected="true"/>
 				</scale-control>
 			</algorithm>
 			<algorithm class="" component="" enable="false" id="32" name="其他（欢迎集思广益）" selected="false">

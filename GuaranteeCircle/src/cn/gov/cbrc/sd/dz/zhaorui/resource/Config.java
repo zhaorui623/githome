@@ -29,6 +29,7 @@ public class Config {
 	public static final File CONFIG_FILE = new File(System.getProperty("user.dir") + "\\" + "config.xml");
 
 	public static final String SPLIT_ALGORITHM_TAG = "algorithm";
+	public static final String REGION_TAG = "region";
 
 	private static Document doc;
 

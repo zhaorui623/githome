@@ -16,6 +16,7 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.RegionDistributAnalysis;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
@@ -118,47 +119,55 @@ public class Step3Module extends Module {
 	 */
 	public void procedure4() throws Exception {
 		InfoPane.getInstance().info("为" + graphics.size() + "个担保圈生成图像文件……");
-		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
-		for (Graphic g : graphics)
-			queue.put(g);
-		new Thread() {
-			public void run() {
-				while (queue.isEmpty() == false) {
-					getProcedure().setPercent((int) ((1 - queue.size() * 1.0 / graphics.size()) * 100));
-					try {
-						sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
-		while (queue.isEmpty() == false) {
-			Graphic g = queue.take();
-			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
-		}
+//		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
+//		for (Graphic g : graphics)
+//			queue.put(g);
+//		new Thread() {
+//			public void run() {
+//				while (queue.isEmpty() == false) {
+//					getProcedure().setPercent((int) ((1 - queue.size() * 1.0 / graphics.size()) * 100));
+//					try {
+//						sleep(1000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}.start();
+//		while (queue.isEmpty() == false) {
+//			Graphic g = queue.take();
+//			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
+//		}
 	}
 
 	/**
 	 * 第5步：从地区分布维度分析
+	 * 
 	 * @throws Exception
 	 */
 	public void procedure5() throws Exception {
+		RegionDistributAnalysis rda = new RegionDistributAnalysis();
+		for (Graphic g : graphics) {
+			rda.analysisRegion(g);
+			System.out.println(g.getName()+".地区="+g.getRegion());
+		}
 		
-		InfoPane.getInstance().info("执行procedure5！");
 
 	}
 
 	/**
 	 * 第6步：从重点客户维度分析
+	 * 
 	 * @throws Exception
 	 */
 	public void procedure6() throws Exception {
 		InfoPane.getInstance().info("执行procedure6！");
 
 	}
+
 	/**
 	 * 第7步：从风险分类维度分析
+	 * 
 	 * @throws Exception
 	 */
 	public void procedure7() throws Exception {

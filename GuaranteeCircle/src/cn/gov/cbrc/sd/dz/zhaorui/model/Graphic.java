@@ -19,6 +19,7 @@ public class Graphic {
 
 	private SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge> g;
 	private String name;
+	private Region region;
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -370,4 +371,15 @@ public class Graphic {
 		}
 		return null;
 	}
+
+	public void setRegion(Region region) {
+		this.region=region;
+		
+	}
+
+	public Region getRegion() {
+		
+		return this.region;
+	}
+
 }

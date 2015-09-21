@@ -11,6 +11,7 @@ public class Corporation {
 
 	public static final String NAME_COL = "客户名称";
 	public static final String LOAN_BALANCE_COL = "贷款余额";
+	public static final String REGION_CODE_COL = "行政区划代码";
 
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;

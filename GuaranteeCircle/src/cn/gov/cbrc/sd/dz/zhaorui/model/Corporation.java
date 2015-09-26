@@ -12,6 +12,21 @@ public class Corporation {
 	public static final String NAME_COL = "客户名称";
 	public static final String LOAN_BALANCE_COL = "贷款余额";
 	public static final String REGION_CODE_COL = "行政区划代码";
+	public static final String GUANZHU_LOAN_BALANCE_COL="关注类贷款余额";
+	public static final String BULIANG_LOAN_BALANCE_COL = "不良贷款";
+	public static final String YUQI30YINEI_LOAN_BALANCE_COL = "逾期30天以内";
+	public static final String YUQI31_90_LOAN_BALANCE_COL = "逾期31_90天";
+	public static final String OFF_BALANCE_ZQ_COL = "债券";
+	public static final String OFF_BALANCE_GQ_COL = "股权";
+	public static final String OFF_BALANCE_CD_COL = "银行承兑汇票";
+	public static final String OFF_BALANCE_XYZ_COL = "信用证";
+	public static final String OFF_BALANCE_BH_COL = "保函";
+	public static final String OFF_BALANCE_WTDK_COL = "委托贷款";
+	public static final String OFF_BALANCE_WTTZ_COL = "委托投资";
+	public static final String OFF_BALANCE_CN_COL = "承诺";
+	public static final String OFF_BALANCE_XYFXRZYH_COL = "信用风险仍在银行的销售与购买协议";
+	public static final String OFF_BALANCE_JRYSP_COL = "金融衍生品";
+	
 
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;

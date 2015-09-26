@@ -13,12 +13,20 @@ public class Region {
 		for (String code : codes)
 			this.codes.add(code);
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name;
+	}
+
+	public boolean equals(Object o) {
+		if (o instanceof Region) {
+			if (String.valueOf(((Region) o).getName()).equals(String.valueOf(this.getName())))
+				return true;
+		}
+		return false;
 	}
 }

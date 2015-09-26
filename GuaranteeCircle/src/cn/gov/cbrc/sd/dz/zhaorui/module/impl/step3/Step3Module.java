@@ -65,7 +65,7 @@ public class Step3Module extends Module {
 	 * 
 	 * @throws Exception
 	 */
-	List<Graphic> graphics;
+	private List<Graphic> graphics;
 
 	@SuppressWarnings("static-access")
 	public void procedure1() throws Exception {
@@ -149,7 +149,6 @@ public class Step3Module extends Module {
 		RegionDistributAnalysis rda = new RegionDistributAnalysis();
 		for (Graphic g : graphics) {
 			rda.analysisRegion(g);
-			System.out.println(g.getName()+".地区="+g.getRegion());
 		}
 		
 
@@ -181,6 +180,10 @@ public class Step3Module extends Module {
 	public ProcessPanel getpPanel() {
 
 		return pPanel;
+	}
+
+	public List<Graphic> getResult() {
+		return graphics;
 	}
 
 }

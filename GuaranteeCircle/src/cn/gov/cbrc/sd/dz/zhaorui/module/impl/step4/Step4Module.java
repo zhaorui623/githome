@@ -9,10 +9,11 @@ import javax.swing.JPanel;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 
 public class Step4Module extends Module {
 	
-	DataSourcePanel cmPanel;
+	ResultPanel resultPanel;
 
 	public Step4Module(String id,GC gc,String name,String iconName) {
 		super(id, gc, name,iconName);
@@ -22,10 +23,11 @@ public class Step4Module extends Module {
 	protected List<Component> getTabs() {
 		if(tabs==null){
 			tabs=new ArrayList<Component>();
-			//"第一步：选择数据源"选项卡
-			cmPanel=new DataSourcePanel(this);
-			tabs.add(cmPanel);
+			//"第四步：查看结果"选项卡
+			resultPanel=new ResultPanel(this);
+			tabs.add(resultPanel);
 		}		
+		resultPanel.refreshResult(((Step3Module)gc.getModule("3")).getResult());
 		return tabs;
 	}
 
@@ -35,7 +37,6 @@ public class Step4Module extends Module {
 	}
 
 	public GC getGC() {
-		// TODO Auto-generated method stub
 		return this.gc;
 	}
 

@@ -94,10 +94,12 @@ public abstract class HugeCircleSplitAlgorithm {
 		// 用来存放待会拆出来的所有子图
 		List<Graphic> result = new ArrayList<Graphic>();
 		// 当graphic里尚有节点时，就一直做这个循环，这是为了拆出所有连通子图
+		int i=0;
 		while (graphic.vertexSet().isEmpty() == false) {
 			// 用来存放待会拆出来的一个子图
 			Graphic g = new Graphic();
-			g.setNameSuffix("独立担保圈");
+//			g.setNameSuffix("独立担保圈");
+			g.setName("独立担保圈"+(++i));
 			// 随便取一个节点,加到一个队列里，并同时加到子图g中
 			Queue<Corporation> queue = new LinkedList<Corporation>();
 			Corporation corpRandom = graphic.vertexSet().iterator().next();

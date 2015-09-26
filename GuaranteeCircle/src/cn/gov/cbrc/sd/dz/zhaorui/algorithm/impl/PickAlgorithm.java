@@ -356,7 +356,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
 		// 用来存放待会拉出来的担保圈图
 		Graphic g = new Graphic();
-		g.setNameSuffix(core.getName());
+//		g.setNameSuffix(core.getName());
+		g.setName(core.getName()+"圈");
 		// 先把核心节点放到g里
 		g.addVertex(core);
 		// 拉取第一层节点

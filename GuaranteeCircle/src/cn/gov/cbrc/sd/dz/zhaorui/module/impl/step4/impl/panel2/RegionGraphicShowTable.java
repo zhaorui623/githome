@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
 public class RegionGraphicShowTable extends JTable {
 
@@ -18,6 +19,7 @@ public class RegionGraphicShowTable extends JTable {
 	public RegionGraphicShowTable(RegionGraphicShowTableModel model) {
 		super(model);
 		this.model = model;
+		TableToolkit.fitTableColumns(this);
 	}
 
 }
@@ -49,6 +51,7 @@ class RegionGraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 			row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(graphics)));// 不良贷款余额
 			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(graphics)));// 逾期90以内贷款余额
 			row.add(Math.round(GraphicToolkit.getOffBalance(graphics)));// 表外业务余额
+			row.add(graphics);//最后一列用来存本区域所有担保圈列表，不在前台展示该列
 			rowData.add(row);
 		}
 		return rowData;

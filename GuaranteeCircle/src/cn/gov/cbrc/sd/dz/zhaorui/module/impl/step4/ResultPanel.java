@@ -60,24 +60,26 @@ public class ResultPanel extends JPanel {
 		panel2 = new Panel2();
 		panel3 = new JPanel();
 		panel4 = new Panel4();
-//		panel1.setBackground(Color.yellow);
-//		panel2.setBackground(Color.blue);
-//		panel3.setBackground(Color.green);
-//		panel4.setBackground(Color.red);
+		// panel1.setBackground(Color.yellow);
+		// panel2.setBackground(Color.blue);
+		// panel3.setBackground(Color.green);
+		// panel4.setBackground(Color.red);
 		// 将标签面板加入到选项卡面板对象上
 		tabbedPane.addTab("表1-担保圈总体识别结果", null, panel1, "First panel");
 		tabbedPane.addTab("表2-“区域分布”识别结果 ", null, panel2, "Second panel");
 		tabbedPane.addTab("表3-“重点客户”识别结果", null, panel3, "Third panel");
 		tabbedPane.addTab("表4-“风险分类”识别结果", null, panel4, "Fourth panel");
 
-		this.add(tabbedPane,BorderLayout.CENTER);
+		this.add(tabbedPane, BorderLayout.CENTER);
 		this.setBackground(Color.white);
 	}
 
 	public void refreshResult(List<Graphic> circles) {
-		panel1.refreshResult(circles);
-		panel2.refreshResult(circles);
-		panel4.refreshResult(circles);
+		if (circles != null) {
+			panel1.refreshResult(circles);
+			panel2.refreshResult(circles);
+			panel4.refreshResult(circles);
+		}
 	}
 
 }

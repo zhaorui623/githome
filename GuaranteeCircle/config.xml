@@ -50,7 +50,7 @@
 						<none id="22" selected="true"/>
 					</three-hand-vertex>
 					<!-- 如果N手企业也被认定为“核心企业”，则不取它的后手 -->
-					<unpick-corecorp-son id="23" selected="false"/>
+					<unpick-corecorp-son id="23" selected="true"/>
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
 					<pick-mutually-guaranteed-corp id="24" selected="false"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
@@ -66,7 +66,7 @@
 		<!-- 规模维度 -->
 		<scale-dimension id="27">
 			<scale id="28" level="A"/>
-			<scale id="29" level="B" loan-balance-ceiling="5" loan-balance-floor="1"/>
+			<scale id="29" level="B" loan-balance-ceiling="10" loan-balance-floor="3"/>
 			<scale id="30" level="C"/>
 		</scale-dimension>
 		<!-- 风险维度 -->

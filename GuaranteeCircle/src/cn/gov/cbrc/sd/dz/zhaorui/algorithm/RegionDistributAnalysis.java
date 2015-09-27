@@ -27,31 +27,11 @@ public class RegionDistributAnalysis {
 
 	public RegionDistributAnalysis() throws Exception {
 		super();
-		this.regionsMap = new HashMap<String, Region>();
-		Document doc = Config.getDoc();
-		NodeList regionElements = doc.getElementsByTagName(Config.REGION_TAG);
-		for (int i = 0; i < regionElements.getLength(); i++) {
-			Element regionElement = (Element) regionElements.item(i);
-			String name = regionElement.getAttribute("name");
-			String codeStr = regionElement.getAttribute("code");
-			String[] codes = codeStr.split(";");
-			Region region = new Region(name, codes);
-			for (String code : codes)
-				this.regionsMap.put(code, region);
-		}
+		this.regionsMap = Config.getRegionsMap();
 	}
 
-	public Region getRegion(String code) {
-		Region region;
-		if (code == null || "null".equals(code))
-			return new Region("未知地区");
-		region = this.regionsMap.get(code);
-		if (region == null)
-			region = new Region("省外地区", code);
-		return region;
-	}
 
-	public void analysisRegion(Graphic graphic) {
+	public void analysisRegion(Graphic graphic) throws Exception {
 		Set<Corporation> vSet = graphic.vertexSet();
 		Map<Region, Integer> countMap = new HashMap<Region, Integer>();
 		Map<Region, Double> loanBalanceMap = new HashMap<Region, Double>();
@@ -61,7 +41,7 @@ public class RegionDistributAnalysis {
 			if ("null".equals(regionCode) || regionCode == null)
 				continue;
 			double loanBalance = v.getDoubleValue(Corporation.LOAN_BALANCE_COL);
-			Region vRegion = this.getRegion(regionCode);
+			Region vRegion = Config.getRegionByCode(regionCode);
 			if (countMap.containsKey(vRegion) == false) {
 				countMap.put(vRegion, 1);
 				loanBalanceMap.put(vRegion, loanBalance);

@@ -11,6 +11,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.model.GraphicClassify;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
 public class GrpahicClassifyShowTable extends JTable {
 
@@ -19,6 +20,7 @@ public class GrpahicClassifyShowTable extends JTable {
 	public GrpahicClassifyShowTable(GraphicClassifyShowTableModel model) {
 		super(model);
 		this.model = model;
+		TableToolkit.fitTableColumns(this);
 	}
 
 }
@@ -51,6 +53,7 @@ class GraphicClassifyShowTableModel extends javax.swing.table.AbstractTableModel
 //			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(graphics)));// 逾期90以内贷款余额
 //			row.add(Math.round(GraphicToolkit.getYuQi90YiShangLoanBalance(graphics)));// 逾期90以上贷款余额
 			row.add(Math.round(GraphicToolkit.getOffBalance(graphics)));// 表外业务余额
+			row.add(graphics);//最后一列用来存本类别所有担保圈列表，不在前台展示该列
 			rowData.add(row);
 		}
 		return rowData;

@@ -11,26 +11,28 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
-public class GraphicShowTable extends JTable {
+public class GraphicListShowTable extends JTable {
 
-	private GraphicShowTableModel model;
+	private GraphicListShowTableModel model;
 
-	public GraphicShowTable(GraphicShowTableModel model) {
+	public GraphicListShowTable(GraphicListShowTableModel model) {
 		super(model);
 		this.model = model;
+		TableToolkit.fitTableColumns(this);
 	}
 
 }
 
-class GraphicShowTableModel extends javax.swing.table.AbstractTableModel {
+class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 
 	private Vector<Vector> rowData;
 	private Vector<String> columnNames;
-	private String[] COLUMN_NAMES = { "担保圈名称","所属地区", "涉及企业个数",
+	private String[] COLUMN_NAMES = { "担保圈名称","所属地区", "风险分类","涉及企业个数",
 			"担保圈贷款余额" ,"关注类贷款余额","不良贷款余额","逾期90以内贷款余额","表外业务余额"  };
 
-	public GraphicShowTableModel(List<Graphic> circles) {
+	public GraphicListShowTableModel(List<Graphic> circles) {
 		super();
 		columnNames = initColumnNames();
 		rowData = initRowData(circles);
@@ -41,13 +43,15 @@ class GraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 		for (Graphic circle : circles) {
 			Vector<Object> row = new Vector<Object>();
 			row.add(circle.getName());// 担保圈名称
-			row.add(circle.getRegion().getName());
+			row.add(circle.getRegion().getName());//所属地区
+			row.add(circle.getRiskClassify().getName());//风险分类
 			row.add(circle.vertexSet().size());// 涉及企业个数
 			row.add(Math.round(GraphicToolkit.getLoanBalance(circle)));// 贷款余额
 			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(circle)));// 关注类贷款余额
 			row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(circle)));// 不良贷款余额
 			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(circle)));// 逾期90以内贷款余额
 			row.add(Math.round(GraphicToolkit.getOffBalance(circle)));// 表外业务余额
+			row.add(circle);//最后一列放Graphic对象本身，该列不会被显示
 			rowData.add(row);
 		}
 		return rowData;
@@ -82,7 +86,7 @@ class GraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		if (columnIndex <=1)
+		if (columnIndex <=2)
 			return String.class;
 		else
 			return Double.class;

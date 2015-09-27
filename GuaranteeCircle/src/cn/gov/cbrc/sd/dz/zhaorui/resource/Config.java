@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.xml.parsers.DocumentBuilder;
@@ -22,6 +24,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
 public class Config {
@@ -30,9 +33,9 @@ public class Config {
 
 	public static final String SPLIT_ALGORITHM_TAG = "algorithm";
 	public static final String REGION_TAG = "region";
-	public static final String LOAN_BALANCE_FLOOR_ATTRIBUTE="loan-balance-floor";
-	public static final String LOAN_BALANCE_CEILLING_ATTRIBUTE="loan-balance-ceiling";
-	public static final String LEVEL_ATTRIBUTE="level";
+	public static final String LOAN_BALANCE_FLOOR_ATTRIBUTE = "loan-balance-floor";
+	public static final String LOAN_BALANCE_CEILLING_ATTRIBUTE = "loan-balance-ceiling";
+	public static final String LEVEL_ATTRIBUTE = "level";
 
 	private static Document doc;
 
@@ -91,5 +94,35 @@ public class Config {
 			}
 		}
 		return hugeCircleSplitAlgorithmList;
+	}
+
+	private static Map<String, Region> regionsMap;
+
+	public static Map<String, Region> getRegionsMap() throws Exception {
+		if (regionsMap == null) {
+			regionsMap = new HashMap<String, Region>();
+			Document doc = Config.getDoc();
+			NodeList regionElements = doc.getElementsByTagName(Config.REGION_TAG);
+			for (int i = 0; i < regionElements.getLength(); i++) {
+				Element regionElement = (Element) regionElements.item(i);
+				String name = regionElement.getAttribute("name");
+				String codeStr = regionElement.getAttribute("code");
+				String[] codes = codeStr.split(";");
+				Region region = new Region(name, codes);
+				for (String code : codes)
+					regionsMap.put(code, region);
+			}
+		}
+		return regionsMap;
+	}
+
+	public static Region getRegionByCode(String code) throws Exception {
+		Region region;
+		if (code == null || "null".equals(code))
+			return new Region("未知地区");
+		region = getRegionsMap().get(code);
+		if (region == null)
+			region = new Region("省外地区", code);
+		return region;
 	}
 }

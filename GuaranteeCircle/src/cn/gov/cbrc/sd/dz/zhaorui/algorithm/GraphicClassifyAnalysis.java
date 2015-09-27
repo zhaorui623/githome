@@ -65,7 +65,7 @@ public class GraphicClassifyAnalysis {
 
 		// 确定规模级别
 		Scale scale;
-		if (loanBalance > scaleA.getFloor() && loanBalance <= scaleA.getCeilling())
+		if (loanBalance <= scaleA.getCeilling())
 			scale = scaleA;
 		else if (loanBalance > scaleB.getFloor() && loanBalance <= scaleB.getCeilling())
 			scale = scaleB;

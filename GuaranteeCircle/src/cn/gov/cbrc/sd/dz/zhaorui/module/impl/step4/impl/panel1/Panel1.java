@@ -18,14 +18,14 @@ public class Panel1 extends JPanel {
 	
 	private JTextArea resultTextarea;
 	
-	private GraphicShowPanel gsPanel;
+	private GraphicListShowPanel gsPanel;
 
 	public Panel1() {
 		super(new BorderLayout());
 		resultTextarea=new JTextArea();
 		resultTextarea.setLineWrap(true);
 		resultTextarea.setEditable(false);
-		gsPanel=new GraphicShowPanel();
+		gsPanel=new GraphicListShowPanel();
 		this.add(resultTextarea,BorderLayout.NORTH);
 		this.add(gsPanel, BorderLayout.CENTER);
 	}

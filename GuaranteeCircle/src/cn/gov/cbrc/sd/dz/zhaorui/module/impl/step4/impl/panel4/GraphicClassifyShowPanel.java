@@ -6,19 +6,48 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.Panel2;
 import cn.gov.cbrc.sd.dz.zhaorui.model.GraphicClassify;
 
 public class GraphicClassifyShowPanel extends JScrollPane {
 
-	static GrpahicClassifyShowTable table;
+	GrpahicClassifyShowTable table;
 
-	public GraphicClassifyShowPanel() {
+	Panel4 panel4;
+
+	public GraphicClassifyShowPanel(Panel4 panel4) {
 		super();
+		this.setAutoscrolls(true);
+		this.panel4 = panel4;
+		addListeners();
+	}
+
+	private void addListeners() {
+		if (table != null) {
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					int row = table.getSelectedRow();
+					int col = table.getColumnCount();
+					if (row >= 0) {
+						row = table.convertRowIndexToModel(row);
+						List<Graphic> circles = (List<Graphic>) table.getModel().getValueAt(row, col);
+						if (panel4 != null) {
+							Panel1 bottomPanel = panel4.getBottomPanel();
+							if (bottomPanel != null)
+								bottomPanel.refreshResult(circles);
+						}
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -30,6 +59,7 @@ public class GraphicClassifyShowPanel extends JScrollPane {
 		GraphicClassifyShowTableModel model = new GraphicClassifyShowTableModel(classifyGraphicsMap);
 		table = new GrpahicClassifyShowTable(model);
 		table.setRowSorter(new TableRowSorter<TableModel>(model));
+		addListeners();
 		this.setViewportView(table);
 		this.repaint();
 	}

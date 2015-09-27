@@ -18,7 +18,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 /**
  * 从地域分布维度分析
  * 
- * @author Administrator
+ * @author zr
  *
  */
 public class RegionDistributAnalysis {

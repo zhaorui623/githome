@@ -14,8 +14,12 @@ public class Corporation {
 	public static final String REGION_CODE_COL = "行政区划代码";
 	public static final String GUANZHU_LOAN_BALANCE_COL="关注类贷款余额";
 	public static final String BULIANG_LOAN_BALANCE_COL = "不良贷款";
-	public static final String YUQI30YINEI_LOAN_BALANCE_COL = "逾期30天以内";
-	public static final String YUQI31_90_LOAN_BALANCE_COL = "逾期31_90天";
+	public static final String YUQI_30DAY_YINEI_LOAN_BALANCE_COL = "逾期30天以内";
+	public static final String YUQI_31DAY_90DAY_LOAN_BALANCE_COL = "逾期31_90天";
+	public static final String YUQI_91DAY_180DAY_LOAN_BALANCE_COL = "逾期91_180天";
+	public static final String YUQI_181DAY_365DAY_LOAN_BALANCE_COL = "逾期181_365天";
+	public static final String YUQI_1YEAR_3YEAR_LOAN_BALANCE_COL = "逾期1年_3年";
+	public static final String YUQI_3YEAR_YISHANG_LOAN_BALANCE_COL = "逾期3年以上";
 	public static final String OFF_BALANCE_ZQ_COL = "债券";
 	public static final String OFF_BALANCE_GQ_COL = "股权";
 	public static final String OFF_BALANCE_CD_COL = "银行承兑汇票";

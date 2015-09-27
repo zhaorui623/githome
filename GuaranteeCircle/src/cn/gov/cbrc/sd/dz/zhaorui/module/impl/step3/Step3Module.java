@@ -17,6 +17,7 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.RegionDistributAnalysis;
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.GraphicClassifyAnalysis;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
@@ -170,7 +171,10 @@ public class Step3Module extends Module {
 	 * @throws Exception
 	 */
 	public void procedure7() throws Exception {
-		InfoPane.getInstance().info("执行procedure7！");
+		GraphicClassifyAnalysis rda = new GraphicClassifyAnalysis();
+		for (Graphic g : graphics) {
+			rda.analysisRiskClassify(g);
+		}
 	}
 
 	public Procedure getProcedure() {

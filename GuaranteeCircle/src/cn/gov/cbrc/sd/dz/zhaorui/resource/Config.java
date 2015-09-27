@@ -30,6 +30,9 @@ public class Config {
 
 	public static final String SPLIT_ALGORITHM_TAG = "algorithm";
 	public static final String REGION_TAG = "region";
+	public static final String LOAN_BALANCE_FLOOR_ATTRIBUTE="loan-balance-floor";
+	public static final String LOAN_BALANCE_CEILLING_ATTRIBUTE="loan-balance-ceiling";
+	public static final String LEVEL_ATTRIBUTE="level";
 
 	private static Document doc;
 

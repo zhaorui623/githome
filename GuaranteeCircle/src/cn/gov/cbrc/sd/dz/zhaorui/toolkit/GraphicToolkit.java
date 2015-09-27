@@ -72,8 +72,8 @@ public class GraphicToolkit {
 		if(graphics!=null){
 			Set<Corporation> corps=getVertexSet(graphics);
 			for(Corporation corp:corps){
-				double value1=corp.getDoubleValue(Corporation.YUQI30YINEI_LOAN_BALANCE_COL);
-				double value2=corp.getDoubleValue(Corporation.YUQI31_90_LOAN_BALANCE_COL);
+				double value1=corp.getDoubleValue(Corporation.YUQI_30DAY_YINEI_LOAN_BALANCE_COL);
+				double value2=corp.getDoubleValue(Corporation.YUQI_31DAY_90DAY_LOAN_BALANCE_COL);
 				result=result+value1+value2;
 			}
 		}
@@ -127,6 +127,27 @@ public class GraphicToolkit {
 		List<Graphic> list=new ArrayList<Graphic>();
 		list.add(circle);
 		return getOffBalance(list);
+	}
+
+	public static double getYuQi90YiShangLoanBalance(Graphic circle) {
+		List<Graphic> list=new ArrayList<Graphic>();
+		list.add(circle);
+		return getYuQi90YiShangLoanBalance(list);
+	}
+
+	public static double getYuQi90YiShangLoanBalance(List<Graphic> graphics) {
+		double result=0;
+		if(graphics!=null){
+			Set<Corporation> corps=getVertexSet(graphics);
+			for(Corporation corp:corps){
+				double value1=corp.getDoubleValue(Corporation.YUQI_91DAY_180DAY_LOAN_BALANCE_COL);
+				double value2=corp.getDoubleValue(Corporation.YUQI_181DAY_365DAY_LOAN_BALANCE_COL);
+				double value3=corp.getDoubleValue(Corporation.YUQI_1YEAR_3YEAR_LOAN_BALANCE_COL);
+				double value4=corp.getDoubleValue(Corporation.YUQI_3YEAR_YISHANG_LOAN_BALANCE_COL);
+				result=result+value1+value2+value3+value4;
+			}
+		}
+		return result;
 	}
 
 }

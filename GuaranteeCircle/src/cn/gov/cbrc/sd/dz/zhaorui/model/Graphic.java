@@ -20,6 +20,7 @@ public class Graphic {
 	private SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge> g;
 	private String name;
 	private Region region;
+	private GraphicClassify riskClassify;
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -168,9 +169,9 @@ public class Graphic {
 	public void setNameSuffix(String name) {
 		this.name = name + this.toString().replaceAll(this.getClass().getName(), "");
 	}
-	
-	public void setName(String name){
-		this.name=name;
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getName() {
@@ -343,43 +344,51 @@ public class Graphic {
 	}
 
 	public Graphic clone() {
-		Graphic graphicClone=new Graphic();
-		if(this.getName()!=null)
+		Graphic graphicClone = new Graphic();
+		if (this.getName() != null)
 			graphicClone.setName(new String(this.getName()));
-		Set<Corporation> vertexSet=this.vertexSet();
-		for(Corporation vertex:vertexSet){
-			Corporation vertexClone=vertex.clone();
+		Set<Corporation> vertexSet = this.vertexSet();
+		for (Corporation vertex : vertexSet) {
+			Corporation vertexClone = vertex.clone();
 			graphicClone.addVertex(vertexClone);
 		}
-		Set<DefaultWeightedEdge> edgeSet=this.edgeSet();
-		for(DefaultWeightedEdge edge:edgeSet){
-			Corporation corpSource=this.getEdgeSource(edge);
-			Corporation corpTarget=this.getEdgeTarget(edge);
-			Corporation corpSourceClone=graphicClone.getVertexByName(corpSource.getName());
-			Corporation corpTargetClone=graphicClone.getVertexByName(corpTarget.getName());
+		Set<DefaultWeightedEdge> edgeSet = this.edgeSet();
+		for (DefaultWeightedEdge edge : edgeSet) {
+			Corporation corpSource = this.getEdgeSource(edge);
+			Corporation corpTarget = this.getEdgeTarget(edge);
+			Corporation corpSourceClone = graphicClone.getVertexByName(corpSource.getName());
+			Corporation corpTargetClone = graphicClone.getVertexByName(corpTarget.getName());
 			graphicClone.addEdge(corpSourceClone, corpTargetClone);
 		}
-		
+
 		return graphicClone;
 	}
 
 	private Corporation getVertexByName(String name) {
-		Set<Corporation> vertexs=this.vertexSet();
-		for(Corporation v:vertexs){
-			if(v.getName().equals(name))
+		Set<Corporation> vertexs = this.vertexSet();
+		for (Corporation v : vertexs) {
+			if (v.getName().equals(name))
 				return v;
 		}
 		return null;
 	}
 
 	public void setRegion(Region region) {
-		this.region=region;
-		
+		this.region = region;
+
 	}
 
 	public Region getRegion() {
-		
+
 		return this.region;
+	}
+
+	public void setRiskClassify(GraphicClassify riskClassify) {
+		this.riskClassify = riskClassify;
+	}
+
+	public GraphicClassify getRiskClassify() {
+		return this.riskClassify;
 	}
 
 }

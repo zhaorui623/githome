@@ -34,6 +34,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.*;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.Panel2;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel4.Panel4;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.InvisibleNode;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.InvisibleTreeModel;
 
@@ -42,9 +43,10 @@ public class ResultPanel extends JPanel {
 
 	private GC GC = null;
 	private JTabbedPane tabbedPane;
-	private JPanel panel3,panel4;
+	private JPanel panel3;
 	private Panel1 panel1;
 	private Panel2 panel2;
+	private Panel4 panel4;
 
 	public ResultPanel(Step4Module step4Module) {
 		super();
@@ -57,7 +59,7 @@ public class ResultPanel extends JPanel {
 		panel1 = new Panel1();
 		panel2 = new Panel2();
 		panel3 = new JPanel();
-		panel4 = new JPanel();
+		panel4 = new Panel4();
 //		panel1.setBackground(Color.yellow);
 //		panel2.setBackground(Color.blue);
 //		panel3.setBackground(Color.green);
@@ -75,6 +77,7 @@ public class ResultPanel extends JPanel {
 	public void refreshResult(List<Graphic> circles) {
 		panel1.refreshResult(circles);
 		panel2.refreshResult(circles);
+		panel4.refreshResult(circles);
 	}
 
 }

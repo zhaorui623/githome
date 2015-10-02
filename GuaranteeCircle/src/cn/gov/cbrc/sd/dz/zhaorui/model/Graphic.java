@@ -21,6 +21,7 @@ public class Graphic {
 	private String name;
 	private Region region;
 	private GraphicClassify riskClassify;
+	private boolean VIPTag;
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -364,7 +365,7 @@ public class Graphic {
 		return graphicClone;
 	}
 
-	private Corporation getVertexByName(String name) {
+	public Corporation getVertexByName(String name) {
 		Set<Corporation> vertexs = this.vertexSet();
 		for (Corporation v : vertexs) {
 			if (v.getName().equals(name))
@@ -391,4 +392,16 @@ public class Graphic {
 		return this.riskClassify;
 	}
 
+	public boolean containsVertexWithName(String corpName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setVIPTag(boolean isVIPGrphic) {
+		this.VIPTag=isVIPGrphic;
+	}
+
+	public boolean isVIPGraphic(){
+		return this.VIPTag;
+	}
 }

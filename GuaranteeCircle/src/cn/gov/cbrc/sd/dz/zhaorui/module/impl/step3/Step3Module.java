@@ -3,27 +3,28 @@ package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.sound.midi.MidiDevice.Info;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.GraphicClassifyAnalysis;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.RegionDistributAnalysis;
-import cn.gov.cbrc.sd.dz.zhaorui.algorithm.GraphicClassifyAnalysis;
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.model.VIPCustomerGroup;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
-import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.Step2Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step1.Step1Module;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.Step2Module;
 
 public class Step3Module extends Module {
 
@@ -32,6 +33,8 @@ public class Step3Module extends Module {
 	private HugeCircleSplitAlgorithm hcsAlgm;
 
 	private Graphic totalGraphic;
+	
+	private boolean sucessMark;
 
 	public static final int PROCEDURE_COUNT = 7;
 
@@ -62,7 +65,7 @@ public class Step3Module extends Module {
 	private Procedure procedure = new Procedure();
 
 	/**
-	 * 第一步：识别独立连通子图
+	 * 第1步：识别独立连通子图
 	 * 
 	 * @throws Exception
 	 */
@@ -78,7 +81,7 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第二步：对超大圈进行拆分
+	 * 第2步：对超大圈进行拆分
 	 * 
 	 * @throws Exception
 	 */
@@ -92,11 +95,11 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第三步：过滤掉非圈非链、小圈小链
+	 * 第4步：过滤掉非圈非链、小圈小链
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure3() throws Exception {
+	public void procedure4() throws Exception {
 		int size1 = graphics.size();
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
@@ -114,31 +117,33 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第四步：生成每个担保圈的拓扑图
+	 * 第7步：生成每个担保圈的拓扑图
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure4() throws Exception {
+	public void procedure7() throws Exception {
 		InfoPane.getInstance().info("为" + graphics.size() + "个担保圈生成图像文件……");
-//		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
-//		for (Graphic g : graphics)
-//			queue.put(g);
-//		new Thread() {
-//			public void run() {
-//				while (queue.isEmpty() == false) {
-//					getProcedure().setPercent((int) ((1 - queue.size() * 1.0 / graphics.size()) * 100));
-//					try {
-//						sleep(1000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}.start();
-//		while (queue.isEmpty() == false) {
-//			Graphic g = queue.take();
-//			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
-//		}
+		// final BlockingQueue<Graphic> queue = new
+		// LinkedBlockingQueue<Graphic>(graphics.size());
+		// for (Graphic g : graphics)
+		// queue.put(g);
+		// new Thread() {
+		// public void run() {
+		// while (queue.isEmpty() == false) {
+		// getProcedure().setPercent((int) ((1 - queue.size() * 1.0 /
+		// graphics.size()) * 100));
+		// try {
+		// sleep(1000);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
+		// }
+		// }.start();
+		// while (queue.isEmpty() == false) {
+		// Graphic g = queue.take();
+		// g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
+		// }
 	}
 
 	/**
@@ -151,26 +156,55 @@ public class Step3Module extends Module {
 		for (Graphic g : graphics) {
 			rda.analysisRegion(g);
 		}
-		
 
 	}
 
 	/**
-	 * 第6步：从重点客户维度分析
+	 * 第3步：从重点客户维度分析
+	 * 
+	 * @throws Exception
+	 */
+	public void procedure3() throws Exception {
+
+		boolean skip = ((Step1Module) Module.getModule("1")).isSkipVIPCustomerAnlys();
+		if (skip == true) {
+			InfoPane.getInstance().info("跳过第3步：从重点客户维度分析");
+			return;
+		}
+
+		Graphic totalG = ((Step1Module) Module.getModule("1")).getTotalGraphic().clone();
+		List<VIPCustomerGroup> list = ((Step1Module) Module.getModule("1")).getVIPCustomerGroupList();
+
+		for (int i = 0; i < list.size(); i++) {
+			procedure.setPercent((int) (i * 1.0 / list.size() * 100));
+//			System.out.println(procedure.getPercent());
+			VIPCustomerGroup group = list.get(i);
+			Graphic graphic = new Graphic();// 重点客户担保圈
+			graphic.setName("重点风险企业担保圈" + (i + 1) + "-" + group.getName() + "圈");
+			List<Corporation> corps = group.getCorps();// 重点客户组内的客户清单
+			if (corps == null) {
+				InfoPane.getInstance().info("未发现重点风险企业" + group.getName() + "圈内企业与其他企业存在担保关系，该圈将不被生成");
+				continue;
+			}
+			Set<Corporation> vertexSet = new HashSet<Corporation>();
+			for (Corporation corp : corps) {// 拉取客户清单中每个客户的相关企业，全部加到vertexSet里
+				Graphic g = ((PickAlgorithm) hcsAlgm).pickCircleOf(totalG, corp);
+				vertexSet.addAll(g.vertexSet());
+			}
+			for (Corporation vertex : vertexSet)
+				graphic.addVertex(vertex);
+			graphic.addEdgesFrom(totalG);
+			graphic.setVIPTag(true);
+			graphics.add(graphic);
+		}
+	}
+
+	/**
+	 * 第6步：从风险分类维度分析
 	 * 
 	 * @throws Exception
 	 */
 	public void procedure6() throws Exception {
-		InfoPane.getInstance().info("执行procedure6！");
-
-	}
-
-	/**
-	 * 第7步：从风险分类维度分析
-	 * 
-	 * @throws Exception
-	 */
-	public void procedure7() throws Exception {
 		GraphicClassifyAnalysis rda = new GraphicClassifyAnalysis();
 		for (Graphic g : graphics) {
 			rda.analysisRiskClassify(g);
@@ -186,8 +220,22 @@ public class Step3Module extends Module {
 		return pPanel;
 	}
 
-	public List<Graphic> getResult() {
+	public List<Graphic> getResultGraphics() {
 		return graphics;
 	}
 
+	public void clearProcedueStatusMark() {
+		pPanel.clearProcedueStatusMark();
+	}
+
+	public void clearSucessMark() {
+		this.setSucessMark(false);
+	}
+	public boolean isSucess() {
+		return this.sucessMark;
+	}
+
+	public void setSucessMark(boolean b) {
+		this.sucessMark=false;
+	}
 }

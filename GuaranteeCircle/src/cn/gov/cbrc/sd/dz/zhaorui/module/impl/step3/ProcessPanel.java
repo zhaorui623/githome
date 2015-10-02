@@ -29,8 +29,8 @@ public class ProcessPanel extends JPanel {
 
 	private JLabel statusIcons[], procedureLabels[], percentLabels[];
 
-	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行拆分", "第3步：过滤掉非圈非链、小圈小链", "第4步：生成每个担保圈的拓扑图",
-			"第5步：从地区分布维度分析", "第6步：从重点客户维度分析", "第7步：从风险分类维度分析" };
+	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行拆分", "第3步：从重点客户维度分析", "第4步：过滤掉非圈非链、小圈小链",
+			"第5步：从地区分布维度分析", "第6步：从风险分类维度分析", "第7步：生成每个担保圈的拓扑图" };
 
 	private String finishedLabel = "√", processingLabel = "→", percent100 = "(100%)";
 
@@ -76,6 +76,7 @@ public class ProcessPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					clearProcedueStatusMark();
 					final ProcedureThread thread = new ProcedureThread();
 					thread.start(step3Module);
 					new Thread() {
@@ -92,16 +93,18 @@ public class ProcessPanel extends JPanel {
 									percentLabels[index].setText("(" + p.getPercent() + "%)");
 								}
 								try {
-									Thread.sleep(500);
+									Thread.sleep(100);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
 							}
-							statusIcons[Step3Module.PROCEDURE_COUNT - 1].setText(finishedLabel);
-							percentLabels[Step3Module.PROCEDURE_COUNT - 1].setText(percent100);
-							JOptionPane.showMessageDialog(ProcessPanel.this, "识别过程结束！", "提示",
-									JOptionPane.INFORMATION_MESSAGE);
-							Module.gotoStep(4);
+							if (step3Module.isSucess()) {
+								statusIcons[Step3Module.PROCEDURE_COUNT - 1].setText(finishedLabel);
+								percentLabels[Step3Module.PROCEDURE_COUNT - 1].setText(percent100);
+								JOptionPane.showMessageDialog(ProcessPanel.this, "识别过程结束！", "提示",
+										JOptionPane.INFORMATION_MESSAGE);
+								Module.gotoStep(4);
+							}
 						}
 					}.start();
 				} catch (Exception e1) {
@@ -113,6 +116,21 @@ public class ProcessPanel extends JPanel {
 
 	public String[] getLabeltexts() {
 		return labeltexts;
+	}
+
+	public void clearProcedueStatusMark() {
+		step3Module.clearSucessMark();
+		if (statusIcons != null)
+			for (JLabel statusIcon : statusIcons)
+				statusIcon.setText("  ");
+		if (percentLabels != null)
+			for (JLabel percentLabel : percentLabels)
+				percentLabel.setText("");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+		}
+
 	}
 
 }

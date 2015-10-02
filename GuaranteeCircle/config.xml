@@ -25,20 +25,20 @@
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="false"/>
+						<all id="12" selected="true"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
 						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="14" selected="true"/>
+						<none id="14" selected="false"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
 						<!-- 规则1：摘取全部2手节点企业（含担保和被担保） -->
 						<all id="16" selected="false"/>
 						<!-- 规则2：只取为1手企业提供担保的企业 -->
-						<in-only id="17" selected="false"/>
+						<in-only id="17" selected="true"/>
 						<!-- 规则3：全不取 -->
-						<none id="18" selected="true"/>
+						<none id="18" selected="false"/>
 					</two-hand-vertex>
 					<!-- 3手节点企业摘取规则，以下规则只能选择1个 -->
 					<three-hand-vertex id="19">
@@ -52,7 +52,7 @@
 					<!-- 如果N手企业也被认定为“核心企业”，则不取它的后手 -->
 					<unpick-corecorp-son id="23" selected="true"/>
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
-					<pick-mutually-guaranteed-corp id="24" selected="false"/>
+					<pick-mutually-guaranteed-corp id="24" selected="true"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
 					<pick-corecorp-loop id="25" selected="true"/>
 				</scale-control>

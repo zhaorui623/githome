@@ -268,4 +268,15 @@ public class Corporation {
 	public double getGuQuanBalance() {
 		return this.getDoubleValue(GUQUAN_COL);
 	}
+	public int hashCode(){
+		return String.valueOf(getName()).hashCode();
+	}
+	public boolean equals(Object o){
+		if(o instanceof Corporation&&o!=null){
+			Corporation corp=(Corporation)o;
+			if(String.valueOf(corp.getName()).equals(String.valueOf(this.getName())))
+				return true;
+		}
+		return false;
+	}
 }

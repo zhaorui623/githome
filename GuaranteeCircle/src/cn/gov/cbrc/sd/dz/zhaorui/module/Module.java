@@ -27,6 +27,7 @@ import org.w3c.dom.NodeList;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.*;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
 
 public abstract class Module {
@@ -199,5 +200,10 @@ public abstract class Module {
 
 	public static void gotoStep(int step) {
 		modules.get(String.valueOf(step)).getNavigatorButton().doClick();
+	}
+
+	public static Module get(String id) {
+		// TODO Auto-generated method stub
+		return modules.get(id);
 	}
 }

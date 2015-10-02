@@ -9,24 +9,25 @@ import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 
 public class ProcedureThread extends Thread {
 
-	Step3Module obj;
+	Step3Module step3Module;
 
 	public void start(Step3Module object) {
-		this.obj = object;
+		this.step3Module = object;
 		start();
 	}
 
 	public void run() {
 		try {
 			for (int i = 1; i <= Step3Module.PROCEDURE_COUNT; i++) {
-				InfoPane.getInstance().info("开始执行" + obj.getpPanel().getLabeltexts()[i - 1]);
-				obj.getProcedure().setIndex(i);
-				obj.getProcedure().setPercent(0);
-				Step3Module.class.getMethod("procedure" + i).invoke(obj);
-				obj.getProcedure().setPercent(100);
+				InfoPane.getInstance().info("开始执行" + step3Module.getpPanel().getLabeltexts()[i - 1]);
+				step3Module.getProcedure().setIndex(i);
+				step3Module.getProcedure().setPercent(0);
+				Step3Module.class.getMethod("procedure" + i).invoke(step3Module);
+				step3Module.getProcedure().setPercent(100);
 				Thread.sleep(500);
 
 			}
+			step3Module.setSucessMark(true);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "识别过程中遇到异常！", "错误", JOptionPane.ERROR_MESSAGE);
 			InfoPane.getInstance().info(e.toString());
@@ -37,6 +38,6 @@ public class ProcedureThread extends Thread {
 	}
 
 	public Procedure getCurrentProcedure() {
-		return obj.getProcedure();
+		return step3Module.getProcedure();
 	}
 }

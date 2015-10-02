@@ -30,6 +30,10 @@ public abstract class HugeCircleSplitAlgorithm {
 
 	protected boolean isAlgorithmConfigPanelInited = false;
 
+	public HugeCircleSplitAlgorithm(){
+		super();
+	}
+	
 	public HugeCircleSplitAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) {
 		super();
 		this.algorithm_name = algorithm_name;

@@ -33,6 +33,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.GCClassify;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step1.DataSourcePanel;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
 

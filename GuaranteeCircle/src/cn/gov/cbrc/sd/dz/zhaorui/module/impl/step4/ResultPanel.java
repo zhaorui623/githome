@@ -10,6 +10,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -43,9 +44,9 @@ public class ResultPanel extends JPanel {
 
 	private GC GC = null;
 	private JTabbedPane tabbedPane;
-	private JPanel panel3;
 	private Panel1 panel1;
 	private Panel2 panel2;
+	private Panel1 panel3;
 	private Panel4 panel4;
 
 	public ResultPanel(Step4Module step4Module) {
@@ -58,7 +59,7 @@ public class ResultPanel extends JPanel {
 		// 创建面板
 		panel1 = new Panel1();
 		panel2 = new Panel2();
-		panel3 = new JPanel();
+		panel3 = new Panel1();
 		panel4 = new Panel4();
 		// panel1.setBackground(Color.yellow);
 		// panel2.setBackground(Color.blue);
@@ -75,10 +76,16 @@ public class ResultPanel extends JPanel {
 	}
 
 	public void refreshResult(List<Graphic> circles) {
-		if (circles != null) {
+		if (circles != null) {			
 			panel1.refreshResult(circles);
 			panel2.refreshResult(circles);
 			panel4.refreshResult(circles);
+			 
+			List<Graphic> vipCircles=new ArrayList<Graphic>();
+			for(Graphic circle:circles)
+				if(circle.isVIPGraphic())
+					vipCircles.add(circle);
+			panel3.refreshResult(vipCircles);
 		}
 	}
 

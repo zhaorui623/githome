@@ -93,6 +93,12 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		pick_corecorp_loop = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "25").getAttribute("selected"));
 	}
 
+
+	public PickAlgorithm() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int getGuarantor_floor_value() {
 		return guarantor_floor_value;
 	}
@@ -353,7 +359,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @return
 	 * @throws Exception
 	 */
-	private Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
+	public Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
 		// 用来存放待会拉出来的担保圈图
 		Graphic g = new Graphic();
 //		g.setNameSuffix(core.getName());

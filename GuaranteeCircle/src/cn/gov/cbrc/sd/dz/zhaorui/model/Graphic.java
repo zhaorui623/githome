@@ -22,6 +22,7 @@ public class Graphic {
 	private Region region;
 	private GraphicClassify riskClassify;
 	private boolean VIPTag;
+	private Set<Corporation> coreCorps=new HashSet<Corporation>();
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -136,11 +137,21 @@ public class Graphic {
 
 	public String toDotCode() {
 		StringBuffer code = new StringBuffer();
+		Set<DefaultWeightedEdge> edges = this.edgeSet();
+		Set<Corporation> vertexs = this.vertexSet();
 		code.append("digraph show{node[fontname=\"宋体\"];\n");
 		// if(g.name.equals("独立")==false)
 		// code.append(g.name.substring(0,
 		// g.name.length()-1)+"[style=\"filled\",fillcolor=\"#f08080\"]\n");
-		for (DefaultWeightedEdge e : this.edgeSet())
+
+		for (Corporation v : vertexs) {
+			if (this.coreCorps.contains(v)) // 将该图的核心企业背景设置为红色
+				code.append(v.getName() + "[peripheries=\"2\",style=\"filled\",fillcolor=\"#FF0033\"]\n");
+			else if(v.isCore()==true)// 将其他核心企业背景设置为粉色
+				code.append(v.getName() + "[style=\"filled\",fillcolor=\"#FF99FF\"]\n");
+
+		}
+		for (DefaultWeightedEdge e : edges)
 			code.append(this.getEdgeSource(e).getName() + "->" + this.getEdgeTarget(e).getName() + ";\n");
 		code.append("}");
 
@@ -398,10 +409,21 @@ public class Graphic {
 	}
 
 	public void setVIPTag(boolean isVIPGrphic) {
-		this.VIPTag=isVIPGrphic;
+		this.VIPTag = isVIPGrphic;
 	}
 
-	public boolean isVIPGraphic(){
+	public boolean isVIPGraphic() {
 		return this.VIPTag;
+	}
+
+	public void addCoreCorps(Corporation corp) {
+		if (coreCorps == null)
+			coreCorps = new HashSet<Corporation>();
+		if (corp != null)
+			coreCorps.add(corp);
+
+	}
+	public Set<Corporation> getCoreCorps(){
+		return coreCorps;
 	}
 }

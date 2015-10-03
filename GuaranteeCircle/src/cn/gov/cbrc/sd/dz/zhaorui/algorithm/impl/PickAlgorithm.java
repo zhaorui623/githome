@@ -366,6 +366,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		g.setName(core.getName()+"圈");
 		// 先把核心节点放到g里
 		g.addVertex(core);
+		g.addCoreCorps(core);
 		// 拉取第一层节点
 		Set<Corporation> corpsOfLevel1 = pickNextLevel(graphic, g, g.vertexSet(), "One");
 		// 拉取第二层节点
@@ -447,7 +448,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 					}
 					// 如果是“只取为核心企业提供担保的企业”
 					if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_in_only").invoke(this)) {
-						if (corpT == corp) {
+						if (corpT.equals(corp)) {
 							if (g.containsVertex(corpS) == false) {
 								// 将core作为尾顶点时的对端顶点加入g中
 								g.addVertex(corpS);

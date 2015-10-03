@@ -25,6 +25,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.VIPCustomerGroup;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step1.Step1Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.Step2Module;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
 
 public class Step3Module extends Module {
 
@@ -104,6 +105,8 @@ public class Step3Module extends Module {
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
 			Graphic g = iterator.next();
+			if(g.isVIPGraphic()==true)//重点风险客户担保圈不能被过滤掉，用户就想看这个，过滤掉会捉急的
+				continue;
 			int vertexCount = g.vertexSet().size();
 			int edgeCount = g.edgeSet().size();
 			// 如果平均每个节点超过1.5条边 或者 点+边总数超过10的话，则保留
@@ -123,27 +126,25 @@ public class Step3Module extends Module {
 	 */
 	public void procedure7() throws Exception {
 		InfoPane.getInstance().info("为" + graphics.size() + "个担保圈生成图像文件……");
-		// final BlockingQueue<Graphic> queue = new
-		// LinkedBlockingQueue<Graphic>(graphics.size());
-		// for (Graphic g : graphics)
-		// queue.put(g);
-		// new Thread() {
-		// public void run() {
-		// while (queue.isEmpty() == false) {
-		// getProcedure().setPercent((int) ((1 - queue.size() * 1.0 /
-		// graphics.size()) * 100));
-		// try {
-		// sleep(1000);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// }
-		// }
-		// }.start();
-		// while (queue.isEmpty() == false) {
-		// Graphic g = queue.take();
-		// g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
-		// }
+		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
+		for (Graphic g : graphics)
+			queue.put(g);
+		new Thread() {
+			public void run() {
+				while (queue.isEmpty() == false) {
+					getProcedure().setPercent((int) ((1 - queue.size() * 1.0 / graphics.size()) * 100));
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+		while (queue.isEmpty() == false) {
+			Graphic g = queue.take();
+			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
+		}
 	}
 
 	/**
@@ -189,7 +190,9 @@ public class Step3Module extends Module {
 			Set<Corporation> vertexSet = new HashSet<Corporation>();
 			for (Corporation corp : corps) {// 拉取客户清单中每个客户的相关企业，全部加到vertexSet里
 				Graphic g = ((PickAlgorithm) hcsAlgm).pickCircleOf(totalG, corp);
+				graphic.addCoreCorps(corp);
 				vertexSet.addAll(g.vertexSet());
+				GraphicToolkit.removeGraphicWhosCoreCorpis(corp,graphics);
 			}
 			for (Corporation vertex : vertexSet)
 				graphic.addVertex(vertex);
@@ -236,6 +239,6 @@ public class Step3Module extends Module {
 	}
 
 	public void setSucessMark(boolean b) {
-		this.sucessMark=false;
+		this.sucessMark=b;
 	}
 }

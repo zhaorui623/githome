@@ -72,11 +72,12 @@ public class ProcessPanel extends JPanel {
 
 	private void addListeners() {
 		start.addActionListener(new ActionListener() {
-
+			boolean shown=false;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					clearProcedueStatusMark();
+					shown=false;
 					final ProcedureThread thread = new ProcedureThread();
 					thread.start(step3Module);
 					new Thread() {
@@ -95,7 +96,12 @@ public class ProcessPanel extends JPanel {
 								try {
 									Thread.sleep(100);
 								} catch (InterruptedException e) {
-									e.printStackTrace();
+								}
+								if(p!=null&&shown==false&&p.getIndex()==labeltexts.length){
+									shown=true;
+									JOptionPane.showMessageDialog(null, "前序步骤全部结束，目前正在后台生成担保圈图像，该步骤耗时较长，将为您先切换到结果展示页面查看报表。", "提示",
+											JOptionPane.INFORMATION_MESSAGE);
+									Module.gotoStep(4);
 								}
 							}
 							if (step3Module.isSucess()) {

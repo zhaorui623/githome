@@ -42,6 +42,8 @@ public class Corporation {
 	public static final String OFF_BALANCE_CN_COL = "承诺";
 	public static final String OFF_BALANCE_XYFXRZYH_COL = "信用风险仍在银行的销售与购买协议";
 	public static final String OFF_BALANCE_JRYSP_COL = "金融衍生品";
+	
+	private double weight=-1.0;
 
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;
@@ -279,4 +281,23 @@ public class Corporation {
 		}
 		return false;
 	}
+
+	public double getWeight() {
+		if(weight==-1.0){
+			weight=caculateWeight();
+		}
+		return weight;
+	}
+
+	private double caculateWeight() {
+		double weight=0;
+		double value1=this.getZhengChangLoanBalance()*0.01;
+		double value2=this.getGuanZhuLoanBalance()*0.02;
+		double value3=this.getCiJiLoanBalance()*0.25;
+		double value4=this.getKeYiLoanBalance()*0.50;
+		double value5=this.getSunShiLoanBalance()*1.00;
+		weight=value1+value2+value3+value4+value5;
+		return weight;
+	}
+
 }

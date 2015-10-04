@@ -22,7 +22,7 @@ public class Graphic {
 	private Region region;
 	private GraphicClassify riskClassify;
 	private boolean VIPTag;
-	private Set<Corporation> coreCorps=new HashSet<Corporation>();
+	private Set<Corporation> coreCorps = new HashSet<Corporation>();
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -147,7 +147,7 @@ public class Graphic {
 		for (Corporation v : vertexs) {
 			if (this.coreCorps.contains(v)) // 将该图的核心企业背景设置为红色
 				code.append(v.getName() + "[peripheries=\"2\",style=\"filled\",fillcolor=\"#FF0033\"]\n");
-			else if(v.isCore()==true)// 将其他核心企业背景设置为粉色
+			else if (v.isCore() == true) // 将其他核心企业背景设置为粉色
 				code.append(v.getName() + "[style=\"filled\",fillcolor=\"#FF99FF\"]\n");
 
 		}
@@ -334,22 +334,23 @@ public class Graphic {
 	}
 
 	/**
-	 * 尝试把g的所有节点的所有边（Graphic中的边）加入g中
+	 * 尝试把本图的所有节点的所有边（Graphic中的边）加入本图中
 	 * 
 	 * @param graphic
 	 *            节点原来所属图
-	 * @param g
-	 *            新生成的图
 	 */
 	public void addEdgesFrom(Graphic graphic) {
 		Set<Corporation> vs = this.vertexSet();
 		for (Corporation v : vs) {
-			Set<DefaultWeightedEdge> edges = graphic.edgesOf(v);
-			for (DefaultWeightedEdge edge : edges) {
-				try {
-					this.addEdge(graphic.getEdgeSource(edge), graphic.getEdgeTarget(edge));
-				} catch (IllegalArgumentException e) {
-					// 如果该边加不进来，说明对端节点未被拉取，所以自然就不用加
+			if (graphic.vertexSet().contains(v)) {//如果这个节点是本图和graphic的共同节点
+				Set<DefaultWeightedEdge> edges = graphic.edgesOf(v);//则取graphic中该节点的所有边
+				for (DefaultWeightedEdge edge : edges) {//尝试将每条边接入到本图中
+					try {
+						this.addEdge(graphic.getEdgeSource(edge), graphic.getEdgeTarget(edge));
+					} catch (IllegalArgumentException e) {
+						// 如果该边加不进来，说明对端节点未被拉取，所以自然就不用加
+					}
+
 				}
 			}
 		}
@@ -423,7 +424,51 @@ public class Graphic {
 			coreCorps.add(corp);
 
 	}
-	public Set<Corporation> getCoreCorps(){
+
+	public Set<Corporation> getCoreCorps() {
 		return coreCorps;
+	}
+
+	public Corporation getHeaviestVertex(boolean core) {
+		Set<Corporation> vertexs = this.vertexSet();
+		double maxWeight = -1.0;
+		Corporation heviestVertex = null;
+		for (Corporation vertex : vertexs) {
+			if (core == true && vertex.isCore() == false)
+				continue;
+			double weight = vertex.getWeight();
+			if (weight > maxWeight) {
+				maxWeight = weight;
+				heviestVertex = vertex;
+			}
+		}
+		return heviestVertex;
+	}
+
+	public Corporation getHeaviestCoreVertex() {
+
+		return getHeaviestVertex(true);
+	}
+
+	/**
+	 * 将整个graphic合并进本图中
+	 * 
+	 * @param graphic
+	 */
+	public void absorb(Graphic graphic) {
+		absorb(graphic,false);
+	}
+
+	/**
+	 * 将graphic合并进本图中，如果onlyCoreCorp为true，则只并入graphic的核心节点及其相关边
+	 * @param graphic
+	 * @param onlyCoreCorp
+	 */
+	public void absorb(Graphic graphic, boolean onlyCoreCorp) {
+		Set<Corporation> vs = onlyCoreCorp?graphic.getCoreCorps():graphic.vertexSet();
+		for (Corporation v : vs)
+			this.addVertex(v);
+		this.addEdgesFrom(graphic);
+		
 	}
 }

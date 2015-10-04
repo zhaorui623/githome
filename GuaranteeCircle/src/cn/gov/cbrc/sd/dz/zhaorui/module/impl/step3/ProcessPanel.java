@@ -29,8 +29,8 @@ public class ProcessPanel extends JPanel {
 
 	private JLabel statusIcons[], procedureLabels[], percentLabels[];
 
-	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行拆分", "第3步：从重点客户维度分析", "第4步：过滤掉非圈非链、小圈小链",
-			"第5步：从地区分布维度分析", "第6步：从风险分类维度分析", "第7步：生成每个担保圈的拓扑图" };
+	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行拆分", "第3步：从重点客户维度分析","第4步：高关联度担保圈合并", "第5步：过滤掉非圈非链、小圈小链",
+			"第6步：从地区分布维度分析", "第7步：从风险分类维度分析", "第8步：生成每个担保圈的拓扑图" };
 
 	private String finishedLabel = "√", processingLabel = "→", percent100 = "(100%)";
 

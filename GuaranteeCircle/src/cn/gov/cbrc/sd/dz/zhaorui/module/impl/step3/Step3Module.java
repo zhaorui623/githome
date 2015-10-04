@@ -13,6 +13,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.sound.midi.MidiDevice.Info;
 import javax.swing.JMenuItem;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.GraphicClassifyAnalysis;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
@@ -34,10 +37,10 @@ public class Step3Module extends Module {
 	private HugeCircleSplitAlgorithm hcsAlgm;
 
 	private Graphic totalGraphic;
-	
+
 	private boolean sucessMark;
 
-	public static final int PROCEDURE_COUNT = 7;
+	public static final int PROCEDURE_COUNT = 8;
 
 	public Step3Module(String id, GC gc, String name, String iconName) {
 		super(id, gc, name, iconName);
@@ -96,16 +99,16 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第4步：过滤掉非圈非链、小圈小链
+	 * 第5步：过滤掉非圈非链、小圈小链
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure4() throws Exception {
+	public void procedure5() throws Exception {
 		int size1 = graphics.size();
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
 			Graphic g = iterator.next();
-			if(g.isVIPGraphic()==true)//重点风险客户担保圈不能被过滤掉，用户就想看这个，过滤掉会捉急的
+			if (g.isVIPGraphic() == true) // 重点风险客户担保圈不能被过滤掉，用户就想看这个，过滤掉会捉急的
 				continue;
 			int vertexCount = g.vertexSet().size();
 			int edgeCount = g.edgeSet().size();
@@ -120,11 +123,11 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第7步：生成每个担保圈的拓扑图
+	 * 第8步：生成每个担保圈的拓扑图
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure7() throws Exception {
+	public void procedure8() throws Exception {
 		InfoPane.getInstance().info("为" + graphics.size() + "个担保圈生成图像文件……");
 		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(graphics.size());
 		for (Graphic g : graphics)
@@ -148,11 +151,11 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第5步：从地区分布维度分析
+	 * 第6步：从地区分布维度分析
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure5() throws Exception {
+	public void procedure6() throws Exception {
 		RegionDistributAnalysis rda = new RegionDistributAnalysis();
 		for (Graphic g : graphics) {
 			rda.analysisRegion(g);
@@ -178,7 +181,7 @@ public class Step3Module extends Module {
 
 		for (int i = 0; i < list.size(); i++) {
 			procedure.setPercent((int) (i * 1.0 / list.size() * 100));
-//			System.out.println(procedure.getPercent());
+			// System.out.println(procedure.getPercent());
 			VIPCustomerGroup group = list.get(i);
 			Graphic graphic = new Graphic();// 重点客户担保圈
 			graphic.setName("重点风险企业担保圈" + (i + 1) + "-" + group.getName() + "圈");
@@ -189,10 +192,11 @@ public class Step3Module extends Module {
 			}
 			Set<Corporation> vertexSet = new HashSet<Corporation>();
 			for (Corporation corp : corps) {// 拉取客户清单中每个客户的相关企业，全部加到vertexSet里
+				corp.setCore(true);
 				Graphic g = ((PickAlgorithm) hcsAlgm).pickCircleOf(totalG, corp);
 				graphic.addCoreCorps(corp);
 				vertexSet.addAll(g.vertexSet());
-				GraphicToolkit.removeGraphicWhosCoreCorpis(corp,graphics);
+				GraphicToolkit.removeGraphicWhosCoreCorpis(corp, graphics);
 			}
 			for (Corporation vertex : vertexSet)
 				graphic.addVertex(vertex);
@@ -203,15 +207,74 @@ public class Step3Module extends Module {
 	}
 
 	/**
-	 * 第6步：从风险分类维度分析
+	 * 第7步：从风险分类维度分析
 	 * 
 	 * @throws Exception
 	 */
-	public void procedure6() throws Exception {
+	public void procedure7() throws Exception {
 		GraphicClassifyAnalysis rda = new GraphicClassifyAnalysis();
 		for (Graphic g : graphics) {
 			rda.analysisRiskClassify(g);
 		}
+	}
+
+//	/**
+//	 * 第4步：高关联度担保圈合并
+//	 */
+//	public void procedure4() {
+//		int count=0;
+//		Iterator<Graphic> iterator = graphics.iterator();
+//		while (iterator.hasNext()) {
+//			Graphic g = iterator.next();
+//			if (g.isVIPGraphic()) // 只处理自动生成的担保圈，根据重点风险客户形成的担保圈不处理
+//				continue;
+//			Corporation heaviestCorp = g.getHeaviestCoreVertex();// 取图中最重的节点,并且该节点是核心节点(广义的核心节点，不一定是该图的核心节点)
+//			if(heaviestCorp==null)//说明该图中没有核心节点（可能是独立担保圈），就不处理了
+//				continue;
+//			if (g.getCoreCorps().contains(heaviestCorp)) // 如果最重的节点本身就是该图的核心企业，就不用处理了
+//				continue;
+//			else {// 否则，寻找以最重节点为核心企业的担保圈，把当前图合并进该担保圈中
+//				Graphic graphic = GraphicToolkit.getCircleWhosCoreCorpis(heaviestCorp, graphics);
+//				if (graphic != null) {
+//					graphic.absorb(g);
+//					iterator.remove();
+//					count++;
+//				}
+//			}
+//		}
+//		InfoPane.getInstance().info("合并了"+count+"个担保圈");
+//	}
+	/**
+	 * 第4步：高关联度担保圈合并
+	 */
+	public void procedure4() {
+		SimpleDirectedWeightedGraph<Graphic,DefaultWeightedEdge> mergeTree=new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);;
+		int count=0;
+		Iterator<Graphic> iterator = graphics.iterator();
+		while (iterator.hasNext()) {
+			Graphic g = iterator.next();
+			if (g.isVIPGraphic()) // 只处理自动生成的担保圈，根据重点风险客户形成的担保圈不处理
+				continue;
+			Corporation heaviestCorp = g.getHeaviestCoreVertex();// 取图中最重的节点,并且该节点是核心节点(广义的核心节点，不一定是该图的核心节点)
+			if(heaviestCorp==null)//说明该图中没有核心节点（可能是独立担保圈），就不处理了
+				continue;
+			if (g.getCoreCorps().contains(heaviestCorp)) // 如果最重的节点本身就是该图的核心企业，就不用处理了
+				continue;
+			else {// 否则，寻找以最重节点为核心企业的担保圈，并准备把当前图合并进该担保圈中
+				Graphic graphic = GraphicToolkit.getCircleWhosCoreCorpis(heaviestCorp, graphics);
+				if (graphic != null) {
+					mergeTree.addVertex(graphic);
+					mergeTree.addVertex(g);
+					mergeTree.addEdge(g, graphic);
+					count++;
+				}
+			}
+		}
+		//合并担保圈，并将被合并的担保圈从graphics中移除
+		Set<Graphic> graphicToRemove=GraphicToolkit.mergeCircles(mergeTree);
+		graphics.removeAll(graphicToRemove);
+		
+		InfoPane.getInstance().info("合并了"+count+"个担保圈");
 	}
 
 	public Procedure getProcedure() {
@@ -234,11 +297,12 @@ public class Step3Module extends Module {
 	public void clearSucessMark() {
 		this.setSucessMark(false);
 	}
+
 	public boolean isSucess() {
 		return this.sucessMark;
 	}
 
 	public void setSucessMark(boolean b) {
-		this.sucessMark=b;
+		this.sucessMark = b;
 	}
 }

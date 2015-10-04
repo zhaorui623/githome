@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 
@@ -159,10 +162,52 @@ public class GraphicToolkit {
 			}
 		}
 	}
+
 	public static void removeGraphicWhosCoreCorpis(Corporation corp, List<Graphic> graphics) {
-		List<Corporation> corps=new ArrayList<Corporation>();
+		List<Corporation> corps = new ArrayList<Corporation>();
 		corps.add(corp);
-		removeGraphicWhosCoreCorpsContains(corps,graphics);
+		removeGraphicWhosCoreCorpsContains(corps, graphics);
+	}
+
+	public static Graphic getCircleWhosCoreCorpis(Corporation heaviestCorp, List<Graphic> graphics) {
+		for (Graphic g : graphics) {
+			Set<Corporation> coreCorps = g.getCoreCorps();
+			if (coreCorps.contains(heaviestCorp))
+				return g;
+		}
+		return null;
+	}
+
+	
+	public static Set<Graphic> mergeCircles(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
+		Set<Graphic> leafs=new HashSet<Graphic>();
+		
+		while(true){
+			//寻找非根叶子节点（即入度为0，出度不为0的节点）
+			Graphic leaf=getLeaf(mergeTree);
+			
+			if(leaf!=null){//如果树中还有非根叶子节点，则合并之
+				DefaultWeightedEdge edge=mergeTree.edgesOf(leaf).iterator().next();
+				Graphic parent=mergeTree.getEdgeTarget(edge);//叶子节点的父节点
+				parent.absorb(leaf,true);//将叶子节点并入父节点(只保留叶子节点的核心企业）
+				leafs.add(leaf);//记录一下
+				mergeTree.removeVertex(leaf);//将叶子节点移除
+			}else//否则，说明只剩根节点了，合并完成了，结束循环
+				break;			
+		}
+		
+		return leafs;		
+	}
+
+	private static Graphic getLeaf(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
+		Set<Graphic> vs=mergeTree.vertexSet();
+		for(Graphic v:vs){
+			int inDegree=mergeTree.inDegreeOf(v);
+			int outDegree=mergeTree.outDegreeOf(v);
+			if(inDegree==0&&outDegree!=0)
+				return v;
+		}
+		return null;
 	}
 
 }

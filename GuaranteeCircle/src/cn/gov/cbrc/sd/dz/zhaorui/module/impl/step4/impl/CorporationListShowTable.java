@@ -30,7 +30,7 @@ class CorporationListShowTableModel extends javax.swing.table.AbstractTableModel
 
 	private Vector<Vector> rowData;
 	private Vector<String> columnNames;
-	private String[] COLUMN_NAMES = { "企业名称", "组织机构代码", "所属地区", "贷款银行家数", "贷款余额", "不良贷款余额", "不良贷款率（%）", "正常类贷款余额",
+	private String[] COLUMN_NAMES = { "企业名称", "组织机构代码", "所属地区","权重","贷款银行家数", "贷款余额", "不良贷款余额", "不良贷款率（%）", "正常类贷款余额",
 			"关注类贷款余额", "次级类贷款余额", "可疑类贷款余额", "损失类贷款余额", "逾期贷款", "逾期30天以内", "逾期31_90天", "逾期91_180天", "逾期181_365天",
 			"逾期1年_3年", "逾期3年以上", "银行持有企业债券", "银行持有企业股权", "表外业务余额" };
 
@@ -47,6 +47,7 @@ class CorporationListShowTableModel extends javax.swing.table.AbstractTableModel
 			row.add(corp.getName());// 企业名称
 			row.add(corp.getOrgCode());// 企业组织机构代码
 			row.add(corp.getRegion().getName());// 所属地区
+			row.add(corp.getWeight());// 权重
 			row.add(corp.getLoanBankCount());// 贷款银行家数
 			row.add(Math.round(corp.getLoanBalance()));// 贷款余额
 			row.add(Math.round(corp.getBuLiangLoanBalance()));// 不良贷款余额

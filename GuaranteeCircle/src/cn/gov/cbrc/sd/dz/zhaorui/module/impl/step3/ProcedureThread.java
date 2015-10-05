@@ -8,17 +8,20 @@ import javax.swing.JOptionPane;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 
 public class ProcedureThread extends Thread {
-
+	ProcessPanel processPanel;
 	Step3Module step3Module;
 
-	public void start(Step3Module object) {
-		this.step3Module = object;
+	public void start(ProcessPanel object) {
+		this.processPanel = object;
+		this.step3Module = object.getStep3Module();
 		start();
 	}
 
 	public void run() {
 		try {
-			for (int i = 1; i <= Step3Module.PROCEDURE_COUNT; i++) {
+			for (int i = 1; i <= processPanel.getProcedureCount(); i++) {
+				if (i == processPanel.getProcedureCount() && processPanel.isSkipGraphicGenerate() == true) // 是否需要跳过担保图生成的步骤
+					continue;
 				InfoPane.getInstance().info("开始执行" + step3Module.getpPanel().getLabeltexts()[i - 1]);
 				step3Module.getProcedure().setIndex(i);
 				step3Module.getProcedure().setPercent(0);

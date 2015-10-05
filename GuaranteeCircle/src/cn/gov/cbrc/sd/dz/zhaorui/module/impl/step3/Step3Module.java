@@ -40,8 +40,6 @@ public class Step3Module extends Module {
 
 	private boolean sucessMark;
 
-	public static final int PROCEDURE_COUNT = 8;
-
 	public Step3Module(String id, GC gc, String name, String iconName) {
 		super(id, gc, name, iconName);
 	}

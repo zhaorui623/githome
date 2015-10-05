@@ -4,9 +4,12 @@ import java.io.File;
 import java.util.Enumeration;
 
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -16,6 +19,18 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 public class TableToolkit {
+
+	public static void filt(JTable myTable, String filterText, int... rowsToFilt) {
+		RowFilter<TableModel, Object> rf = null;
+		try {
+			rf = RowFilter.regexFilter(filterText, 0);
+		} catch (java.util.regex.PatternSyntaxException e) {
+			return;
+		}
+		TableRowSorter<TableModel> sorter = (TableRowSorter<TableModel>) myTable.getRowSorter();
+		sorter.setRowFilter(rf);
+	}
+
 	public static void fitTableColumns(JTable myTable) {
 		JTableHeader header = myTable.getTableHeader();
 		int rowCount = myTable.getRowCount();
@@ -43,11 +58,11 @@ public class TableToolkit {
 			return;
 		if (excelFile == null)
 			throw new Exception("未指定导出文件！");
-//		if (excelFile.exists())
-//			if (excelFile.delete() == false)
-//				throw new Exception(excelFile.getAbsolutePath() + "正在被使用中！");
+		// if (excelFile.exists())
+		// if (excelFile.delete() == false)
+		// throw new Exception(excelFile.getAbsolutePath() + "正在被使用中！");
 		WritableWorkbook book = Workbook.createWorkbook(excelFile);
-		WritableSheet sheet =book.createSheet("sheet1", 0);		
+		WritableSheet sheet = book.createSheet("sheet1", 0);
 		TableModel model = table.getModel();
 		int colCount = model.getColumnCount();
 		int rowCount = model.getRowCount();
@@ -61,10 +76,10 @@ public class TableToolkit {
 		for (int row = 1; row <= rowCount; row++) {
 			for (int col = 0; col < colCount; col++) {
 				WritableCell cell = null;
-				String value = String.valueOf(model.getValueAt(row-1, col));
+				String value = String.valueOf(model.getValueAt(row - 1, col));
 				Class clas = model.getColumnClass(col);
 				if (clas.equals(String.class))
-					cell = new Label(col,row, value);
+					cell = new Label(col, row, value);
 				else if (clas.equals(Double.class))
 					cell = new Number(col, row, Double.parseDouble(value));
 				if (cell != null)

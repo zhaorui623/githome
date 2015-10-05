@@ -471,4 +471,9 @@ public class Graphic {
 		this.addEdgesFrom(graphic);
 		
 	}
+
+	public Corporation getHeaviestVertex() {
+		
+		return getHeaviestVertex(false);
+	}
 }

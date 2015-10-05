@@ -102,8 +102,6 @@ public abstract class HugeCircleSplitAlgorithm {
 		while (graphic.vertexSet().isEmpty() == false) {
 			// 用来存放待会拆出来的一个子图
 			Graphic g = new Graphic();
-//			g.setNameSuffix("独立担保圈");
-			g.setName("独立担保圈"+(++i));
 			// 随便取一个节点,加到一个队列里，并同时加到子图g中
 			Queue<Corporation> queue = new LinkedList<Corporation>();
 			Corporation corpRandom = graphic.vertexSet().iterator().next();
@@ -137,6 +135,7 @@ public abstract class HugeCircleSplitAlgorithm {
 				// 从总图中移除 刚刚被弹出的 这个节点
 				graphic.removeVertex(corp);
 			}
+			g.setName("独立担保圈"+(++i)+"-"+g.getHeaviestVertex().getName()+"圈");
 			result.add(g);
 		}
 

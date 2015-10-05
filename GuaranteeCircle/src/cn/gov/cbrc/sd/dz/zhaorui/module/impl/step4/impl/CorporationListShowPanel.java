@@ -21,6 +21,7 @@ import javax.swing.table.TableRowSorter;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
+import cn.gov.cbrc.sd.dz.zhaorui.component.TableFilterPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
@@ -31,7 +32,7 @@ public class CorporationListShowPanel extends JPanel {
 	private JScrollPane tablePane;
 	private JButton exp2ExcelButton;
 
-	static CorporationListShowTable table;
+	private CorporationListShowTable table;
 
 	/**
 	 * 根据传入的 “企业列表”构造“担保圈内企业展示表”
@@ -40,11 +41,6 @@ public class CorporationListShowPanel extends JPanel {
 	 */
 	public CorporationListShowPanel(Set<Corporation> corporations) throws Exception {
 		super(new BorderLayout());
-
-		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		exp2ExcelButton = new JButton("导出为Excel");
-		northPanel.add(exp2ExcelButton);
-		this.add(northPanel, BorderLayout.NORTH);
 
 		CorporationListShowTableModel model = new CorporationListShowTableModel(corporations);
 		table = new CorporationListShowTable(model);
@@ -55,6 +51,13 @@ public class CorporationListShowPanel extends JPanel {
 		tablePane.repaint();
 		this.add(tablePane, BorderLayout.CENTER);
 
+		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		TableFilterPanel filterPanel=new TableFilterPanel(table,0);
+		northPanel.add(filterPanel);
+		exp2ExcelButton = new JButton("导出为Excel");
+		northPanel.add(exp2ExcelButton);
+		this.add(northPanel, BorderLayout.NORTH);
+		
 		addListeners();
 	}
 

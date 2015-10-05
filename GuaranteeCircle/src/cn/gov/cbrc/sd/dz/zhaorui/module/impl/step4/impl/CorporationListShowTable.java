@@ -47,7 +47,7 @@ class CorporationListShowTableModel extends javax.swing.table.AbstractTableModel
 			row.add(corp.getName());// 企业名称
 			row.add(corp.getOrgCode());// 企业组织机构代码
 			row.add(corp.getRegion().getName());// 所属地区
-			row.add(corp.getWeight());// 权重
+			row.add(Math.round(corp.getWeight()));// 权重
 			row.add(corp.getLoanBankCount());// 贷款银行家数
 			row.add(Math.round(corp.getLoanBalance()));// 贷款余额
 			row.add(Math.round(corp.getBuLiangLoanBalance()));// 不良贷款余额

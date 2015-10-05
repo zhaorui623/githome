@@ -96,6 +96,8 @@ public class ProcessPanel extends JPanel {
 								Procedure p = thread.getCurrentProcedure();
 								if (p != null) {
 									int index = p.getIndex() - 1;
+									if(index==-1)
+										continue;
 									for (int i = 0; i < index; i++) {
 										statusIcons[i].setText(finishedLabel);
 										percentLabels[i].setText(percent100);

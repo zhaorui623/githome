@@ -23,6 +23,7 @@ import javax.swing.table.TableRowSorter;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
+import cn.gov.cbrc.sd.dz.zhaorui.component.TableFilterPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.GraphicDetailShowDialog;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
@@ -31,19 +32,23 @@ public class GraphicListShowPanel extends JPanel {
 
 	private JScrollPane tablePane;
 	private JButton exp2ExcelButton;
-
+	private TableFilterPanel filterPanel;
 	private GraphicListShowTable table;
 
 	public GraphicListShowPanel() {
 		super(new BorderLayout());
 
-		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		exp2ExcelButton = new JButton("导出为Excel");
-		northPanel.add(exp2ExcelButton);
-		this.add(northPanel, BorderLayout.NORTH);
 
 		tablePane = new JScrollPane();
 		this.add(tablePane, BorderLayout.CENTER);
+		
+
+		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		filterPanel=new TableFilterPanel(table,0);
+		northPanel.add(filterPanel);
+		exp2ExcelButton = new JButton("导出为Excel");
+		northPanel.add(exp2ExcelButton);
+		this.add(northPanel, BorderLayout.NORTH);
 
 		addListeners();
 	}
@@ -60,6 +65,7 @@ public class GraphicListShowPanel extends JPanel {
 		addTableListener();
 		tablePane.setViewportView(table);
 		tablePane.repaint();
+		filterPanel.setTableToFilt(table);
 	}
 
 	private void addTableListener() {

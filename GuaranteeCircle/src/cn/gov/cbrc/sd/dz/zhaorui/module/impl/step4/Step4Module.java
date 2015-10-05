@@ -27,7 +27,11 @@ public class Step4Module extends Module {
 			resultPanel=new ResultPanel(this);
 			tabs.add(resultPanel);
 		}		
-		resultPanel.refreshResult(((Step3Module)gc.getModule("3")).getResultGraphics());
+		try {
+			resultPanel.refreshResult(((Step3Module)gc.getModule("3")).getResultGraphics());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return tabs;
 	}
 

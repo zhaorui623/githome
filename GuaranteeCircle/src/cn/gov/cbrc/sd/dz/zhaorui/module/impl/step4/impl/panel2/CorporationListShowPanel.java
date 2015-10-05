@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel4;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,50 +7,58 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
+import cn.gov.cbrc.sd.dz.zhaorui.component.TableFilterPanel;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
-import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
-import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.Panel2;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
-import cn.gov.cbrc.sd.dz.zhaorui.model.GraphicClassify;
 
-public class GraphicClassifyShowPanel extends JPanel {
+public class CorporationListShowPanel extends JPanel {
 
 	private JScrollPane tablePane;
 	private JButton exp2ExcelButton;
-	
 
-	GrpahicClassifyShowTable table;
+	private CorporationListShowTable table;
+	private TableFilterPanel filterPanel;
 
-	Panel4 panel4;
+	public void refreshData(Set<Corporation> corporations) throws Exception{
 
-	public GraphicClassifyShowPanel(Panel4 panel4) {
+		CorporationListShowTableModel model = new CorporationListShowTableModel(corporations);
+		table = new CorporationListShowTable(model);
+		table.setRowSorter(new TableRowSorter<TableModel>(model));
+		tablePane.setViewportView(table);
+		tablePane.setAutoscrolls(true);
+		tablePane.repaint();
+		filterPanel.setTableToFilt(table);
+	}
+
+	public CorporationListShowPanel() {
 		super(new BorderLayout());
 
+		tablePane = new JScrollPane();
+		this.add(tablePane, BorderLayout.CENTER);
+
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		filterPanel = new TableFilterPanel(table, 0);
+		northPanel.add(filterPanel);
 		exp2ExcelButton = new JButton("导出为Excel");
 		northPanel.add(exp2ExcelButton);
 		this.add(northPanel, BorderLayout.NORTH);
-		
-		tablePane=new JScrollPane();
-		tablePane.setAutoscrolls(true);
-		this.add(tablePane,BorderLayout.CENTER);
-		
-		this.panel4 = panel4;
+
 		addListeners();
 	}
 
@@ -60,7 +68,7 @@ public class GraphicClassifyShowPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (table == null)
 					return;
-				if(table.getRowCount()==0)
+				if (table.getRowCount() == 0)
 					return;
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.xls", "xls");
 				JFileChooser chooser = new JFileChooser();
@@ -86,39 +94,4 @@ public class GraphicClassifyShowPanel extends JPanel {
 
 		});
 	}
-
-	private void addTableListener() {
-		if (table != null) {
-			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-				public void valueChanged(ListSelectionEvent e) {
-					int row = table.getSelectedRow();
-					int col = table.getColumnCount();
-					if (row >= 0) {
-						row = table.convertRowIndexToModel(row);
-						List<Graphic> circles = (List<Graphic>) table.getModel().getValueAt(row, col);
-						if (panel4 != null) {
-							Panel1 bottomPanel = panel4.getBottomPanel();
-							if (bottomPanel != null)
-								bottomPanel.refreshResult(circles);
-						}
-					}
-				}
-			});
-		}
-	}
-
-	/**
-	 * 根据传入的 “分类->担保圈列表”构造“结果展示表”
-	 * 
-	 * @param classifyGraphicsMap
-	 */
-	public void refreshData(Map<GraphicClassify, List<Graphic>> classifyGraphicsMap) {
-		GraphicClassifyShowTableModel model = new GraphicClassifyShowTableModel(classifyGraphicsMap);
-		table = new GrpahicClassifyShowTable(model);
-		table.setRowSorter(new TableRowSorter<TableModel>(model));
-		addTableListener();
-		tablePane.setViewportView(table);
-		tablePane.repaint();
-	}
-
 }

@@ -45,7 +45,7 @@ public class TableFilterPanel extends JPanel {
 		});
 	}
 
-	public void setTableToFilt(GraphicListShowTable table) {
+	public void setTableToFilt(JTable table) {
 		this.table=table;		
 	}
 }

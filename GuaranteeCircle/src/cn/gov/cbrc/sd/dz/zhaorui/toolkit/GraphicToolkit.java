@@ -210,4 +210,11 @@ public class GraphicToolkit {
 		return null;
 	}
 
+	public static Set<Corporation> getCorpsSet(List<Graphic> circles) {
+		Set<Corporation> set=new HashSet<Corporation>();
+		for(Graphic g:circles)
+			set.addAll(g.vertexSet());
+		return set;
+	}
+
 }

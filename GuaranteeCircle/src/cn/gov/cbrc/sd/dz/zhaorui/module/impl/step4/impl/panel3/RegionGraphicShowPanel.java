@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,57 +7,47 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
-import cn.gov.cbrc.sd.dz.zhaorui.component.TableFilterPanel;
-import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
-public class CorporationListShowPanel extends JPanel {
+public class RegionGraphicShowPanel extends JPanel {
 
 	private JScrollPane tablePane;
 	private JButton exp2ExcelButton;
+	
+	RegionGraphicShowTable table;
 
-	private CorporationListShowTable table;
+	Panel3 panel2;
 
-	/**
-	 * 根据传入的 “企业列表”构造“担保圈内企业展示表”
-	 * @param set
-	 * @throws Exception 
-	 */
-	public CorporationListShowPanel(Set<Corporation> corporations) throws Exception {
+	public RegionGraphicShowPanel(Panel3 panel2) {
 		super(new BorderLayout());
 
-		CorporationListShowTableModel model = new CorporationListShowTableModel(corporations);
-		table = new CorporationListShowTable(model);
-		table.setRowSorter(new TableRowSorter<TableModel>(model));
-		tablePane = new JScrollPane();
-		tablePane.setViewportView(table);
-		tablePane.setAutoscrolls(true);
-		tablePane.repaint();
-		this.add(tablePane, BorderLayout.CENTER);
-
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		TableFilterPanel filterPanel=new TableFilterPanel(table,0);
-		northPanel.add(filterPanel);
 		exp2ExcelButton = new JButton("导出为Excel");
 		northPanel.add(exp2ExcelButton);
 		this.add(northPanel, BorderLayout.NORTH);
 		
+		tablePane=new JScrollPane();
+		tablePane.setAutoscrolls(true);
+		this.add(tablePane,BorderLayout.CENTER);
+		
+		this.panel2 = panel2;
 		addListeners();
 	}
 
@@ -93,4 +83,39 @@ public class CorporationListShowPanel extends JPanel {
 
 		});
 	}
+
+	private void addTableListener() {
+		if (table != null) {
+			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					int row = table.getSelectedRow();
+					int col = table.getColumnCount();
+					if (row >= 0) {
+						row = table.convertRowIndexToModel(row);
+						List<Graphic> circles = (List<Graphic>) table.getModel().getValueAt(row, col);
+						if (panel2 != null) {
+							Panel1 bottomPanel = panel2.getBottomPanel();
+							if (bottomPanel != null)
+								bottomPanel.refreshResult(circles);
+						}
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * 根据传入的 “地区->担保圈列表”构造“结果展示表”
+	 * 
+	 * @param regionGraphicsMap
+	 */
+	public void refreshData(Map<Region, List<Graphic>> regionGraphicsMap) {
+		RegionGraphicShowTableModel model = new RegionGraphicShowTableModel(regionGraphicsMap);
+		table = new RegionGraphicShowTable(model);
+		table.setRowSorter(new TableRowSorter<TableModel>(model));
+		addTableListener();
+		tablePane.setViewportView(table);
+		tablePane.repaint();
+	}
+
 }

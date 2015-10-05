@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.CorporationListShowPanel;
 
 public class GraphicDetailShowDialog extends JDialog {
 
@@ -20,7 +21,8 @@ public class GraphicDetailShowDialog extends JDialog {
 		super((Frame) GC.getParent());
 						
 		//添加表格面板到对话框的中央
-		CorporationListShowPanel panel=new CorporationListShowPanel(circle.vertexSet());
+		CorporationListShowPanel panel=new CorporationListShowPanel();
+		panel.refreshData(circle.vertexSet());
 		this.add(panel,BorderLayout.CENTER);	
 		
 		//设置对话框的位置和一些属性

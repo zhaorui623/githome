@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2;
 
 import java.util.List;
 import java.util.Map;

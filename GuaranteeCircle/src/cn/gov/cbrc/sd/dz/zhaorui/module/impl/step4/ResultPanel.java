@@ -35,7 +35,9 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.*;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.Panel2;
-import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel4.Panel4;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3.Panel3;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel5.Panel5;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.InvisibleNode;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.InvisibleTreeModel;
 
@@ -46,8 +48,9 @@ public class ResultPanel extends JPanel {
 	private JTabbedPane tabbedPane;
 	private Panel1 panel1;
 	private Panel2 panel2;
-	private Panel1 panel3;
-	private Panel4 panel4;
+	private Panel3 panel3;
+	private Panel1 panel4;
+	private Panel5 panel5;
 
 	public ResultPanel(Step4Module step4Module) {
 		super();
@@ -59,33 +62,39 @@ public class ResultPanel extends JPanel {
 		// 创建面板
 		panel1 = new Panel1();
 		panel2 = new Panel2();
-		panel3 = new Panel1();
-		panel4 = new Panel4();
+		panel3 = new Panel3();
+		panel4 = new Panel1();
+		panel5 = new Panel5();
 		// panel1.setBackground(Color.yellow);
 		// panel2.setBackground(Color.blue);
 		// panel3.setBackground(Color.green);
 		// panel4.setBackground(Color.red);
 		// 将标签面板加入到选项卡面板对象上
-		tabbedPane.addTab("表1-担保圈总体识别结果", null, panel1, "First panel");
-		tabbedPane.addTab("表2-“区域分布”识别结果 ", null, panel2, "Second panel");
-		tabbedPane.addTab("表3-“重点客户”识别结果", null, panel3, "Third panel");
-		tabbedPane.addTab("表4-“风险分类”识别结果", null, panel4, "Fourth panel");
+		tabbedPane.addTab("表1-担保圈清单", null, panel1, "First panel");
+		tabbedPane.addTab("表2-涉圈企业清单 ", null, panel2, "Second panel");
+		tabbedPane.addTab("表3-“区域分布”分析结果 ", null, panel3, "Thrid panel");
+		tabbedPane.addTab("表4-“重点客户”分析结果", null, panel4, "Fourth panel");
+		tabbedPane.addTab("表5-“风险分类”分析结果", null, panel5, "Fifth panel");
 
 		this.add(tabbedPane, BorderLayout.CENTER);
 		this.setBackground(Color.white);
 	}
 
-	public void refreshResult(List<Graphic> circles) {
+	public void refreshResult(List<Graphic> circles) throws Exception {
 		if (circles != null) {			
 			panel1.refreshResult(circles);
-			panel2.refreshResult(circles);
-			panel4.refreshResult(circles);
+			
+			panel2.refreshResult(GraphicToolkit.getCorpsSet(circles));
+			
+			panel3.refreshResult(circles);
 			 
 			List<Graphic> vipCircles=new ArrayList<Graphic>();
 			for(Graphic circle:circles)
 				if(circle.isVIPGraphic())
 					vipCircles.add(circle);
-			panel3.refreshResult(vipCircles);
+			panel4.refreshResult(vipCircles);
+			
+			panel5.refreshResult(circles);
 		}
 	}
 

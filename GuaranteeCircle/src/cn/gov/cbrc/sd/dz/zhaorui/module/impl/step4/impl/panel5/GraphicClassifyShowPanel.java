@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel5;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -24,18 +24,21 @@ import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3.Panel3;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.model.GraphicClassify;
 
-public class RegionGraphicShowPanel extends JPanel {
+public class GraphicClassifyShowPanel extends JPanel {
 
 	private JScrollPane tablePane;
 	private JButton exp2ExcelButton;
 	
-	RegionGraphicShowTable table;
 
-	Panel2 panel2;
+	GrpahicClassifyShowTable table;
 
-	public RegionGraphicShowPanel(Panel2 panel2) {
+	Panel5 panel4;
+
+	public GraphicClassifyShowPanel(Panel5 panel4) {
 		super(new BorderLayout());
 
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -47,7 +50,7 @@ public class RegionGraphicShowPanel extends JPanel {
 		tablePane.setAutoscrolls(true);
 		this.add(tablePane,BorderLayout.CENTER);
 		
-		this.panel2 = panel2;
+		this.panel4 = panel4;
 		addListeners();
 	}
 
@@ -93,8 +96,8 @@ public class RegionGraphicShowPanel extends JPanel {
 					if (row >= 0) {
 						row = table.convertRowIndexToModel(row);
 						List<Graphic> circles = (List<Graphic>) table.getModel().getValueAt(row, col);
-						if (panel2 != null) {
-							Panel1 bottomPanel = panel2.getBottomPanel();
+						if (panel4 != null) {
+							Panel1 bottomPanel = panel4.getBottomPanel();
 							if (bottomPanel != null)
 								bottomPanel.refreshResult(circles);
 						}
@@ -105,13 +108,13 @@ public class RegionGraphicShowPanel extends JPanel {
 	}
 
 	/**
-	 * 根据传入的 “地区->担保圈列表”构造“结果展示表”
+	 * 根据传入的 “分类->担保圈列表”构造“结果展示表”
 	 * 
-	 * @param regionGraphicsMap
+	 * @param classifyGraphicsMap
 	 */
-	public void refreshData(Map<Region, List<Graphic>> regionGraphicsMap) {
-		RegionGraphicShowTableModel model = new RegionGraphicShowTableModel(regionGraphicsMap);
-		table = new RegionGraphicShowTable(model);
+	public void refreshData(Map<GraphicClassify, List<Graphic>> classifyGraphicsMap) {
+		GraphicClassifyShowTableModel model = new GraphicClassifyShowTableModel(classifyGraphicsMap);
+		table = new GrpahicClassifyShowTable(model);
 		table.setRowSorter(new TableRowSorter<TableModel>(model));
 		addTableListener();
 		tablePane.setViewportView(table);

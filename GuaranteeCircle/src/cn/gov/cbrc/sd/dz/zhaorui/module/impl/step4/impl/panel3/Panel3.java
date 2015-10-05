@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel4;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3;
 
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
@@ -14,32 +14,34 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
-import cn.gov.cbrc.sd.dz.zhaorui.model.GraphicClassify;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel5.Panel5;
 
 /**
- * 风险分类识别结果展示页面
+ * 区域分布识别结果展示页面
  * 
  * @author zr
  *
  */
-public class Panel4 extends JSplitPane {
+public class Panel3 extends JSplitPane {
 
 	private StringBuilder resultContent;
 
 	private JTextArea resultTextarea;
 
-	private GraphicClassifyShowPanel rgsPanel;
+	private RegionGraphicShowPanel rgsPanel;
 	
 	private Panel1 bottomPanel;
 
-	public Panel4() {
+	public Panel3() {
 		super(JSplitPane.VERTICAL_SPLIT, true);
+		
 		JPanel topPanel = new JPanel(new BorderLayout());
 		resultTextarea = new JTextArea();
 		resultTextarea.setLineWrap(true);
 		resultTextarea.setEditable(false);
-		rgsPanel = new GraphicClassifyShowPanel(this);
+		rgsPanel = new RegionGraphicShowPanel(this);
 		topPanel.add(resultTextarea, BorderLayout.NORTH);
 		topPanel.add(rgsPanel, BorderLayout.CENTER);
 		this.setTopComponent(topPanel);
@@ -50,42 +52,41 @@ public class Panel4 extends JSplitPane {
 		this.setAutoscrolls(true);
 		this.setOneTouchExpandable(true);
 		this.setDividerSize(10);
-
+		
 		addListeners();
-		
-		
 	}
 
 	private void addListeners() {
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
-				Panel4.this.setDividerLocation(0.5);
+				Panel3.this.setDividerLocation(0.5);
 			}
 			public void componentShown(ComponentEvent e) {
-				Panel4.this.setDividerLocation(0.5);
+				Panel3.this.setDividerLocation(0.5);
 			}
 		});
+		
 	}
 
 	public void refreshResult(List<Graphic> circles) {
-		Map<GraphicClassify, List<Graphic>> classifyGraphicsMap = new HashMap<GraphicClassify, List<Graphic>>();
+		Map<Region, List<Graphic>> regionGraphicsMap = new HashMap<Region, List<Graphic>>();
 		for (Graphic g : circles) {
-			GraphicClassify classify = g.getRiskClassify();
-			if (classifyGraphicsMap.containsKey(classify))
-				classifyGraphicsMap.get(classify).add(g);
+			Region region = g.getRegion();
+			if (regionGraphicsMap.containsKey(region))
+				regionGraphicsMap.get(region).add(g);
 			else {
 				List<Graphic> list = new ArrayList<Graphic>();
 				list.add(g);
-				classifyGraphicsMap.put(classify, list);
+				regionGraphicsMap.put(region, list);
 			}
 		}
 		// 刷新“识别结果”说明文字
 		resultContent = new StringBuilder();
 		resultContent.append("本次识别出的").append(circles.size()).append("个担保圈共分布在")
-				.append(classifyGraphicsMap.keySet().size()).append("个类别。");
+				.append(regionGraphicsMap.keySet().size()).append("个地区。");
 		resultTextarea.setText(resultContent.toString());
 		// 刷新“识别结果”表格面板
-		rgsPanel.refreshData(classifyGraphicsMap);
+		rgsPanel.refreshData(regionGraphicsMap);
 	}
 
 	public Panel1 getBottomPanel() {

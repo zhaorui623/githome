@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
-import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.RegionGraphicShowPanel;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3.RegionGraphicShowPanel;
 
 public class Panel1 extends JPanel {
 	private StringBuilder resultContent;

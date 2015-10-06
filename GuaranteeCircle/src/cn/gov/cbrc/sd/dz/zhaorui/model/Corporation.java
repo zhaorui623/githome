@@ -290,12 +290,23 @@ public class Corporation {
 	}
 
 	private double caculateWeight() {
-		double weight=0;
-		double value1=this.getZhengChangLoanBalance()*0.01;
-		double value2=this.getGuanZhuLoanBalance()*0.02;
-		double value3=this.getCiJiLoanBalance()*0.25;
-		double value4=this.getKeYiLoanBalance()*0.50;
-		double value5=this.getSunShiLoanBalance()*1.00;
+		double weight;//权重
+		
+		double coefficient1=0.01;//正常类贷款，权重系数为1%
+		double coefficient2=0.02;//关注类贷款，权重系数为2%
+		double coefficient3=0.25;//次级类贷款，权重系数为25%
+		double coefficient4=0.50;//可疑类贷款，权重系数为50%
+		double coefficient5=1.00;//损失类贷款，权重系数为100%
+		
+		if(this.getBuLiangLoanBalance()>0){//如果有不良贷款的话，则将正常、关注类的系数调整为25%;
+			coefficient1=0.25;
+			coefficient2=0.25;
+		}
+		double value1=this.getZhengChangLoanBalance()*coefficient1;
+		double value2=this.getGuanZhuLoanBalance()*coefficient2;
+		double value3=this.getCiJiLoanBalance()*coefficient3;
+		double value4=this.getKeYiLoanBalance()*coefficient4;
+		double value5=this.getSunShiLoanBalance()*coefficient5;
 		weight=value1+value2+value3+value4+value5;
 		return weight;
 	}

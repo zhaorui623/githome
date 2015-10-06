@@ -29,7 +29,7 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 
 	private Vector<Vector> rowData;
 	private Vector<String> columnNames;
-	private String[] COLUMN_NAMES = { "担保圈名称", "所属地区", "风险分类", "涉及企业个数", "担保圈贷款余额", "关注类贷款余额", "不良贷款余额", "逾期90以内贷款余额",
+	private String[] COLUMN_NAMES = { "担保圈名称", "所属地区", "风险分类", "涉及企业个数", "担保圈贷款余额",  "不良贷款余额","不良率(%)","关注类贷款余额", "逾期90以内贷款余额",
 			"表外业务余额" };
 
 	public GraphicListShowTableModel(List<Graphic> circles) {
@@ -53,8 +53,9 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 				row.add(circle.getRiskClassify().getName());// 风险分类
 			row.add(circle.vertexSet().size());// 涉及企业个数
 			row.add(Math.round(GraphicToolkit.getLoanBalance(circle)));// 贷款余额
-			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(circle)));// 关注类贷款余额
 			row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(circle)));// 不良贷款余额
+			row.add(GraphicToolkit.getBuLiangLv(circle));// 不良率
+			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(circle)));// 关注类贷款余额
 			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(circle)));// 逾期90以内贷款余额
 			row.add(Math.round(GraphicToolkit.getOffBalance(circle)));// 表外业务余额
 			row.add(circle);// 最后一列放Graphic对象本身，该列不会被显示

@@ -216,36 +216,11 @@ public class Step3Module extends Module {
 		}
 	}
 
-//	/**
-//	 * 第4步：高关联度担保圈合并
-//	 */
-//	public void procedure4() {
-//		int count=0;
-//		Iterator<Graphic> iterator = graphics.iterator();
-//		while (iterator.hasNext()) {
-//			Graphic g = iterator.next();
-//			if (g.isVIPGraphic()) // 只处理自动生成的担保圈，根据重点风险客户形成的担保圈不处理
-//				continue;
-//			Corporation heaviestCorp = g.getHeaviestCoreVertex();// 取图中最重的节点,并且该节点是核心节点(广义的核心节点，不一定是该图的核心节点)
-//			if(heaviestCorp==null)//说明该图中没有核心节点（可能是独立担保圈），就不处理了
-//				continue;
-//			if (g.getCoreCorps().contains(heaviestCorp)) // 如果最重的节点本身就是该图的核心企业，就不用处理了
-//				continue;
-//			else {// 否则，寻找以最重节点为核心企业的担保圈，把当前图合并进该担保圈中
-//				Graphic graphic = GraphicToolkit.getCircleWhosCoreCorpis(heaviestCorp, graphics);
-//				if (graphic != null) {
-//					graphic.absorb(g);
-//					iterator.remove();
-//					count++;
-//				}
-//			}
-//		}
-//		InfoPane.getInstance().info("合并了"+count+"个担保圈");
-//	}
 	/**
 	 * 第4步：高关联度担保圈合并
+	 * @throws Exception 
 	 */
-	public void procedure4() {
+	public void procedure4() throws Exception {
 		SimpleDirectedWeightedGraph<Graphic,DefaultWeightedEdge> mergeTree=new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);;
 		int count=0;
 		Iterator<Graphic> iterator = graphics.iterator();
@@ -268,6 +243,7 @@ public class Step3Module extends Module {
 				}
 			}
 		}
+		GraphicToolkit.toFile(mergeTree,new File(System.getProperty("user.dir") + "\\担保圈图\\"));
 		//合并担保圈，并将被合并的担保圈从graphics中移除
 		Set<Graphic> graphicToRemove=GraphicToolkit.mergeCircles(mergeTree);
 		graphics.removeAll(graphicToRemove);

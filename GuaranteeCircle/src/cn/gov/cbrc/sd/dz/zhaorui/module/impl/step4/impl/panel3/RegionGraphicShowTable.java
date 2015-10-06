@@ -29,7 +29,7 @@ class RegionGraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 	private Vector<Vector> rowData;
 	private Vector<String> columnNames;
 	private String[] COLUMN_NAMES = { "地区名称", "担保圈个数", "涉及企业个数",
-			"担保圈贷款余额" ,"关注类贷款余额","不良贷款余额","逾期90以内贷款余额","表外业务余额"  };
+			"担保圈贷款余额" ,"不良贷款余额","不良率(%)","关注类贷款余额","逾期90以内贷款余额","表外业务余额"  };
 
 	public RegionGraphicShowTableModel(Map<Region, List<Graphic>> regionGraphicsMap) {
 		super();
@@ -47,8 +47,9 @@ class RegionGraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 			row.add(graphics.size());// 担保圈个数
 			row.add(GraphicToolkit.getVertexSet(graphics).size());// 涉及企业个数
 			row.add(Math.round(GraphicToolkit.getLoanBalance(graphics)));// 贷款余额
-			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(graphics)));// 关注类贷款余额
 			row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(graphics)));// 不良贷款余额
+			row.add(GraphicToolkit.getBuLiangLv(graphics));// 不良率
+			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(graphics)));// 关注类贷款余额
 			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(graphics)));// 逾期90以内贷款余额
 			row.add(Math.round(GraphicToolkit.getOffBalance(graphics)));// 表外业务余额
 			row.add(graphics);//最后一列用来存本区域所有担保圈列表，不在前台展示该列

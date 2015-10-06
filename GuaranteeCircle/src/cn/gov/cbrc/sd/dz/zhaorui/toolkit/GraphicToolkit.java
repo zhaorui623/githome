@@ -1,11 +1,16 @@
 package cn.gov.cbrc.sd.dz.zhaorui.toolkit;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.poi.ss.util.NumberToTextConverter;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -178,43 +183,88 @@ public class GraphicToolkit {
 		return null;
 	}
 
-	
 	public static Set<Graphic> mergeCircles(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
-		Set<Graphic> leafs=new HashSet<Graphic>();
-		
-		while(true){
-			//寻找非根叶子节点（即入度为0，出度不为0的节点）
-			Graphic leaf=getLeaf(mergeTree);
-			
-			if(leaf!=null){//如果树中还有非根叶子节点，则合并之
-				DefaultWeightedEdge edge=mergeTree.edgesOf(leaf).iterator().next();
-				Graphic parent=mergeTree.getEdgeTarget(edge);//叶子节点的父节点
-				parent.absorb(leaf,true);//将叶子节点并入父节点(只保留叶子节点的核心企业）
-				leafs.add(leaf);//记录一下
-				mergeTree.removeVertex(leaf);//将叶子节点移除
-			}else//否则，说明只剩根节点了，合并完成了，结束循环
-				break;			
+		Set<Graphic> leafs = new HashSet<Graphic>();
+
+		while (true) {
+			// 寻找非根叶子节点（即入度为0，出度不为0的节点）
+			Graphic leaf = getLeaf(mergeTree);
+
+			if (leaf != null) {// 如果树中还有非根叶子节点，则合并之
+				DefaultWeightedEdge edge = mergeTree.edgesOf(leaf).iterator().next();
+				Graphic parent = mergeTree.getEdgeTarget(edge);// 叶子节点的父节点
+				parent.absorb(leaf, true);// 将叶子节点并入父节点(只保留叶子节点的核心企业）
+				leafs.add(leaf);// 记录一下
+				mergeTree.removeVertex(leaf);// 将叶子节点移除
+			} else// 否则，说明只剩根节点了，合并完成了，结束循环
+				break;
 		}
-		
-		return leafs;		
+
+		return leafs;
 	}
 
 	private static Graphic getLeaf(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
-		Set<Graphic> vs=mergeTree.vertexSet();
-		for(Graphic v:vs){
-			int inDegree=mergeTree.inDegreeOf(v);
-			int outDegree=mergeTree.outDegreeOf(v);
-			if(inDegree==0&&outDegree!=0)
+		Set<Graphic> vs = mergeTree.vertexSet();
+		for (Graphic v : vs) {
+			int inDegree = mergeTree.inDegreeOf(v);
+			int outDegree = mergeTree.outDegreeOf(v);
+			if (inDegree == 0 && outDegree != 0)
 				return v;
 		}
 		return null;
 	}
 
 	public static Set<Corporation> getCorpsSet(List<Graphic> circles) {
-		Set<Corporation> set=new HashSet<Corporation>();
-		for(Graphic g:circles)
+		Set<Corporation> set = new HashSet<Corporation>();
+		for (Graphic g : circles)
 			set.addAll(g.vertexSet());
 		return set;
 	}
 
+	public static double getBuLiangLv(Graphic circle) {
+		List<Graphic> graphics = new ArrayList<Graphic>();
+		graphics.add(circle);
+		return getBuLiangLv(graphics);
+	}
+
+	public static double getBuLiangLv(List<Graphic> graphics) {
+		double loanBalance = getLoanBalance(graphics);
+		if (loanBalance == 0)
+			return 0;
+		double buliangLoanBalance = getBuLiangLoanBalance(graphics);
+
+		return StringToolkit.formatDouble(buliangLoanBalance * 1.0 / loanBalance * 100.0);
+	}
+
+	public static String toDotCode(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> graphic) {
+		StringBuffer code = new StringBuffer();
+		Set<DefaultWeightedEdge> edges = graphic.edgeSet();
+
+		code.append("digraph show{node[fontname=\"宋体\"];\n");
+
+		for (DefaultWeightedEdge e : edges)
+			code.append(graphic.getEdgeSource(e).getName() + "->" + graphic.getEdgeTarget(e).getName() + ";\n");
+		code.append("}");
+
+		return code.toString();
+	}
+	public static File toFile(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> graphic,File dir) throws Exception {
+		String s = toDotCode(graphic);
+		dir = new File(dir.getAbsolutePath());
+		if (dir.exists() == false)
+			dir.mkdir();
+		File file = new File(dir.getAbsolutePath() + "\\合并路线图.dot");
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+		writer.append(s);
+		writer.close();
+
+		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
+		String cmd2 = "cmd /c dot " + file.getAbsolutePath() + " -Tsvg -o "
+				+ file.getAbsolutePath().replace(".dot", ".svg");
+		String cmd3 = cmd2.replaceAll("svg", "png");
+		Runtime.getRuntime().exec(cmd1 + "&&"  + cmd2 + "&&"  + cmd3).waitFor();
+		;
+
+		return file;
+	}
 }

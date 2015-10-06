@@ -23,6 +23,7 @@ public class Graphic {
 	private GraphicClassify riskClassify;
 	private boolean VIPTag;
 	private Set<Corporation> coreCorps = new HashSet<Corporation>();
+	private Set<Corporation> secondCoreCorps = new HashSet<Corporation>();//合并其他圈得到的核心节点放到这里面
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -405,7 +406,6 @@ public class Graphic {
 	}
 
 	public boolean containsVertexWithName(String corpName) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -465,11 +465,25 @@ public class Graphic {
 	 * @param onlyCoreCorp
 	 */
 	public void absorb(Graphic graphic, boolean onlyCoreCorp) {
-		Set<Corporation> vs = onlyCoreCorp?graphic.getCoreCorps():graphic.vertexSet();
-		for (Corporation v : vs)
+		Set<Corporation> coreCorps=new HashSet<Corporation>();
+		coreCorps.addAll(graphic.getCoreCorps());
+		coreCorps.addAll(graphic.getSecondCoreCorps());
+		Set<Corporation> vs = onlyCoreCorp?coreCorps:graphic.vertexSet();
+		for (Corporation v : vs){
 			this.addVertex(v);
+			this.addSecondCoreCorps(v);
+		}
 		this.addEdgesFrom(graphic);
 		
+	}
+
+	private Collection<Corporation> getSecondCoreCorps() {
+
+		return this.secondCoreCorps;
+	}
+
+	private void addSecondCoreCorps(Corporation v) {
+		this.secondCoreCorps.add(v);
 	}
 
 	public Corporation getHeaviestVertex() {

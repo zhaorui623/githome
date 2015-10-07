@@ -23,7 +23,7 @@ public class TableToolkit {
 	public static void filt(JTable myTable, String filterText, int... rowsToFilt) {
 		RowFilter<TableModel, Object> rf = null;
 		try {
-			rf = RowFilter.regexFilter(filterText, 0);
+			rf = RowFilter.regexFilter(filterText, rowsToFilt);
 		} catch (java.util.regex.PatternSyntaxException e) {
 			return;
 		}
@@ -58,6 +58,9 @@ public class TableToolkit {
 			return;
 		if (excelFile == null)
 			throw new Exception("未指定导出文件！");
+		File dir=excelFile.getParentFile();
+		if(dir.exists()==false)
+			dir.mkdirs();
 		// if (excelFile.exists())
 		// if (excelFile.delete() == false)
 		// throw new Exception(excelFile.getAbsolutePath() + "正在被使用中！");

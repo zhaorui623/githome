@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -143,5 +144,10 @@ public class GraphicListShowPanel extends JPanel {
 			}
 
 		});
+	}
+
+	public JTable getTable() {
+
+		return table;
 	}
 }

@@ -20,6 +20,7 @@ public class GrpahicClassifyShowTable extends JTable {
 	public GrpahicClassifyShowTable(GraphicClassifyShowTableModel model) {
 		super(model);
 		this.model = model;
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		TableToolkit.fitTableColumns(this);
 	}
 

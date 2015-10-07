@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
@@ -91,5 +92,9 @@ public class Panel3 extends JSplitPane {
 
 	public Panel1 getBottomPanel() {
 		return bottomPanel;
+	}
+
+	public JTable getTable() {
+		return rgsPanel.getTable();
 	}
 }

@@ -17,12 +17,15 @@ public class TableFilterPanel extends JPanel {
 	private JTextField filterTextField;
 	
 	private int[] rowsToFilt;
-
 	public TableFilterPanel(JTable table,int... rowsToFilt){
+		this("查找：", table, rowsToFilt);
+	}
+
+	public TableFilterPanel(String filterLabelText,JTable table,int... rowsToFilt){
 		super();
 		this.table=table;
 		this.rowsToFilt=rowsToFilt;
-		this.add(new JLabel("查找："));
+		this.add(new JLabel(filterLabelText));
 		filterTextField=new JTextField(20);
 		this.add(filterTextField);
 		addListeners();

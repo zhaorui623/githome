@@ -1,4 +1,4 @@
-package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1;
+package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel0;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -14,21 +14,21 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel3.RegionGraphicShowPanel;
 
-public class Panel1 extends JPanel {
+public class Panel0 extends JPanel {
 	private StringBuilder resultContent;
 	
 	private JTextArea resultTextarea;
 	
-	private GraphicListShowPanel gsPanel;
+	private TotalResultShowPanel dataPanel;
 
-	public Panel1() {
+	public Panel0() {
 		super(new BorderLayout());
 		resultTextarea=new JTextArea();
 		resultTextarea.setLineWrap(true);
 		resultTextarea.setEditable(false);
-		gsPanel=new GraphicListShowPanel();
+		dataPanel=new TotalResultShowPanel();
 		this.add(resultTextarea,BorderLayout.NORTH);
-		this.add(gsPanel, BorderLayout.CENTER);
+		this.add(dataPanel, BorderLayout.CENTER);
 	}
 
 	public void refreshResult(List<Graphic> circles) {
@@ -37,11 +37,11 @@ public class Panel1 extends JPanel {
 		resultContent.append("本次识别出的").append(circles.size()).append("个担保圈。");
 		resultTextarea.setText(resultContent.toString());
 		//刷新“识别结果”表格面板
-		gsPanel.refreshData(circles);
+		dataPanel.refreshData(circles);
 	}
 
 	public JTable getTable() {
 		// TODO Auto-generated method stub
-		return gsPanel.getTable();
+		return dataPanel.getTable();
 	}
 }

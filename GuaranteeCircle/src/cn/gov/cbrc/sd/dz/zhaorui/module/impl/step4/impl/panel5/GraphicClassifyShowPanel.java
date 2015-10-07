@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -119,6 +120,11 @@ public class GraphicClassifyShowPanel extends JPanel {
 		addTableListener();
 		tablePane.setViewportView(table);
 		tablePane.repaint();
+	}
+
+	public JTable getTable() {
+
+		return table;
 	}
 
 }

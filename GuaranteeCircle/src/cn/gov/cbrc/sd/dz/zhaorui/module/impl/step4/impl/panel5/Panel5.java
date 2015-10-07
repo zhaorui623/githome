@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
@@ -29,7 +30,7 @@ public class Panel5 extends JSplitPane {
 
 	private JTextArea resultTextarea;
 
-	private GraphicClassifyShowPanel rgsPanel;
+	private GraphicClassifyShowPanel gcPanel;
 	
 	private Panel1 bottomPanel;
 
@@ -39,9 +40,9 @@ public class Panel5 extends JSplitPane {
 		resultTextarea = new JTextArea();
 		resultTextarea.setLineWrap(true);
 		resultTextarea.setEditable(false);
-		rgsPanel = new GraphicClassifyShowPanel(this);
+		gcPanel = new GraphicClassifyShowPanel(this);
 		topPanel.add(resultTextarea, BorderLayout.NORTH);
-		topPanel.add(rgsPanel, BorderLayout.CENTER);
+		topPanel.add(gcPanel, BorderLayout.CENTER);
 		this.setTopComponent(topPanel);
 		
 		bottomPanel=new Panel1();
@@ -85,10 +86,15 @@ public class Panel5 extends JSplitPane {
 				.append(classifyGraphicsMap.keySet().size()).append("个类别。");
 		resultTextarea.setText(resultContent.toString());
 		// 刷新“识别结果”表格面板
-		rgsPanel.refreshData(classifyGraphicsMap);
+		gcPanel.refreshData(classifyGraphicsMap);
 	}
 
 	public Panel1 getBottomPanel() {
 		return bottomPanel;
+	}
+
+	public JTable getTable() {
+
+		return gcPanel.getTable();
 	}
 }

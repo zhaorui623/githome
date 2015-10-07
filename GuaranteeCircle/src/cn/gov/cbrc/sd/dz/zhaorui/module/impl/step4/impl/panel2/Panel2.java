@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.util.Set;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
@@ -35,5 +36,10 @@ public class Panel2 extends JPanel {
 		resultTextarea.setText(resultContent.toString());
 		//刷新“识别结果”表格面板
 		dataPanel.refreshData(corps);
+	}
+
+	public JTable getTable() {
+		
+		return dataPanel.getTable();
 	}
 }

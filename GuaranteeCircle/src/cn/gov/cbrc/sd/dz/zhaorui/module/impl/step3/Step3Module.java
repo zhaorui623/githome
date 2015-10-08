@@ -144,7 +144,7 @@ public class Step3Module extends Module {
 		}.start();
 		while (queue.isEmpty() == false) {
 			Graphic g = queue.take();
-			g.toFile(new File(System.getProperty("user.dir") + "\\担保圈图\\"));
+			g.toFile(new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
 		}
 	}
 
@@ -243,7 +243,7 @@ public class Step3Module extends Module {
 				}
 			}
 		}
-		GraphicToolkit.toFile(mergeTree,new File(System.getProperty("user.dir") + "\\担保圈图\\"));
+		GraphicToolkit.toFile(mergeTree,new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
 		//合并担保圈，并将被合并的担保圈从graphics中移除
 		Set<Graphic> graphicToRemove=GraphicToolkit.mergeCircles(mergeTree);
 		graphics.removeAll(graphicToRemove);

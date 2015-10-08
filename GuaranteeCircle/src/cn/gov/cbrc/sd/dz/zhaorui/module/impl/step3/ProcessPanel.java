@@ -7,9 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.lang.reflect.InvocationTargetException;
+import java.io.File;
+import java.util.Date;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -17,9 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
-import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
-import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TimeToolkit;
 
 @SuppressWarnings("serial")
 public class ProcessPanel extends JPanel {
@@ -86,6 +85,8 @@ public class ProcessPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					String timeStamp=TimeToolkit.formater3.format(new Date());
+					GC.setOutputDir(new File(System.getProperty("user.dir")+"\\"+timeStamp+"\\"));
 					clearProcedueStatusMark();
 					shown = false;
 					final ProcedureThread thread = new ProcedureThread();

@@ -13,6 +13,7 @@ public class TimeToolkit {
 
 	public static final SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final SimpleDateFormat formater2=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static final SimpleDateFormat formater3=new SimpleDateFormat("yyyyMMddHHmmss");
 
 	public static String getRandomTime(){
 		Calendar calendar=Calendar.getInstance();
@@ -53,10 +54,10 @@ public class TimeToolkit {
 		}
 		return date;
 	}	
-	public static String format(Date date){
+	public static String format3(Date date){
 		String str="";
 		if(date!=null)
-			str=formater.format(date);
+			str=formater3.format(date);
 		return str;
 	}
 }

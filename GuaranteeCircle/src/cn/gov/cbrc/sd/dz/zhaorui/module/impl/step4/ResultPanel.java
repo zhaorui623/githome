@@ -124,7 +124,7 @@ public class ResultPanel extends JPanel {
 	protected boolean doExport() throws Exception {
 		if(this.circles==null||this.circles.size()==0)
 			return false;
-		String dir=System.getProperty("user.dir")+"\\报表\\";
+		String dir=GC.getOutputDir().getAbsolutePath()+"\\报表\\";
 		TableToolkit.exp2Excel(panel0.getTable(), new File(dir+TOTALTABLE+".xls"));
 		TableToolkit.exp2Excel(panel1.getTable(), new File(dir+TABLE1+".xls"));
 		TableToolkit.exp2Excel(panel2.getTable(), new File(dir+TABLE2+".xls"));

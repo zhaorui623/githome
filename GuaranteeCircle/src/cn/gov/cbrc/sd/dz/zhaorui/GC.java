@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.dnd.DragSource;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -106,9 +107,9 @@ public class GC {
 	 */
 	private static GC gc = null;
 
-
 	public static ImageIcon icon;
 
+	private static File outputDir;
 
 	/**
 	 * creating the bundle
@@ -204,9 +205,9 @@ public class GC {
 		// 右部主工作区
 		workPane = new WorkPane();
 		desktop.add(workPane, "Center");
-		
-		//下部日志区
-		desktop.add(InfoPane.getInstance(),"South");
+
+		// 下部日志区
+		desktop.add(InfoPane.getInstance(), "South");
 
 		Module.createModules(this);
 
@@ -340,4 +341,15 @@ public class GC {
 		return menubar;
 	}
 
+	public static void setOutputDir(File dir) {
+		if (dir != null) {
+			if (dir.exists() == false)
+				dir.mkdir();
+			outputDir = dir;
+		}
+	}
+
+	public static File getOutputDir() {
+		return outputDir;
+	}
 }

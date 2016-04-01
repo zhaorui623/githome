@@ -50,6 +50,8 @@ public class ConfigPanel extends JPanel {
 	
 	private GCClassifyConfigPanel gcClassifyConfigPanel;
 
+	private RegionDistributAnalysisConfigPanel rdaConfigPanel;
+	
 	private JButton apply;
 
 	private List<JRadioButton> algorithmChooseRadioButtons;
@@ -99,11 +101,18 @@ public class ConfigPanel extends JPanel {
 		p2.add(gcClassifyConfigPanel);
 		centerPanel.add(p2, BorderLayout.CENTER);
 
+		// “区域分布”分析模块配置面板
+		JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		p3.setBorder(BorderFactory.createTitledBorder("“区域分布”分析模块配置"));
+		rdaConfigPanel=new RegionDistributAnalysisConfigPanel();
+		p3.add(rdaConfigPanel);
+		centerPanel.add(p3, BorderLayout.SOUTH);
+		
+		this.add(centerPanel, BorderLayout.CENTER);
+		
 		// 应用按钮
 		apply = new JButton("应用");
-		centerPanel.add(apply, BorderLayout.SOUTH);
-
-		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(apply, BorderLayout.SOUTH);
 	}
 	Map<JRadioButton,HugeCircleSplitAlgorithm> map;
 	private List<JRadioButton> createAlgorithmChooseRadioButtons() throws Exception {
@@ -198,6 +207,7 @@ public class ConfigPanel extends JPanel {
 							try {
 								palgm.updateConfigCache();
 								gcClassify.updateConfigCache();
+								rdaConfigPanel.updateConfigCache();
 								boolean sucess=Config.saveDoc();
 								
 								if(sucess){

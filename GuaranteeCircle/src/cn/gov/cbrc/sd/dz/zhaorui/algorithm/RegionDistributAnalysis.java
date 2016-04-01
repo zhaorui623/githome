@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.model.RegionLevel;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 
 /**
@@ -24,10 +25,13 @@ import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 public class RegionDistributAnalysis {
 
 	private Map<String, Region> regionsMap;
+	
+	private RegionLevel regoinLevel;
 
 	public RegionDistributAnalysis() throws Exception {
 		super();
 		this.regionsMap = Config.getRegionsMap();
+		this.regoinLevel=Config.getRegionLevel();
 	}
 
 
@@ -41,6 +45,9 @@ public class RegionDistributAnalysis {
 			if ("null".equals(regionCode) || regionCode == null)
 				continue;
 			double loanBalance = v.getDoubleValue(Corporation.LOAN_BALANCE_COL);
+			regionCode=regionCode.substring(0, this.regoinLevel.getLength());
+			while(regionCode.length()<6)
+				regionCode=regionCode+"0";
 			Region vRegion = Config.getRegionByCode(regionCode);
 			if (countMap.containsKey(vRegion) == false) {
 				countMap.put(vRegion, 1);

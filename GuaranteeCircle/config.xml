@@ -61,6 +61,11 @@
 			</algorithm>
 		</algorithms>
 	</huge-circle-split-algorithm>
+	<!-- 担保圈合并 -->
+	<circle-merge>
+		<!-- 小圈合并入大圈时，是只并入核心企业(true)，还是并入所有企业(false) -->
+		<only-absorb-corecorp value="false"/>
+	</circle-merge>
 	<!-- 担保圈分类标准 -->
 	<circle-classify id="26">
 		<!-- 规模维度 -->
@@ -72,7 +77,10 @@
 		<!-- 风险维度 -->
 		<risk-dimension id="31"/>
 	</circle-classify>
+	<!-- 计算区域分布时细化到哪个级别，2-省，4-市，6-县 -->
+	<region-level id="33" value="市"/>
 	<region-list>
+		<region code="370000" name="山东省"/>
 		<region code="370100" name="济南市"/>
 		<region code="370101" name="济南市市辖区"/>
 		<region code="370102" name="济南市历下区"/>

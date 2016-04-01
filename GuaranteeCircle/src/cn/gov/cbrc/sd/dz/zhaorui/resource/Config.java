@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.model.RegionLevel;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
 public class Config {
@@ -33,6 +34,7 @@ public class Config {
 
 	public static final String SPLIT_ALGORITHM_TAG = "algorithm";
 	public static final String REGION_TAG = "region";
+	public static final String REGION_LEVEL_TAG = "region-level";
 	public static final String LOAN_BALANCE_FLOOR_ATTRIBUTE = "loan-balance-floor";
 	public static final String LOAN_BALANCE_CEILLING_ATTRIBUTE = "loan-balance-ceiling";
 	public static final String LEVEL_ATTRIBUTE = "level";
@@ -124,5 +126,14 @@ public class Config {
 		if (region == null)
 			region = new Region("省外地区", code);
 		return region;
+	}
+
+	public static RegionLevel getRegionLevel() throws Exception {
+
+		Document doc = Config.getDoc();
+		Element regionLevelElement =(Element) doc.getElementsByTagName(Config.REGION_LEVEL_TAG).item(0);
+		String regionLevel=regionLevelElement.getAttribute("value");
+		return RegionLevel.valueOf(regionLevel);
+		
 	}
 }

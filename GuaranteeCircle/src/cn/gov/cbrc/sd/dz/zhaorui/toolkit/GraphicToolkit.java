@@ -13,9 +13,11 @@ import java.util.Set;
 import org.apache.poi.ss.util.NumberToTextConverter;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.w3c.dom.Element;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 
 public class GraphicToolkit {
 
@@ -183,7 +185,15 @@ public class GraphicToolkit {
 		return null;
 	}
 
+
 	public static Set<Graphic> mergeCircles(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
+		boolean onlyAbsorbCorecorp=true;
+		try {
+			onlyAbsorbCorecorp = Boolean.getBoolean(
+					((Element) Config.getDoc().getElementsByTagName("only-absorb-corecorp").item(0)).getAttribute("value"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Set<Graphic> leafs = new HashSet<Graphic>();
 
 		while (true) {
@@ -193,7 +203,7 @@ public class GraphicToolkit {
 			if (leaf != null) {// 如果树中还有非根叶子节点，则合并之
 				DefaultWeightedEdge edge = mergeTree.edgesOf(leaf).iterator().next();
 				Graphic parent = mergeTree.getEdgeTarget(edge);// 叶子节点的父节点
-				parent.absorb(leaf, true);// 将叶子节点并入父节点(只保留叶子节点的核心企业）
+				parent.absorb(leaf, onlyAbsorbCorecorp);// 将叶子节点并入父节点
 				leafs.add(leaf);// 记录一下
 				mergeTree.removeVertex(leaf);// 将叶子节点移除
 			} else// 否则，说明只剩根节点了，合并完成了，结束循环
@@ -248,7 +258,9 @@ public class GraphicToolkit {
 
 		return code.toString();
 	}
-	public static File toFile(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> graphic,File dir) throws Exception {
+
+	public static File toFile(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> graphic, File dir)
+			throws Exception {
 		String s = toDotCode(graphic);
 		dir = new File(dir.getAbsolutePath());
 		if (dir.exists() == false)
@@ -260,9 +272,9 @@ public class GraphicToolkit {
 
 		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
 		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -Tsvg -o \""
-				+ file.getAbsolutePath().replace(".dot", ".svg")+"\"";
+				+ file.getAbsolutePath().replace(".dot", ".svg") + "\"";
 		String cmd3 = cmd2.replaceAll("svg", "png");
-		Runtime.getRuntime().exec(cmd1 + "&&"  + cmd2 + "&&"  + cmd3).waitFor();
+		Runtime.getRuntime().exec(cmd1 + "&&" + cmd2 + "&&" + cmd3).waitFor();
 		;
 
 		return file;

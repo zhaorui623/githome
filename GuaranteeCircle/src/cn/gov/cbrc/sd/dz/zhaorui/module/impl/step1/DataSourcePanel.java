@@ -141,12 +141,14 @@ public class DataSourcePanel extends JPanel {
 						JOptionPane.showMessageDialog(DataSourcePanel.this, successMessage, "提示",
 								JOptionPane.INFORMATION_MESSAGE);
 						InfoPane.getInstance().info(successMessage);
-					}
+					}else
+						return;
 				} catch (Exception exp) {
 					JOptionPane.showMessageDialog(DataSourcePanel.this, failedMessage, "错误", JOptionPane.ERROR_MESSAGE);
 					InfoPane.getInstance().error(failedMessage);
 					InfoPane.getInstance().error(exp.toString());
 					exp.printStackTrace();
+					return;
 				}
 				Module.gotoStep(2);
 			}

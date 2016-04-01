@@ -35,8 +35,8 @@ public class Step1Module extends Module {
 	private List<VIPCustomerGroup> vipCustomerGroupList;
 
 	private Graphic totalGraphic;
-	
-	private boolean skipVIPCustomerAnlys=true;;
+
+	private boolean skipVIPCustomerAnlys = true;;
 
 	public Step1Module(String id, GC gc, String name, String iconName) {
 		super(id, gc, name, iconName);
@@ -100,10 +100,10 @@ public class Step1Module extends Module {
 				vipCustomerBook = Workbook.getWorkbook(vipCustomerFile);
 				// 生成重点客户列表
 				initVIPCustomerGroupList(totalGraphic, vipCustomerBook);// 存储在Step1Module.vipCustomerGroupList里
-				skipVIPCustomerAnlys=false;
-			}else{
+				skipVIPCustomerAnlys = false;
+			} else {
 				InfoPane.getInstance().info("“重点客户清单”未选择或文件不存在，将不进行重点客户维度分析");
-				skipVIPCustomerAnlys=true;
+				skipVIPCustomerAnlys = true;
 			}
 			return true;
 		}
@@ -138,27 +138,29 @@ public class Step1Module extends Module {
 	private void initGraphic(Map<String, Corporation> corps, Workbook book) {
 		totalGraphic = new Graphic();
 		// 解析“担保关系表”
-		Sheet sheet = book.getSheet(0);
-		int rowCount = sheet.getRows();
-		for (int row = 1; row < rowCount; row++) {
-			String corpName1 = sheet.getCell(0, row).getContents();// 担保人
-			String corpName2 = sheet.getCell(1, row).getContents();// 借款人
-			Corporation corp1 = corps.get(corpName1);// 担保人
-			if (corp1 == null) {// 说明担保人未在银行办理过信贷类业务
-				// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
-				corp1 = Corporation.createDefaultCorp(corpName1);
-				corps.put(corp1.getName(), corp1);
+		Sheet[] sheets = book.getSheets();
+		for (Sheet sheet : sheets) {
+			int rowCount = sheet.getRows();
+			for (int row = 1; row < rowCount; row++) {
+				String corpName1 = sheet.getCell(0, row).getContents();// 担保人
+				String corpName2 = sheet.getCell(1, row).getContents();// 借款人
+				Corporation corp1 = corps.get(corpName1);// 担保人
+				if (corp1 == null) {// 说明担保人未在银行办理过信贷类业务
+					// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
+					corp1 = Corporation.createDefaultCorp(corpName1);
+					corps.put(corp1.getName(), corp1);
+				}
+				Corporation corp2 = corps.get(corpName2);// 借款人
+				if (corp2 == null) {// 说明借款人未在银行办理过信贷类业务----------------很奇怪，查查原因---------------
+					// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
+					corp2 = Corporation.createDefaultCorp(corpName2);
+					corps.put(corp2.getName(), corp2);
+				}
+				// 将担保人和借款人以及其担保关系加入总图中
+				totalGraphic.addVertex(corp1);
+				totalGraphic.addVertex(corp2);
+				totalGraphic.addEdge(corp1, corp2);
 			}
-			Corporation corp2 = corps.get(corpName2);// 借款人
-			if (corp2 == null) {// 说明借款人未在银行办理过信贷类业务----------------很奇怪，查查原因---------------
-				// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
-				corp2 = Corporation.createDefaultCorp(corpName2);
-				corps.put(corp2.getName(), corp2);
-			}
-			// 将担保人和借款人以及其担保关系加入总图中
-			totalGraphic.addVertex(corp1);
-			totalGraphic.addVertex(corp2);
-			totalGraphic.addEdge(corp1, corp2);
 		}
 		totalGraphic.printBasicInfo();
 	}
@@ -167,22 +169,27 @@ public class Step1Module extends Module {
 		Map<String, Corporation> corps = new HashMap<String, Corporation>();
 		// 解析“客户信息表”
 		Sheet sheet = book.getSheet(0);
-		int rowCount = sheet.getRows(), colCount = sheet.getColumns();
+		int colCount = sheet.getColumns();
 		String colNames[] = new String[colCount];
 		// 取所有列名，形成数组
 		for (int col = 0; col < colCount; col++)
 			colNames[col] = sheet.getCell(col, 0).getContents();
+
 		// 取每一行数据，组成Corporation对象，加入到corps里
-		for (int row = 1; row < rowCount; row++) {
-			Corporation corp;
-			LinkedHashMap<String, Object> datas = new LinkedHashMap<String, Object>();
-			for (int col = 0; col < colCount; col++) {
-				String key = colNames[col];
-				Object value = sheet.getCell(col, row).getContents();
-				datas.put(key, value);
+		Sheet sheets[] = book.getSheets();
+		for (int s = 0; s < sheets.length; s++) {
+			int rowCount = sheets[s].getRows();
+			for (int row = 1; row < rowCount; row++) {
+				Corporation corp;
+				LinkedHashMap<String, Object> datas = new LinkedHashMap<String, Object>();
+				for (int col = 0; col < colCount; col++) {
+					String key = colNames[col];
+					Object value = sheets[s].getCell(col, row).getContents();
+					datas.put(key, value);
+				}
+				corp = new Corporation(datas);
+				corps.put(corp.getName(), corp);
 			}
-			corp = new Corporation(datas);
-			corps.put(corp.getName(), corp);
 		}
 		return corps;
 	}

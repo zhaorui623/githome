@@ -259,8 +259,8 @@ public class GraphicToolkit {
 		writer.close();
 
 		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
-		String cmd2 = "cmd /c dot " + file.getAbsolutePath() + " -Tsvg -o "
-				+ file.getAbsolutePath().replace(".dot", ".svg");
+		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -Tsvg -o \""
+				+ file.getAbsolutePath().replace(".dot", ".svg")+"\"";
 		String cmd3 = cmd2.replaceAll("svg", "png");
 		Runtime.getRuntime().exec(cmd1 + "&&"  + cmd2 + "&&"  + cmd3).waitFor();
 		;

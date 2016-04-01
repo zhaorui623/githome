@@ -45,7 +45,7 @@ public class Config {
 		if (doc == null) {
 			DocumentBuilderFactory docBuildFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuild = docBuildFactory.newDocumentBuilder();
-			doc = docBuild.parse(CONFIG_FILE.getAbsolutePath());
+			doc = docBuild.parse(CONFIG_FILE);
 		}
 		return doc;
 	}

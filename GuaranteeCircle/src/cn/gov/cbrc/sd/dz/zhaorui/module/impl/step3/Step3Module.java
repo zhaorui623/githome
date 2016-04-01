@@ -64,7 +64,7 @@ public class Step3Module extends Module {
 		return this.gc;
 	}
 
-	private Procedure procedure = new Procedure();
+	public Procedure procedure = new Procedure();
 
 	/**
 	 * 第1步：识别独立连通子图

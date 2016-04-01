@@ -6,18 +6,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
+import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
+
 public class Graphic {
 
 	private SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge> g;
+	private Map<String,Corporation> corpIndexing;//公司索引，方便查找
 	private String name;
 	private Region region;
 	private GraphicClassify riskClassify;
@@ -170,8 +176,8 @@ public class Graphic {
 		writer.close();
 
 		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
-		String cmd2 = "cmd /c dot " + file.getAbsolutePath() + " -Tsvg -o "
-				+ file.getAbsolutePath().replace(".dot", ".svg");
+		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -Tsvg -o \""
+				+ file.getAbsolutePath().replace(".dot", ".svg")+"\"";
 		String cmd3 = cmd2.replaceAll("svg", "png");
 		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();
 		;
@@ -367,24 +373,32 @@ public class Graphic {
 			graphicClone.addVertex(vertexClone);
 		}
 		Set<DefaultWeightedEdge> edgeSet = this.edgeSet();
+		double i=0,f=edgeSet.size();
 		for (DefaultWeightedEdge edge : edgeSet) {
 			Corporation corpSource = this.getEdgeSource(edge);
 			Corporation corpTarget = this.getEdgeTarget(edge);
 			Corporation corpSourceClone = graphicClone.getVertexByName(corpSource.getName());
 			Corporation corpTargetClone = graphicClone.getVertexByName(corpTarget.getName());
 			graphicClone.addEdge(corpSourceClone, corpTargetClone);
+			i++;
+//			System.out.println(i+"/"+f+"="+Math.round(i/f/2*100));
+
+			((Step3Module)(GC.getGalileo().getModule("3"))).procedure.setPercent((int) i/f/2*100);
 		}
 
 		return graphicClone;
 	}
 
+	
 	public Corporation getVertexByName(String name) {
-		Set<Corporation> vertexs = this.vertexSet();
-		for (Corporation v : vertexs) {
-			if (v.getName().equals(name))
-				return v;
+		if(corpIndexing==null){
+			corpIndexing=new HashMap<String, Corporation>();
+			Set<Corporation> vertexs = this.vertexSet();
+			for (Corporation v : vertexs) 
+				corpIndexing.put(v.getName(), v);
+			
 		}
-		return null;
+		return corpIndexing.get(name);
 	}
 
 	public void setRegion(Region region) {

@@ -100,6 +100,7 @@ public abstract class HugeCircleSplitAlgorithm {
 		// 当graphic里尚有节点时，就一直做这个循环，这是为了拆出所有连通子图
 		int i=0;
 		while (graphic.vertexSet().isEmpty() == false) {
+			System.out.println("尚有"+graphic.vertexSet().size()+"个节点");
 			// 用来存放待会拆出来的一个子图
 			Graphic g = new Graphic();
 			// 随便取一个节点,加到一个队列里，并同时加到子图g中
@@ -136,6 +137,7 @@ public abstract class HugeCircleSplitAlgorithm {
 				graphic.removeVertex(corp);
 			}
 			g.setName("独立担保圈"+(++i)+"-"+g.getHeaviestVertex().getName()+"圈");
+			System.out.println(g.getName()+"[节点数"+g.vertexSet().size()+"]");
 			result.add(g);
 		}
 

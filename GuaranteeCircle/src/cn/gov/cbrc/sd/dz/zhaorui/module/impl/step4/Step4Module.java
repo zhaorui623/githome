@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 
@@ -28,7 +29,9 @@ public class Step4Module extends Module {
 			tabs.add(resultPanel);
 		}		
 		try {
+			InfoPane.getInstance().info("正在整理报表数据……");
 			resultPanel.refreshResult(((Step3Module)gc.getModule("3")).getResultGraphics());
+			InfoPane.getInstance().info("报表数据整理完成");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

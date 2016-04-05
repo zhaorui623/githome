@@ -49,6 +49,12 @@ public class InfoPane extends JScrollPane{
 
 		textarea.setCaretPosition(textarea.getDocument().getLength());
 	}
+	public void warn(String warn) {
+		textarea.append(java.util.Calendar.getInstance().getTime().toLocaleString()+" WARN:"+warn+"\n");
+		logger.info(warn);
+
+		textarea.setCaretPosition(textarea.getDocument().getLength());
+	}
 
 	public void showMessage(String content) {		
 		textarea.setText(content);

@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Loop;
@@ -22,6 +23,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Unit;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;;
 
 public class PickAlgorithm extends HugeCircleSplitAlgorithm {
@@ -93,11 +95,9 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		pick_corecorp_loop = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "25").getAttribute("selected"));
 	}
 
-
 	public PickAlgorithm() {
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public int getGuarantor_floor_value() {
 		return guarantor_floor_value;
@@ -340,11 +340,11 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		Set<Corporation> coreCorps = getCoreCorps(graphic);
 		// 对每个核心企业，拉取其担保圈
 		int i = 0;
+		Procedure p = ((Step3Module) (GC.getGalileo().getModule("3"))).getProcedure();
 		for (Corporation corp : coreCorps) {
 			i++;
 			Graphic g = pickCircleOf(graphic, corp);
-			((Step3Module) (GC.getGalileo().getModule("3"))).getProcedure()
-					.setPercent((int) (i * 1.0 / coreCorps.size() * 100));
+			p.setPercent((int) (i * 1.0 / coreCorps.size() * 100));
 			gs.add(g);
 		}
 		return gs;
@@ -362,8 +362,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
 		// 用来存放待会拉出来的担保圈图
 		Graphic g = new Graphic();
-//		g.setNameSuffix(core.getName());
-		g.setName(core.getName()+"圈");
+		// g.setNameSuffix(core.getName());
+		g.setName(core.getName() + "圈");
 		// 先把核心节点放到g里
 		g.addVertex(core);
 		g.addCoreCorps(core);
@@ -532,7 +532,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 				corp.setCore(false);
 		}
 
-		System.out.println("核心企业数为：" + getCoreCorpCount(graphic));
+		InfoPane.getInstance().info("超大圈内识别出的核心企业数为：" + getCoreCorpCount(graphic));
 	}
 
 	/**

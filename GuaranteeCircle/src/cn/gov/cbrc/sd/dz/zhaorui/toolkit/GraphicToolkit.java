@@ -185,12 +185,10 @@ public class GraphicToolkit {
 		return null;
 	}
 
-
 	public static Set<Graphic> mergeCircles(SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree) {
-		boolean onlyAbsorbCorecorp=true;
+		boolean onlyAbsorbCorecorp = true;
 		try {
-			onlyAbsorbCorecorp = Boolean.getBoolean(
-					((Element) Config.getDoc().getElementsByTagName("only-absorb-corecorp").item(0)).getAttribute("value"));
+			onlyAbsorbCorecorp = Boolean.getBoolean(XMLToolkit.getElementById(Config.getDoc(),"34").getAttribute("value"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

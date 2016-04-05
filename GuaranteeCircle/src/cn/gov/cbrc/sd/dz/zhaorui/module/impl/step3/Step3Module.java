@@ -221,7 +221,7 @@ public class Step3Module extends Module {
 	 * @throws Exception 
 	 */
 	public void procedure4() throws Exception {
-		SimpleDirectedWeightedGraph<Graphic,DefaultWeightedEdge> mergeTree=new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);;
+		final SimpleDirectedWeightedGraph<Graphic,DefaultWeightedEdge> mergeTree=new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);;
 		int count=0;
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
@@ -243,7 +243,16 @@ public class Step3Module extends Module {
 				}
 			}
 		}
-		GraphicToolkit.toFile(mergeTree,new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
+		Thread t=new Thread() {
+			public void run() {
+				try {
+					GraphicToolkit.toFile(mergeTree,new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
+				} catch (Exception e) {
+					InfoPane.getInstance().warn("担保圈合并路线图生成失败");
+				}
+			}
+		};
+		t.start();
 		//合并担保圈，并将被合并的担保圈从graphics中移除
 		Set<Graphic> graphicToRemove=GraphicToolkit.mergeCircles(mergeTree);
 		graphics.removeAll(graphicToRemove);

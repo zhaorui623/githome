@@ -64,7 +64,7 @@
 	<!-- 担保圈合并 -->
 	<circle-merge>
 		<!-- 小圈合并入大圈时，是只并入核心企业(true)，还是并入所有企业(false) -->
-		<only-absorb-corecorp value="false"/>
+		<only-absorb-corecorp id="34" value="false"/>
 	</circle-merge>
 	<!-- 担保圈分类标准 -->
 	<circle-classify id="26">

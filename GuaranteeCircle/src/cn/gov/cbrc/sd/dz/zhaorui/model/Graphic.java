@@ -18,18 +18,21 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GCLogger;
 
 public class Graphic {
 
 	private SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge> g;
-	private Map<String,Corporation> corpIndexing;//公司索引，方便查找
+	private Map<String, Corporation> corpIndexing;// 公司索引，方便查找
 	private String name;
 	private Region region;
 	private GraphicClassify riskClassify;
 	private boolean VIPTag;
 	private Set<Corporation> coreCorps = new HashSet<Corporation>();
-	private Set<Corporation> secondCoreCorps = new HashSet<Corporation>();//合并其他圈得到的核心节点放到这里面
+	private Set<Corporation> secondCoreCorps = new HashSet<Corporation>();// 合并其他圈得到的核心节点放到这里面
 
 	public Graphic() {
 		g = new SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge>(DefaultWeightedEdge.class);
@@ -136,10 +139,7 @@ public class Graphic {
 	}
 
 	public void printBasicInfo() {
-		System.out.print("总图基本信息[");
-		System.out.print("节点总数=" + g.vertexSet().size() + "\t");
-		System.out.print("边总数=" + g.edgeSet().size());
-		System.out.print("]\n");
+		InfoPane.getInstance().info("总图基本信息[节点总数=" + g.vertexSet().size() + "\t边总数=" + g.edgeSet().size() + "]");
 	}
 
 	public String toDotCode() {
@@ -177,7 +177,7 @@ public class Graphic {
 
 		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
 		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -Tsvg -o \""
-				+ file.getAbsolutePath().replace(".dot", ".svg")+"\"";
+				+ file.getAbsolutePath().replace(".dot", ".svg") + "\"";
 		String cmd3 = cmd2.replaceAll("svg", "png");
 		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();
 		;
@@ -349,9 +349,9 @@ public class Graphic {
 	public void addEdgesFrom(Graphic graphic) {
 		Set<Corporation> vs = this.vertexSet();
 		for (Corporation v : vs) {
-			if (graphic.vertexSet().contains(v)) {//如果这个节点是本图和graphic的共同节点
-				Set<DefaultWeightedEdge> edges = graphic.edgesOf(v);//则取graphic中该节点的所有边
-				for (DefaultWeightedEdge edge : edges) {//尝试将每条边接入到本图中
+			if (graphic.vertexSet().contains(v)) {// 如果这个节点是本图和graphic的共同节点
+				Set<DefaultWeightedEdge> edges = graphic.edgesOf(v);// 则取graphic中该节点的所有边
+				for (DefaultWeightedEdge edge : edges) {// 尝试将每条边接入到本图中
 					try {
 						this.addEdge(graphic.getEdgeSource(edge), graphic.getEdgeTarget(edge));
 					} catch (IllegalArgumentException e) {
@@ -373,7 +373,8 @@ public class Graphic {
 			graphicClone.addVertex(vertexClone);
 		}
 		Set<DefaultWeightedEdge> edgeSet = this.edgeSet();
-		double i=0,f=edgeSet.size();
+		double i = 0, f = edgeSet.size();
+		Procedure p=((Step3Module) (GC.getGalileo().getModule("3"))).procedure;
 		for (DefaultWeightedEdge edge : edgeSet) {
 			Corporation corpSource = this.getEdgeSource(edge);
 			Corporation corpTarget = this.getEdgeTarget(edge);
@@ -381,22 +382,19 @@ public class Graphic {
 			Corporation corpTargetClone = graphicClone.getVertexByName(corpTarget.getName());
 			graphicClone.addEdge(corpSourceClone, corpTargetClone);
 			i++;
-//			System.out.println(i+"/"+f+"="+Math.round(i/f/2*100));
-
-			((Step3Module)(GC.getGalileo().getModule("3"))).procedure.setPercent((int) i/f/2*100);
+			p.setPercent((int) (i / f / 2 * 100));
 		}
 
 		return graphicClone;
 	}
 
-	
 	public Corporation getVertexByName(String name) {
-		if(corpIndexing==null){
-			corpIndexing=new HashMap<String, Corporation>();
+		if (corpIndexing == null) {
+			corpIndexing = new HashMap<String, Corporation>();
 			Set<Corporation> vertexs = this.vertexSet();
-			for (Corporation v : vertexs) 
+			for (Corporation v : vertexs)
 				corpIndexing.put(v.getName(), v);
-			
+
 		}
 		return corpIndexing.get(name);
 	}
@@ -470,25 +468,26 @@ public class Graphic {
 	 * @param graphic
 	 */
 	public void absorb(Graphic graphic) {
-		absorb(graphic,false);
+		absorb(graphic, false);
 	}
 
 	/**
 	 * 将graphic合并进本图中，如果onlyCoreCorp为true，则只并入graphic的核心节点及其相关边
+	 * 
 	 * @param graphic
 	 * @param onlyCoreCorp
 	 */
 	public void absorb(Graphic graphic, boolean onlyCoreCorp) {
-		Set<Corporation> coreCorps=new HashSet<Corporation>();
+		Set<Corporation> coreCorps = new HashSet<Corporation>();
 		coreCorps.addAll(graphic.getCoreCorps());
 		coreCorps.addAll(graphic.getSecondCoreCorps());
-		Set<Corporation> vs = onlyCoreCorp?coreCorps:graphic.vertexSet();
-		for (Corporation v : vs){
+		Set<Corporation> vs = onlyCoreCorp ? coreCorps : graphic.vertexSet();
+		for (Corporation v : vs) {
 			this.addVertex(v);
 			this.addSecondCoreCorps(v);
 		}
 		this.addEdgesFrom(graphic);
-		
+
 	}
 
 	private Collection<Corporation> getSecondCoreCorps() {
@@ -501,7 +500,7 @@ public class Graphic {
 	}
 
 	public Corporation getHeaviestVertex() {
-		
+
 		return getHeaviestVertex(false);
 	}
 }

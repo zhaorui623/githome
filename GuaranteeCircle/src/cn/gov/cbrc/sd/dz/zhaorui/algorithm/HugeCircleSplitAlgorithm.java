@@ -10,11 +10,14 @@ import javax.swing.JPanel;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 
 public abstract class HugeCircleSplitAlgorithm {
 
@@ -95,12 +98,15 @@ public abstract class HugeCircleSplitAlgorithm {
 	 * @return
 	 */
 	public static List<Graphic> split(Graphic graphic) {
+		Procedure p=((Step3Module) (GC.getGalileo().getModule("3"))).procedure;
+		int total=graphic.vertexSet().size();
 		// 用来存放待会拆出来的所有子图
 		List<Graphic> result = new ArrayList<Graphic>();
 		// 当graphic里尚有节点时，就一直做这个循环，这是为了拆出所有连通子图
 		int i=0;
 		while (graphic.vertexSet().isEmpty() == false) {
-			System.out.println("尚有"+graphic.vertexSet().size()+"个节点");
+//			System.out.println("尚有"+graphic.vertexSet().size()+"个节点");
+			p.setPercent((int) (((1-graphic.vertexSet().size()*1.0 / total)/2.0+0.5) * 100));
 			// 用来存放待会拆出来的一个子图
 			Graphic g = new Graphic();
 			// 随便取一个节点,加到一个队列里，并同时加到子图g中
@@ -137,7 +143,7 @@ public abstract class HugeCircleSplitAlgorithm {
 				graphic.removeVertex(corp);
 			}
 			g.setName("独立担保圈"+(++i)+"-"+g.getHeaviestVertex().getName()+"圈");
-			System.out.println(g.getName()+"[节点数"+g.vertexSet().size()+"]");
+//			System.out.println(g.getName()+"[节点数"+g.vertexSet().size()+"]");
 			result.add(g);
 		}
 
@@ -162,8 +168,9 @@ public abstract class HugeCircleSplitAlgorithm {
 	public List<Graphic> splitHugeCircle(Graphic graphic) throws Exception {
 		List<Graphic> gs = new ArrayList<Graphic>();
 		if (isHugeCircle(graphic)) {// 如果确实是超大圈，则拆分之
+			InfoPane.getInstance().info("发现超大圈[节点数："+graphic.vertexSet().size()+"\t边数："+graphic.edgeSet().size()+"]");
 			List<Graphic> sonGrpahicsOfHugeCircle=splitHugeCircleImpl(graphic);
-			InfoPane.getInstance().info("发现超大圈，它最终被拆分成了"+sonGrpahicsOfHugeCircle.size()+"个子圈");
+			InfoPane.getInstance().info("超大圈最终被拆分成了"+sonGrpahicsOfHugeCircle.size()+"个子圈");
 			gs.addAll(sonGrpahicsOfHugeCircle);
 			
 		} else {// 如果不是超大圈，则直接加入到结果集合中

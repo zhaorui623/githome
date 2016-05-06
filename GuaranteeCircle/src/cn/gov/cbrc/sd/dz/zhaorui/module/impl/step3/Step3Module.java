@@ -218,18 +218,21 @@ public class Step3Module extends Module {
 
 	/**
 	 * 第4步：高关联度担保圈合并
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	public void procedure4() throws Exception {
-		final SimpleDirectedWeightedGraph<Graphic,DefaultWeightedEdge> mergeTree=new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);;
-		int count=0;
+		final SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree = new SimpleDirectedWeightedGraph(
+				DefaultWeightedEdge.class);
+		;
+		int count = 0;
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
 			Graphic g = iterator.next();
 			if (g.isVIPGraphic()) // 只处理自动生成的担保圈，根据重点风险客户形成的担保圈不处理
 				continue;
 			Corporation heaviestCorp = g.getHeaviestCoreVertex();// 取图中最重的节点,并且该节点是核心节点(广义的核心节点，不一定是该图的核心节点)
-			if(heaviestCorp==null)//说明该图中没有核心节点（可能是独立担保圈），就不处理了
+			if (heaviestCorp == null) // 说明该图中没有核心节点（可能是独立担保圈），就不处理了
 				continue;
 			if (g.getCoreCorps().contains(heaviestCorp)) // 如果最重的节点本身就是该图的核心企业，就不用处理了
 				continue;
@@ -243,21 +246,23 @@ public class Step3Module extends Module {
 				}
 			}
 		}
-		Thread t=new Thread() {
-			public void run() {
-				try {
-					GraphicToolkit.toFile(mergeTree,new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
-				} catch (Exception e) {
-					InfoPane.getInstance().warn("担保圈合并路线图生成失败");
-				}
-			}
-		};
-		t.start();
-		//合并担保圈，并将被合并的担保圈从graphics中移除
-		Set<Graphic> graphicToRemove=GraphicToolkit.mergeCircles(mergeTree);
+		// Thread t=new Thread() {
+		// public void run() {
+		// try {
+		// System.out.println("生成合并路线图");
+		GraphicToolkit.toFile(mergeTree, new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"));
+		// System.out.println("生成合并路线图成功");
+		// } catch (Exception e) {
+		// InfoPane.getInstance().warn("担保圈合并路线图生成失败");
+		// }
+		// }
+		// };
+		// t.start();
+		// 合并担保圈，并将被合并的担保圈从graphics中移除
+		Set<Graphic> graphicToRemove = GraphicToolkit.mergeCircles(mergeTree);
 		graphics.removeAll(graphicToRemove);
-		
-		InfoPane.getInstance().info("合并了"+count+"个担保圈");
+
+		InfoPane.getInstance().info("合并了" + count + "个担保圈");
 	}
 
 	public Procedure getProcedure() {

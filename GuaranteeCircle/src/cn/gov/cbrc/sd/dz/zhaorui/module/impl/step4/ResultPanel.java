@@ -14,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel0.Panel0;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel1.Panel1;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.impl.panel2.Panel2;
@@ -85,6 +87,7 @@ public class ResultPanel extends JPanel {
 	public void refreshResult(List<Graphic> circles) throws Exception {
 		this.circles=circles;
 		if (circles != null) {	
+			InfoPane.getInstance().info("正在整理报表数据……");
 			panel0.refreshResult(circles);
 			
 			panel1.refreshResult(circles);
@@ -100,6 +103,7 @@ public class ResultPanel extends JPanel {
 			panel4.refreshResult(vipCircles);
 			
 			panel5.refreshResult(circles);
+			InfoPane.getInstance().info("报表数据整理完成");
 		}
 	}
 

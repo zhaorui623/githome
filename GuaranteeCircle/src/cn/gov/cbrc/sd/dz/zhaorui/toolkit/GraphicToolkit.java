@@ -251,7 +251,7 @@ public class GraphicToolkit {
 		code.append("digraph show{node[fontname=\"宋体\"];\n");
 
 		for (DefaultWeightedEdge e : edges)
-			code.append(graphic.getEdgeSource(e).getName() + "->" + graphic.getEdgeTarget(e).getName() + ";\n");
+			code.append("\""+graphic.getEdgeSource(e).getName() + "\"->\"" + graphic.getEdgeTarget(e).getName() + "\";\n");
 		code.append("}");
 
 		return code.toString();

@@ -159,7 +159,7 @@ public class Graphic {
 
 		}
 		for (DefaultWeightedEdge e : edges)
-			code.append(this.getEdgeSource(e).getName() + "->" + this.getEdgeTarget(e).getName() + ";\n");
+			code.append("\""+this.getEdgeSource(e).getName() + "\"->\"" + this.getEdgeTarget(e).getName() + "\";\n");
 		code.append("}");
 
 		return code.toString();

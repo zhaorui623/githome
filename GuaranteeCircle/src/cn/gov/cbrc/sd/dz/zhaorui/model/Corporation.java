@@ -16,7 +16,7 @@ public class Corporation {
 	public static final String ORG_CODE_COL = "组织机构代码";
 	public static final String LOAN_BANK_COUNT_COL = "贷款银行家数";
 	public static final String ADDRESS_COL = "注册地址";
-	public static final String REGION_CODE_COL = "行政区划代码";	
+	public static final String REGION_CODE_COL = "行政区划代码";
 	public static final String LOAN_BALANCE_COL = "贷款余额";
 	public static final String BULIANG_LOAN_BALANCE_COL = "不良贷款";
 	public static final String BULIANG_LV_BALANCE_COL = "不良贷款率";
@@ -42,8 +42,10 @@ public class Corporation {
 	public static final String OFF_BALANCE_CN_COL = "承诺";
 	public static final String OFF_BALANCE_XYFXRZYH_COL = "信用风险仍在银行的销售与购买协议";
 	public static final String OFF_BALANCE_JRYSP_COL = "金融衍生品";
-	
-	private double weight=-1.0;
+	public static final String GUARANTEED_LOAN_BALANCE_COL = "被担保贷款余额";
+	public static final String OUT_GUARANTEED_LOAN_BALANCE_COL = "对外担保贷款对应的贷款余额";
+
+	private double weight = -1.0;
 
 	// 字段名->字段值
 	private LinkedHashMap<String, Object> datas;
@@ -53,7 +55,8 @@ public class Corporation {
 	// 摘取法中，用来标记该企业是否为核心企业
 	private boolean isCore = false;
 	private int level;
-
+	
+	
 	public Corporation(LinkedHashMap<String, Object> datas) {
 		this.datas = datas;
 	}
@@ -124,10 +127,12 @@ public class Corporation {
 	// return null;
 	// }
 
-	public static Corporation createDefaultCorp(String corpName) {
+	public static Corporation createDefaultCorp(String orgCode, String corpName) {
 
 		LinkedHashMap<String, Object> datas = new LinkedHashMap<String, Object>();
 		datas.put(NAME_COL, corpName);
+		datas.put(ORG_CODE_COL, orgCode);
+
 		Corporation corp = new Corporation(datas);
 		return corp;
 	}
@@ -191,21 +196,21 @@ public class Corporation {
 	}
 
 	public double getOffBalance() {
-		double value1=this.getDoubleValue(Corporation.OFF_BALANCE_CD_COL);
-		double value2=this.getDoubleValue(Corporation.OFF_BALANCE_XYZ_COL);
-		double value3=this.getDoubleValue(Corporation.OFF_BALANCE_BH_COL);
-		double value4=this.getDoubleValue(Corporation.OFF_BALANCE_WTDK_COL);
-		double value5=this.getDoubleValue(Corporation.OFF_BALANCE_WTTZ_COL);
-		double value6=this.getDoubleValue(Corporation.OFF_BALANCE_CN_COL);
-		double value7=this.getDoubleValue(Corporation.OFF_BALANCE_XYFXRZYH_COL);
-		double value8=this.getDoubleValue(Corporation.OFF_BALANCE_JRYSP_COL);
-		double result=value1+value2+value3+value4+value5+value6+value7+value8;
+		double value1 = this.getDoubleValue(Corporation.OFF_BALANCE_CD_COL);
+		double value2 = this.getDoubleValue(Corporation.OFF_BALANCE_XYZ_COL);
+		double value3 = this.getDoubleValue(Corporation.OFF_BALANCE_BH_COL);
+		double value4 = this.getDoubleValue(Corporation.OFF_BALANCE_WTDK_COL);
+		double value5 = this.getDoubleValue(Corporation.OFF_BALANCE_WTTZ_COL);
+		double value6 = this.getDoubleValue(Corporation.OFF_BALANCE_CN_COL);
+		double value7 = this.getDoubleValue(Corporation.OFF_BALANCE_XYFXRZYH_COL);
+		double value8 = this.getDoubleValue(Corporation.OFF_BALANCE_JRYSP_COL);
+		double result = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8;
 		return result;
 	}
 
 	public String getOrgCode() {
-		String orgCode=this.getStringValue(ORG_CODE_COL);
-		if("null".equals(orgCode)||orgCode==null)
+		String orgCode = this.getStringValue(ORG_CODE_COL).toUpperCase();
+		if ("null".equals(orgCode) || orgCode == null)
 			return "未知";
 		else
 			return orgCode;
@@ -270,45 +275,68 @@ public class Corporation {
 	public double getGuQuanBalance() {
 		return this.getDoubleValue(GUQUAN_COL);
 	}
-	public int hashCode(){
+
+	public int hashCode() {
 		return String.valueOf(getName()).hashCode();
 	}
-	public boolean equals(Object o){
-		if(o instanceof Corporation&&o!=null){
-			Corporation corp=(Corporation)o;
-			if(String.valueOf(corp.getName()).equals(String.valueOf(this.getName())))
-				return true;
+
+	public boolean equals(Object o) {
+		if (o instanceof Corporation && o != null) {
+			Corporation corp = (Corporation) o;
+			if (corp.getOrgCode().length() == 0 || this.getOrgCode().length() == 0 || corp.getOrgCode().equals("NULL")
+					|| this.getOrgCode().equals("NULL"))
+				return String.valueOf(corp.getName()).equals(String.valueOf(this.getName()));
+			else
+				return corp.getOrgCode().equals(this.getOrgCode());
+
 		}
 		return false;
 	}
 
 	public double getWeight() {
-		if(weight==-1.0){
-			weight=caculateWeight();
+		if (weight == -1.0) {
+			weight = caculateWeight();
 		}
 		return weight;
 	}
 
 	private double caculateWeight() {
-		double weight;//权重
-		
-		double coefficient1=0.01;//正常类贷款，权重系数为1%
-		double coefficient2=0.02;//关注类贷款，权重系数为2%
-		double coefficient3=0.25;//次级类贷款，权重系数为25%
-		double coefficient4=0.50;//可疑类贷款，权重系数为50%
-		double coefficient5=1.00;//损失类贷款，权重系数为100%
-		
-		if(this.getBuLiangLoanBalance()>0){//如果有不良贷款的话，则将正常、关注类的系数调整为25%;
-			coefficient1=0.25;
-			coefficient2=0.25;
+		double weight;// 权重
+
+		double coefficient1 = 0.01;// 正常类贷款，权重系数为1%
+		double coefficient2 = 0.02;// 关注类贷款，权重系数为2%
+		double coefficient3 = 0.25;// 次级类贷款，权重系数为25%
+		double coefficient4 = 0.50;// 可疑类贷款，权重系数为50%
+		double coefficient5 = 1.00;// 损失类贷款，权重系数为100%
+
+		if (this.getBuLiangLoanBalance() > 0) {// 如果有不良贷款的话，则将正常、关注类的系数调整为25%;
+			coefficient1 = 0.25;
+			coefficient2 = 0.25;
 		}
-		double value1=this.getZhengChangLoanBalance()*coefficient1;
-		double value2=this.getGuanZhuLoanBalance()*coefficient2;
-		double value3=this.getCiJiLoanBalance()*coefficient3;
-		double value4=this.getKeYiLoanBalance()*coefficient4;
-		double value5=this.getSunShiLoanBalance()*coefficient5;
-		weight=value1+value2+value3+value4+value5;
+		double value1 = this.getZhengChangLoanBalance() * coefficient1;
+		double value2 = this.getGuanZhuLoanBalance() * coefficient2;
+		double value3 = this.getCiJiLoanBalance() * coefficient3;
+		double value4 = this.getKeYiLoanBalance() * coefficient4;
+		double value5 = this.getSunShiLoanBalance() * coefficient5;
+		weight = value1 + value2 + value3 + value4 + value5;
 		return weight;
+	}
+
+	public double getGuaranteedLoanBalance() {
+		return this.getDoubleValue(GUARANTEED_LOAN_BALANCE_COL);
+	}
+
+	public double getOutGuaranteedLoanBalance() {
+		return this.getDoubleValue(OUT_GUARANTEED_LOAN_BALANCE_COL);
+	}
+
+	public void setGuaranteedLoanBalance(double guaranteedLoanBalance) {
+		this.datas.put(GUARANTEED_LOAN_BALANCE_COL, guaranteedLoanBalance);
+	}
+
+	public void setOutGuaranteedLoanBalance(double outGuaranteedLoanBalance) {
+		this.datas.put(OUT_GUARANTEED_LOAN_BALANCE_COL, outGuaranteedLoanBalance);
+		
 	}
 
 }

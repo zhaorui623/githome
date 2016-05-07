@@ -43,6 +43,17 @@ public class GraphicToolkit {
 		}
 		return loanBalance;
 	}
+	public static double getGuaranteedLoanBalance(List<Graphic> graphics) {
+		double guaranteedLoanBalance = 0;
+		if (graphics != null) {
+			Set<Corporation> corps = getVertexSet(graphics);
+			for (Corporation corp : corps) {
+				double value = corp.getDoubleValue(Corporation.GUARANTEED_LOAN_BALANCE_COL);
+				guaranteedLoanBalance = guaranteedLoanBalance + value;
+			}
+		}
+		return guaranteedLoanBalance;
+	}
 
 	public static double getGuanZhuLoanBalance(List<Graphic> graphics) {
 		double result = 0;
@@ -104,6 +115,11 @@ public class GraphicToolkit {
 		List<Graphic> list = new ArrayList<Graphic>();
 		list.add(circle);
 		return getLoanBalance(list);
+	}
+	public static double getGuaranteedLoanBalance(Graphic circle) {
+		List<Graphic> list = new ArrayList<Graphic>();
+		list.add(circle);
+		return getGuaranteedLoanBalance(list);
 	}
 
 	public static double getGuanZhuLoanBalance(Graphic circle) {
@@ -277,4 +293,5 @@ public class GraphicToolkit {
 
 		return file;
 	}
+
 }

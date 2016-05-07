@@ -29,12 +29,16 @@ import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;;
 public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private int condition_number_value;
 	private int guarantor_floor_value;
+	private int out_guarantor_floor_value;
 	private boolean guarantor_floor_selected;
+	private boolean out_guarantor_floor_selected;
 	private int mutually_guaranteed_floor_value;
 	private boolean mutually_guaranteed_floor_selected;
 	private int guaranteed_loan_balance_floor_value;
+	private int out_guaranteed_loan_balance_floor_value;
 	private Unit guaranteed_loan_balance_floor_unit;
-	private boolean guaranteed_loan_balance_floor_selected;
+	private Unit out_guaranteed_loan_balance_floor_unit;
+	// private boolean guaranteed_loan_balance_floor_selected;
 	private int loan_balance_floor_value;
 	private Unit loan_balance_floor_unit;
 	private boolean loan_balance_floor_selected;
@@ -60,7 +64,10 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		condition_number_value = Integer.parseInt(XMLToolkit.getElementById(doc, "32").getAttribute("value"));
 
 		guarantor_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "6").getAttribute("value"));
+		out_guarantor_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "34").getAttribute("value"));
 		guarantor_floor_selected = Boolean.parseBoolean(XMLToolkit.getElementById(doc, "6").getAttribute("selected"));
+		out_guarantor_floor_selected = Boolean
+				.parseBoolean(XMLToolkit.getElementById(doc, "34").getAttribute("selected"));
 
 		mutually_guaranteed_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "7").getAttribute("value"));
 		mutually_guaranteed_floor_selected = Boolean
@@ -68,9 +75,14 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 
 		guaranteed_loan_balance_floor_value = Integer
 				.parseInt(XMLToolkit.getElementById(doc, "8").getAttribute("value"));
+		out_guaranteed_loan_balance_floor_value = Integer
+				.parseInt(XMLToolkit.getElementById(doc, "35").getAttribute("value"));
 		guaranteed_loan_balance_floor_unit = Unit.valueOf(XMLToolkit.getElementById(doc, "8").getAttribute("unit"));
-		guaranteed_loan_balance_floor_selected = Boolean
-				.parseBoolean(XMLToolkit.getElementById(doc, "8").getAttribute("selected"));
+		out_guaranteed_loan_balance_floor_unit = Unit
+				.valueOf(XMLToolkit.getElementById(doc, "35").getAttribute("unit"));
+		// guaranteed_loan_balance_floor_selected = Boolean
+		// .parseBoolean(XMLToolkit.getElementById(doc,
+		// "8").getAttribute("selected"));
 
 		loan_balance_floor_value = Integer.parseInt(XMLToolkit.getElementById(doc, "9").getAttribute("value"));
 		loan_balance_floor_unit = Unit.valueOf(XMLToolkit.getElementById(doc, "9").getAttribute("unit"));
@@ -106,6 +118,9 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuarantor_floor_value(int guarantor_floor_value) {
 		this.guarantor_floor_value = guarantor_floor_value;
 	}
+	public void setOut_Guarantor_floor_value(int out_guarantor_floor_value) {
+		this.out_guarantor_floor_value = out_guarantor_floor_value;
+	}
 
 	public boolean isGuarantor_floor_selected() {
 		return guarantor_floor_selected;
@@ -138,6 +153,9 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuaranteed_loan_balance_floor_value(int guaranteed_loan_balance_floor_value) {
 		this.guaranteed_loan_balance_floor_value = guaranteed_loan_balance_floor_value;
 	}
+	public void setOut_Guaranteed_loan_balance_floor_value(int out_guaranteed_loan_balance_floor_value) {
+		this.out_guaranteed_loan_balance_floor_value = out_guaranteed_loan_balance_floor_value;
+	}
 
 	public Unit getGuaranteed_loan_balance_floor_unit() {
 		return guaranteed_loan_balance_floor_unit;
@@ -146,14 +164,19 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuaranteed_loan_balance_floor_unit(Unit guaranteed_loan_balance_floor_unit) {
 		this.guaranteed_loan_balance_floor_unit = guaranteed_loan_balance_floor_unit;
 	}
-
-	public boolean isGuaranteed_loan_balance_floor_selected() {
-		return guaranteed_loan_balance_floor_selected;
+	public void setOut_Guaranteed_loan_balance_floor_unit(Unit out_guaranteed_loan_balance_floor_unit) {
+		this.out_guaranteed_loan_balance_floor_unit = out_guaranteed_loan_balance_floor_unit;
 	}
 
-	public void setGuaranteed_loan_balance_floor_selected(boolean guaranteed_loan_balance_floor_selected) {
-		this.guaranteed_loan_balance_floor_selected = guaranteed_loan_balance_floor_selected;
-	}
+	// public boolean isGuaranteed_loan_balance_floor_selected() {
+	// return guaranteed_loan_balance_floor_selected;
+	// }
+	//
+	// public void setGuaranteed_loan_balance_floor_selected(boolean
+	// guaranteed_loan_balance_floor_selected) {
+	// this.guaranteed_loan_balance_floor_selected =
+	// guaranteed_loan_balance_floor_selected;
+	// }
 
 	public int getLoan_balance_floor_value() {
 		return loan_balance_floor_value;
@@ -290,16 +313,22 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		XMLToolkit.getElementById(doc, "32").setAttribute("value", String.valueOf(condition_number_value));
 
 		XMLToolkit.getElementById(doc, "6").setAttribute("value", String.valueOf(guarantor_floor_value));
+		XMLToolkit.getElementById(doc, "34").setAttribute("value", String.valueOf(out_guarantor_floor_value));
 		XMLToolkit.getElementById(doc, "6").setAttribute("selected", String.valueOf(guarantor_floor_selected));
+		XMLToolkit.getElementById(doc, "34").setAttribute("selected", String.valueOf(out_guarantor_floor_selected));
 
 		XMLToolkit.getElementById(doc, "7").setAttribute("value", String.valueOf(mutually_guaranteed_floor_value));
 		XMLToolkit.getElementById(doc, "7").setAttribute("selected",
 				String.valueOf(mutually_guaranteed_floor_selected));
 
 		XMLToolkit.getElementById(doc, "8").setAttribute("value", String.valueOf(guaranteed_loan_balance_floor_value));
+		XMLToolkit.getElementById(doc, "35").setAttribute("value",
+				String.valueOf(out_guaranteed_loan_balance_floor_value));
 		XMLToolkit.getElementById(doc, "8").setAttribute("unit", String.valueOf(guaranteed_loan_balance_floor_unit));
-		XMLToolkit.getElementById(doc, "8").setAttribute("selected",
-				String.valueOf(guaranteed_loan_balance_floor_selected));
+		XMLToolkit.getElementById(doc, "35").setAttribute("unit",
+				String.valueOf(out_guaranteed_loan_balance_floor_unit));
+		// XMLToolkit.getElementById(doc, "8").setAttribute("selected",
+		// String.valueOf(guaranteed_loan_balance_floor_selected));
 
 		XMLToolkit.getElementById(doc, "9").setAttribute("value", String.valueOf(loan_balance_floor_value));
 		XMLToolkit.getElementById(doc, "9").setAttribute("unit", String.valueOf(loan_balance_floor_unit));
@@ -504,27 +533,39 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		while (iterator.hasNext()) {
 			Corporation corp = iterator.next();
 			int conditionMeetCount = 0;// 实际满足的条件个数
-			if (this.isGuarantor_floor_selected()) {// 若条件1被启用的话
-				// 如果企业被[guarantor-floor.value](含)家以上企业担保，则可以认定为核心企业
-				if (graphic.inDegreeOf(corp) >= this.getGuarantor_floor_value()) {
-					conditionMeetCount++;
-				}
-			}
-			if (this.isMutually_guaranteed_floor_selected()) {// 若条件2被启用的话
-				// 如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则可以认定为核心企业
-				if (graphic.mutuallyDegreeOf(corp) >= this.getMutually_guaranteed_floor_value()) {
-					conditionMeetCount++;
-				}
-			}
-			// 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”,则认定为核心企业
-			// TODO 条件3暂未启用
-			if (this.isLoan_balance_floor_selected()) {// 若条件4被启用的话
+
+			if (this.isLoan_balance_floor_selected()) {// 若条件1被启用的话
 				// 如果“企业的贷款余额>=[loan-balance-floor.value]”，则可以认定为 核心企业
 				if (corp.getDoubleValue(Corporation.LOAN_BALANCE_COL) >= this.getLoan_balance_floor_value()
 						* this.getLoan_balance_floor_unit().getMultiple()) {
 					conditionMeetCount++;
 				}
 			}
+
+			if (this.isGuarantor_floor_selected()) {// 若条件2被启用的话
+				// 如果企业被[guarantor-floor.value](含)家以上企业担保，并且“企业的被担保贷款总余额>=[guaranteed-loan-balance-floor.value]”，则可以认定为核心企业
+				if (graphic.inDegreeOf(corp) >= this.getGuarantor_floor_value()
+						&& corp.getGuaranteedLoanBalance() >= this.getGuaranteed_loan_balance_floor_value()) {
+					conditionMeetCount++;
+				}
+			}
+
+
+			if (this.isOut_guarantor_floor_selected()) {// 若条件3被启用的话
+				// 如果企业为[guarantor-floor.value](含)家以上企业提供担保，并且“企业的对外担保贷款总余额>=[guaranteed-loan-balance-floor.value]”，则可以认定为核心企业
+				if (graphic.outDegreeOf(corp) >= this.getOut_guarantor_floor_value()
+						&& corp.getOutGuaranteedLoanBalance() >= this.getOut_guaranteed_loan_balance_floor_value()) {
+					conditionMeetCount++;
+				}
+			}
+
+			if (this.isMutually_guaranteed_floor_selected()) {// 若条件4被启用的话
+				// 如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则可以认定为核心企业
+				if (graphic.mutuallyDegreeOf(corp) >= this.getMutually_guaranteed_floor_value()) {
+					conditionMeetCount++;
+				}
+			}
+
 			// 如果实际满足的条件个数超过用户定义的下限的话，则认定为核心企业
 			if (conditionMeetCount >= this.getCondition_number_value())
 				corp.setCore(true);
@@ -562,4 +603,36 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		return result;
 	}
 
+	public int getOut_guarantor_floor_value() {
+		return out_guarantor_floor_value;
+	}
+
+	public void setOut_guarantor_floor_value(int out_guarantor_floor_value) {
+		this.out_guarantor_floor_value = out_guarantor_floor_value;
+	}
+
+	public int getOut_guaranteed_loan_balance_floor_value() {
+		return out_guaranteed_loan_balance_floor_value;
+	}
+
+	public void setOut_guaranteed_loan_balance_floor_value(int out_guaranteed_loan_balance_floor_value) {
+		this.out_guaranteed_loan_balance_floor_value = out_guaranteed_loan_balance_floor_value;
+	}
+
+	public Unit getOut_guaranteed_loan_balance_floor_unit() {
+
+		return out_guaranteed_loan_balance_floor_unit;
+	}
+
+	public void setOut_guaranteed_loan_balance_floor_unit(Unit out_guaranteed_loan_balance_floor_unit) {
+		this.out_guaranteed_loan_balance_floor_unit = out_guaranteed_loan_balance_floor_unit;
+	}
+
+	public boolean isOut_guarantor_floor_selected() {
+		return out_guarantor_floor_selected;
+	}
+
+	public void setOut_guarantor_floor_selected(boolean out_guarantor_floor_selected) {
+		this.out_guarantor_floor_selected = out_guarantor_floor_selected;
+	}
 }

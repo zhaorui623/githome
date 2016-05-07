@@ -11,14 +11,17 @@
 				<core-corp id="5">
 					<!-- 要被认定为核心企业需要满足的条件个数 -->
 					<condition-number id="32" value="3"/>
-					<!-- 条件1：如果企业被[guarantor-floor.value](含)家以上企业担保，则摘取以它为核心的担保圈 -->
-					<guarantor-floor id="6" selected="true" value="5"/>
-					<!-- 条件2：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
-					<mutually-guaranteed-floor id="7" selected="true" value="2"/>
-					<!-- 条件3：如果“企业的被担保贷款余额>=[guaranteed-loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<guaranteed-loan-balance-floor id="8" selected="false" unit="亿元" value="1"/>
-					<!-- 条件4：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
+					<!-- 条件1：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
 					<loan-balance-floor id="9" selected="true" unit="万元" value="1000"/>
+					<!-- 条件2：如果企业被[guarantor-floor.value](含)家以上企业担保，并且“企业的被担保贷款总余额>=[guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
+					<guarantor-floor id="6" selected="true" value="3"/>
+					<guaranteed-loan-balance-floor id="8" unit="万元" value="500"/>
+					<!-- 条件3：如果企业为[out-guarantor-floor.value](含)家以上企业提供担保，并且“企业的对外担保贷款总余额>=[out-guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
+					<out-guarantor-floor id="34" selected="true" value="3"/>
+					<out-guaranteed-loan-balance-floor id="35" unit="万元" value="500"/>
+					<!-- 条件4：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
+					<mutually-guaranteed-floor id="7" selected="false" value="2"/>
+					
 				</core-corp>
 				<!-- 担保圈摘取时的规模控制 -->
 				<scale-control id="10">
@@ -78,7 +81,7 @@
 		<risk-dimension id="31"/>
 	</circle-classify>
 	<!-- 计算区域分布时细化到哪个级别，2-省，4-市，6-县 -->
-	<region-level id="33" value="市"/>
+	<region-level id="33" value="县"/>
 	<region-list>
 		<region code="370000" name="山东省"/>
 		<region code="370100" name="济南市"/>

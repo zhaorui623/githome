@@ -47,17 +47,17 @@ public class ConfigPanel extends JPanel {
 	private String instructionText = "程序会自动分析所导入企业的担保关系，并在内存中绘制一整张担保关系拓扑图。一般情况下，该图会包含若干张彼此独立的连通子图，其中规模较小的连通子图会有几十个，但往往也存在一个规模超大（内部节点数为几百甚至几千）的连通子图。对于这种超大连通子图，需要用一定的算法将其合理拆分为规模适中的小图，本页面即用来配置拆分算法。配置完成后，点击“应用”按钮即完成参数配置。";
 
 	private JPanel algmConfigPanel;
-	
+
 	private GCClassifyConfigPanel gcClassifyConfigPanel;
 
 	private RegionDistributAnalysisConfigPanel rdaConfigPanel;
-	
+
 	private JButton apply;
 
 	private List<JRadioButton> algorithmChooseRadioButtons;
 
 	private List<HugeCircleSplitAlgorithm> algms;
-	private String successMessage= "应用并保存配置成功！";
+	private String successMessage = "应用并保存配置成功！";
 
 	public ConfigPanel(Step2Module step2Module) throws Exception {
 
@@ -85,7 +85,7 @@ public class ConfigPanel extends JPanel {
 		JPanel algorithmChoosePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));// 超大圈算法选择面板
 		algorithmChoosePanel.add(new JLabel("超大圈拆分算法:"));
 		List<JRadioButton> algorithmChooseRadioButtons = createAlgorithmChooseRadioButtons();
-		for (JRadioButton button : algorithmChooseRadioButtons){
+		for (JRadioButton button : algorithmChooseRadioButtons) {
 			algorithmChoosePanel.add(button);
 		}
 		p1.add(algorithmChoosePanel, BorderLayout.NORTH);
@@ -96,27 +96,29 @@ public class ConfigPanel extends JPanel {
 		// 担保圈分类标准配置面板
 		JPanel p2 = new JPanel();
 		p2.setBorder(BorderFactory.createTitledBorder("担保圈分类标准配置"));
-		GCClassify gcClassify=new GCClassify();
-		gcClassifyConfigPanel=new GCClassifyConfigPanel(gcClassify);
+		GCClassify gcClassify = new GCClassify();
+		gcClassifyConfigPanel = new GCClassifyConfigPanel(gcClassify);
 		p2.add(gcClassifyConfigPanel);
 		centerPanel.add(p2, BorderLayout.CENTER);
 
 		// “区域分布”分析模块配置面板
 		JPanel p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p3.setBorder(BorderFactory.createTitledBorder("“区域分布”分析模块配置"));
-		rdaConfigPanel=new RegionDistributAnalysisConfigPanel();
+		rdaConfigPanel = new RegionDistributAnalysisConfigPanel();
 		p3.add(rdaConfigPanel);
 		centerPanel.add(p3, BorderLayout.SOUTH);
-		
+
 		this.add(centerPanel, BorderLayout.CENTER);
-		
+
 		// 应用按钮
 		apply = new JButton("应用");
 		this.add(apply, BorderLayout.SOUTH);
 	}
-	Map<JRadioButton,HugeCircleSplitAlgorithm> map;
+
+	Map<JRadioButton, HugeCircleSplitAlgorithm> map;
+
 	private List<JRadioButton> createAlgorithmChooseRadioButtons() throws Exception {
-		map=new HashMap<JRadioButton, HugeCircleSplitAlgorithm>();
+		map = new HashMap<JRadioButton, HugeCircleSplitAlgorithm>();
 		ButtonGroup algorithmChooseRadioButtonGroup = new ButtonGroup();
 		algorithmChooseRadioButtons = new ArrayList<JRadioButton>();
 		algms = Config.getHugeCircleSplitAlgorithms();
@@ -126,7 +128,7 @@ public class ConfigPanel extends JPanel {
 			button.setSelected(algm.isAlgorithm_selected());
 			algorithmChooseRadioButtonGroup.add(button);
 			algorithmChooseRadioButtons.add(button);
-			map.put(button,algm);
+			map.put(button, algm);
 		}
 
 		return algorithmChooseRadioButtons;
@@ -138,7 +140,7 @@ public class ConfigPanel extends JPanel {
 			button.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					if (e.getStateChange() == ItemEvent.SELECTED) {						
+					if (e.getStateChange() == ItemEvent.SELECTED) {
 						step2Module.setHcsAlgm(map.get(e.getSource()));
 						JPanel p = step2Module.getHcsAlgm().getAlgorithmConfigPanel();
 						algmConfigPanel.removeAll();
@@ -148,7 +150,7 @@ public class ConfigPanel extends JPanel {
 			});
 			if (i == 0) {
 				button.doClick();
-				algmConfigPanel.removeAll();			
+				algmConfigPanel.removeAll();
 				step2Module.setHcsAlgm(map.get(button));
 				algmConfigPanel.add(step2Module.getHcsAlgm().getAlgorithmConfigPanel());
 			}
@@ -165,17 +167,24 @@ public class ConfigPanel extends JPanel {
 							PickAlgorithm palgm = pacPanel.getAlgorithm();
 
 							palgm.setAlgorithm_selected(true);
-							
+
 							palgm.setCondition_number_value(pacPanel.getCondition_number_value());
 
-							palgm.setGuaranteed_loan_balance_floor_selected(
-									pacPanel.isGuaranteed_loan_balance_floor_selected());
-							palgm.setGuaranteed_loan_balance_floor_unit(pacPanel.getGuaranteed_loan_balance_floor_unit());
+							// palgm.setGuaranteed_loan_balance_floor_selected(
+							// pacPanel.isGuaranteed_loan_balance_floor_selected());
+							palgm.setGuaranteed_loan_balance_floor_unit(
+									pacPanel.getGuaranteed_loan_balance_floor_unit());
 							palgm.setGuaranteed_loan_balance_floor_value(
+									pacPanel.getGuaranteed_loan_balance_floor_value());
+							palgm.setOut_Guaranteed_loan_balance_floor_unit(
+									pacPanel.getGuaranteed_loan_balance_floor_unit());
+							palgm.setOut_Guaranteed_loan_balance_floor_value(
 									pacPanel.getGuaranteed_loan_balance_floor_value());
 
 							palgm.setGuarantor_floor_selected(pacPanel.isGuarantorFloorSelected());
+							palgm.setOut_guarantor_floor_selected(pacPanel.isOutGuarantorFloorSelected());
 							palgm.setGuarantor_floor_value(pacPanel.getGuarantorFloor());
+							palgm.setOut_Guarantor_floor_value(pacPanel.getOutGuarantorFloor());
 
 							palgm.setLoan_balance_floor_selected(pacPanel.isLoanBalanceFloorSelected());
 							palgm.setLoan_balance_floor_unit(pacPanel.getLoanBalanceFloorUnit());
@@ -199,8 +208,8 @@ public class ConfigPanel extends JPanel {
 							palgm.setPick_corecorp_loop(pacPanel.isPickCorecorpLoopSelected());
 							palgm.setPick_mutually_guaranteed_corp(pacPanel.isPickMutuallyGuaranteedCorpSelected());
 							palgm.setUnpick_corecorp_son(pacPanel.isUnpickCorecorpSonSelected());
-							
-							GCClassify gcClassify=gcClassifyConfigPanel.getGcClassify();
+
+							GCClassify gcClassify = gcClassifyConfigPanel.getGcClassify();
 							gcClassify.setLoan_balance_floor(gcClassifyConfigPanel.getLoan_balance_floor());
 							gcClassify.setLoan_balance_ceiling(gcClassifyConfigPanel.getLoan_balance_ceiling());
 
@@ -208,17 +217,17 @@ public class ConfigPanel extends JPanel {
 								palgm.updateConfigCache();
 								gcClassify.updateConfigCache();
 								rdaConfigPanel.updateConfigCache();
-								boolean sucess=Config.saveDoc();
-								
-								if(sucess){
-									JOptionPane.showMessageDialog(ConfigPanel.this,successMessage, "提示",
+								boolean sucess = Config.saveDoc();
+
+								if (sucess) {
+									JOptionPane.showMessageDialog(ConfigPanel.this, successMessage, "提示",
 											JOptionPane.INFORMATION_MESSAGE);
-									InfoPane.getInstance().info( successMessage);
+									InfoPane.getInstance().info(successMessage);
 								}
 							} catch (Exception e1) {
 								JOptionPane.showMessageDialog(ConfigPanel.this, "应用配置成功，但保存配置时出错，不影响下一步继续进行。", "警告",
 										JOptionPane.WARNING_MESSAGE);
-							}finally {
+							} finally {
 								Module.gotoStep(3);
 							}
 						}

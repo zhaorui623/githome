@@ -314,30 +314,30 @@ public class Graphic {
 
 	public static void main(String[] args) {
 		Graphic g = new Graphic();
-		Corporation v0 = Corporation.createDefaultCorp("0");
-		Corporation v1 = Corporation.createDefaultCorp("1");
-		Corporation v2 = Corporation.createDefaultCorp("2");
-		Corporation v3 = Corporation.createDefaultCorp("3");
-		Corporation v4 = Corporation.createDefaultCorp("4");
+//		Corporation v0 = Corporation.createDefaultCorp("0");
+//		Corporation v1 = Corporation.createDefaultCorp("1");
+//		Corporation v2 = Corporation.createDefaultCorp("2");
+//		Corporation v3 = Corporation.createDefaultCorp("3");
+//		Corporation v4 = Corporation.createDefaultCorp("4");
 
-		g.addVertex(v0);
-		g.addVertex(v1);
-		g.addVertex(v2);
-		g.addVertex(v3);
-		g.addVertex(v4);
-
-		g.addEdge(v0, v1);
-		g.addEdge(v1, v0);
-		g.addEdge(v4, v0);
-		g.addEdge(v1, v4);
-		g.addEdge(v2, v1);
-		g.addEdge(v1, v2);
-		g.addEdge(v2, v3);
-		g.addEdge(v3, v2);
-
-		g.printBasicInfo();
-
-		g.loopsOf(v0, 7);
+//		g.addVertex(v0);
+//		g.addVertex(v1);
+//		g.addVertex(v2);
+//		g.addVertex(v3);
+//		g.addVertex(v4);
+//
+//		g.addEdge(v0, v1);
+//		g.addEdge(v1, v0);
+//		g.addEdge(v4, v0);
+//		g.addEdge(v1, v4);
+//		g.addEdge(v2, v1);
+//		g.addEdge(v1, v2);
+//		g.addEdge(v2, v3);
+//		g.addEdge(v3, v2);
+//
+//		g.printBasicInfo();
+//
+//		g.loopsOf(v0, 7);
 	}
 
 	/**

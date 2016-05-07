@@ -27,11 +27,11 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Unit;
 public class PickAlgorithmConfigPanel extends JPanel {
 
 	private PickAlgorithm algorithm;
-	private JCheckBox guarantorFloorCheck, mutuallyGuarantorFloorCheck, guaranteedLoanBalanceFloorCheck,
+	private JCheckBox guarantorFloorCheck,outGuarantorFloorCheck, mutuallyGuarantorFloorCheck, /*guaranteedLoanBalanceFloorCheck,*/
 			loanBalanceFloorCheck, unpickCorecorpSonCheck, pickMutuallyGuaranteedCorp, pickCorecorpLoop;
-	private JComboBox conditionNumberCombo,guarantorFloorCombo, mutuallyGuarantorFloorCombo;
-	private NumberSpinner guaranteedLoanBalanceFloorSpinner, loanBalanceFloorSpinner;
-	private UnitComboBox guaranteedLoanBalanceFloorUnitCombo, loanBalanceFloorUnitCombo;
+	private JComboBox conditionNumberCombo, guarantorFloorCombo,outGuarantorFloorCombo, mutuallyGuarantorFloorCombo;
+	private NumberSpinner guaranteedLoanBalanceFloorSpinner,outGuaranteedLoanBalanceFloorSpinner, loanBalanceFloorSpinner;
+	private UnitComboBox guaranteedLoanBalanceFloorUnitCombo,outGuaranteedLoanBalanceFloorUnitCombo, loanBalanceFloorUnitCombo;
 	private JRadioButton radio1_1, radio1_2, radio1_3, radio2_1, radio2_2, radio2_3, radio3_1, radio3_2, radio3_3;
 
 	public PickAlgorithmConfigPanel() {
@@ -48,59 +48,18 @@ public class PickAlgorithmConfigPanel extends JPanel {
 		JPanel p1 = new JPanel(new GridLayout(5, 1));
 		p1.setBorder(BorderFactory.createTitledBorder("拆分规则-核心企业的认定"));
 		// =====================================================
-		JPanel p1_0=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel p1_0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel instruction1 = new JLabel("以下条件满足其中");
-		Integer[] conditionNumberValues = new Integer[3];
-		for (int i = 0; i <conditionNumberValues.length; i++)
-			conditionNumberValues[i] = new Integer(i+1);
-		conditionNumberCombo=new JComboBox(conditionNumberValues);
+		Integer[] conditionNumberValues = new Integer[4];
+		for (int i = 0; i < conditionNumberValues.length; i++)
+			conditionNumberValues[i] = new Integer(i + 1);
+		conditionNumberCombo = new JComboBox(conditionNumberValues);
 		conditionNumberCombo.setSelectedItem(algorithm.getCondition_number_value());
 		JLabel instruction2 = new JLabel("个，即被认定为“核心企业”,则摘取以它为核心的担保圈：");
 		p1_0.add(instruction1);
 		p1_0.add(conditionNumberCombo);
 		p1_0.add(instruction2);
 		p1.add(p1_0);
-		// =====================================================
-		JPanel p1_1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		guarantorFloorCheck = new JCheckBox("某企业被");
-		guarantorFloorCheck.setSelected(algorithm.isGuarantor_floor_selected());
-		p1_1.add(guarantorFloorCheck);
-		Integer[] guarantorFloorValues = new Integer[11];
-		for (int i = 0; i <guarantorFloorValues.length; i++)
-			guarantorFloorValues[i] = new Integer(i);
-		guarantorFloorCombo = new JComboBox(guarantorFloorValues);
-		guarantorFloorCombo.setSelectedItem(algorithm.getGuarantor_floor_value());
-		p1_1.add(guarantorFloorCombo);
-		p1_1.add(new JLabel("家（含）以上企业担保"));
-		p1.add(p1_1);
-		// =====================================================
-		JPanel p1_2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		mutuallyGuarantorFloorCheck = new JCheckBox("某企业与");
-		mutuallyGuarantorFloorCheck.setSelected(algorithm.isMutually_guaranteed_floor_selected());
-		p1_2.add(mutuallyGuarantorFloorCheck);
-		Integer[] mutuallyGuarantorFloorValues = new Integer[11];
-		for (int i = 0; i <mutuallyGuarantorFloorValues.length; i++)
-			mutuallyGuarantorFloorValues[i] = new Integer(i);
-		mutuallyGuarantorFloorCombo = new JComboBox(mutuallyGuarantorFloorValues);
-		mutuallyGuarantorFloorCombo.setSelectedItem(algorithm.getMutually_guaranteed_floor_value());
-		p1_2.add(mutuallyGuarantorFloorCombo);
-		p1_2.add(new JLabel("家（含）以上企业存在互保关系"));
-		p1.add(p1_2);
-		// =====================================================
-		JPanel p1_3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		guaranteedLoanBalanceFloorCheck = new JCheckBox("某企业被担保贷款余额超过");
-		guaranteedLoanBalanceFloorCheck.setSelected(algorithm.isGuaranteed_loan_balance_floor_selected());
-		p1_3.add(guaranteedLoanBalanceFloorCheck);
-		guaranteedLoanBalanceFloorSpinner = new NumberSpinner(algorithm.getGuaranteed_loan_balance_floor_value(), 0,
-				Integer.MAX_VALUE, 1);
-		p1_3.add(guaranteedLoanBalanceFloorSpinner);
-		guaranteedLoanBalanceFloorUnitCombo = new UnitComboBox();
-		guaranteedLoanBalanceFloorUnitCombo.setSelectedItem(algorithm.getGuaranteed_loan_balance_floor_unit());
-		p1_3.add(guaranteedLoanBalanceFloorUnitCombo);
-		guaranteedLoanBalanceFloorCheck.setEnabled(false);
-		guaranteedLoanBalanceFloorSpinner.setEnabled(false);
-		guaranteedLoanBalanceFloorUnitCombo.setEnabled(false);
-		p1.add(p1_3);
 		// =====================================================
 		JPanel p1_4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		loanBalanceFloorCheck = new JCheckBox("某企业贷款余额超过");
@@ -112,7 +71,72 @@ public class PickAlgorithmConfigPanel extends JPanel {
 		loanBalanceFloorUnitCombo.setSelectedItem(algorithm.getLoan_balance_floor_unit());
 		p1_4.add(loanBalanceFloorUnitCombo);
 		p1.add(p1_4);
+		// =====================================================
+		JPanel p1_1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		guarantorFloorCheck = new JCheckBox("某企业被");
+		guarantorFloorCheck.setSelected(algorithm.isGuarantor_floor_selected());
+		p1_1.add(guarantorFloorCheck);
+		Integer[] guarantorFloorValues = new Integer[11];
+		for (int i = 0; i < guarantorFloorValues.length; i++)
+			guarantorFloorValues[i] = new Integer(i);
+		guarantorFloorCombo = new JComboBox(guarantorFloorValues);
+		guarantorFloorCombo.setSelectedItem(algorithm.getGuarantor_floor_value());
+		p1_1.add(guarantorFloorCombo);
+		p1_1.add(new JLabel("家（含）以上企业担保 并且 被担保贷款总余额超过"));
+//		p1.add(p1_1);
 
+		// =====================================================
+//		JPanel p1_3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//		guaranteedLoanBalanceFloorCheck = new JCheckBox(" ");
+//		guaranteedLoanBalanceFloorCheck.setSelected(algorithm.isGuaranteed_loan_balance_floor_selected());
+//		p1_1.add(guaranteedLoanBalanceFloorCheck);
+		guaranteedLoanBalanceFloorSpinner = new NumberSpinner(algorithm.getGuaranteed_loan_balance_floor_value(), 0,
+				Integer.MAX_VALUE, 1);
+		p1_1.add(guaranteedLoanBalanceFloorSpinner);
+		guaranteedLoanBalanceFloorUnitCombo = new UnitComboBox();
+		guaranteedLoanBalanceFloorUnitCombo.setSelectedItem(algorithm.getGuaranteed_loan_balance_floor_unit());
+		p1_1.add(guaranteedLoanBalanceFloorUnitCombo);
+//		guaranteedLoanBalanceFloorCheck.setEnabled(false);
+//		guaranteedLoanBalanceFloorSpinner.setEnabled(false);
+//		guaranteedLoanBalanceFloorUnitCombo.setEnabled(false);
+		p1.add(p1_1);
+		// =====================================================
+		
+
+		// =====================================================
+		JPanel p1_5 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		outGuarantorFloorCheck = new JCheckBox("某企业为");
+		outGuarantorFloorCheck.setSelected(algorithm.isOut_guarantor_floor_selected());
+		p1_5.add(outGuarantorFloorCheck);
+		Integer[] outGuarantorFloorValues = new Integer[11];
+		for (int i = 0; i < outGuarantorFloorValues.length; i++)
+			outGuarantorFloorValues[i] = new Integer(i);
+		outGuarantorFloorCombo = new JComboBox(outGuarantorFloorValues);
+		outGuarantorFloorCombo.setSelectedItem(algorithm.getOut_guarantor_floor_value());
+		p1_5.add(outGuarantorFloorCombo);
+		p1_5.add(new JLabel("家（含）以上企业提供担保 并且 对外担保贷款总余额超过"));
+		outGuaranteedLoanBalanceFloorSpinner = new NumberSpinner(algorithm.getOut_guaranteed_loan_balance_floor_value(), 0,
+				Integer.MAX_VALUE, 1);
+		p1_5.add(outGuaranteedLoanBalanceFloorSpinner);
+		outGuaranteedLoanBalanceFloorUnitCombo = new UnitComboBox();
+		outGuaranteedLoanBalanceFloorUnitCombo.setSelectedItem(algorithm.getOut_guaranteed_loan_balance_floor_unit());
+		p1_5.add(outGuaranteedLoanBalanceFloorUnitCombo);
+		p1.add(p1_5);
+		// =====================================================
+		
+		JPanel p1_2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		mutuallyGuarantorFloorCheck = new JCheckBox("某企业与");
+		mutuallyGuarantorFloorCheck.setSelected(algorithm.isMutually_guaranteed_floor_selected());
+		p1_2.add(mutuallyGuarantorFloorCheck);
+		Integer[] mutuallyGuarantorFloorValues = new Integer[11];
+		for (int i = 0; i < mutuallyGuarantorFloorValues.length; i++)
+			mutuallyGuarantorFloorValues[i] = new Integer(i);
+		mutuallyGuarantorFloorCombo = new JComboBox(mutuallyGuarantorFloorValues);
+		mutuallyGuarantorFloorCombo.setSelectedItem(algorithm.getMutually_guaranteed_floor_value());
+		p1_2.add(mutuallyGuarantorFloorCombo);
+		p1_2.add(new JLabel("家（含）以上企业存在互保关系"));
+		p1.add(p1_2);
+		
 		this.add(p1);
 	}
 
@@ -195,14 +219,17 @@ public class PickAlgorithmConfigPanel extends JPanel {
 	public boolean isGuarantorFloorSelected() {
 		return guarantorFloorCheck.isSelected();
 	}
+	public boolean isOutGuarantorFloorSelected() {
+		return outGuarantorFloorCheck.isSelected();
+	}
 
 	public boolean isMutuallyGuarantorFloorSelected() {
 		return mutuallyGuarantorFloorCheck.isSelected();
 	}
 
-	public boolean isGuaranteedLoanBalanceFloorSelected() {
-		return guaranteedLoanBalanceFloorCheck.isSelected();
-	}
+//	public boolean isGuaranteedLoanBalanceFloorSelected() {
+//		return guaranteedLoanBalanceFloorCheck.isSelected();
+//	}
 
 	public boolean isLoanBalanceFloorSelected() {
 		return loanBalanceFloorCheck.isSelected();
@@ -222,6 +249,9 @@ public class PickAlgorithmConfigPanel extends JPanel {
 
 	public int getGuarantorFloor() {
 		return Integer.parseInt(String.valueOf(guarantorFloorCombo.getSelectedItem()));
+	}
+	public int getOutGuarantorFloor() {
+		return Integer.parseInt(String.valueOf(outGuarantorFloorCombo.getSelectedItem()));
 	}
 
 	public int getMutuallyGuarantorFloor() {
@@ -289,22 +319,22 @@ public class PickAlgorithmConfigPanel extends JPanel {
 	}
 
 	public int getCondition_number_value() {
-		
+
 		return Integer.parseInt(String.valueOf(conditionNumberCombo.getSelectedItem()));
 	}
 
-	public boolean isGuaranteed_loan_balance_floor_selected() {
-
-		return guaranteedLoanBalanceFloorCheck.isSelected();
-	}
+//	public boolean isGuaranteed_loan_balance_floor_selected() {
+//
+//		return guaranteedLoanBalanceFloorCheck.isSelected();
+//	}
 
 	public Unit getGuaranteed_loan_balance_floor_unit() {
-		
-		return  (Unit)guaranteedLoanBalanceFloorUnitCombo.getSelectedItem();
+
+		return (Unit) guaranteedLoanBalanceFloorUnitCombo.getSelectedItem();
 	}
 
 	public int getGuaranteed_loan_balance_floor_value() {
-		
+
 		return Integer.parseInt(String.valueOf(guaranteedLoanBalanceFloorSpinner.getValue()));
 	}
 

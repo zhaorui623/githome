@@ -30,8 +30,8 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 
 	private Vector<Vector> rowData;
 	private Vector<String> columnNames;
-	private String[] COLUMN_NAMES = { "担保圈名称", "所属地区", "风险分类", "涉及企业个数", "担保圈贷款余额", "不良贷款余额", "不良率(%)", "企业名称",
-			"贷款银行家数", "贷款余额", "不良贷款余额", "不良率(%)" };
+	private String[] COLUMN_NAMES = { "担保圈名称", "所属地区", "风险分类", "涉及企业个数", "担保圈贷款余额", "担保圈被担保贷款余额","不良贷款余额", "不良率(%)", "企业名称",
+			"贷款银行家数", "贷款余额","被担保贷款余额", "不良贷款余额", "不良率(%)" };
 
 	public GraphicListShowTableModel(List<Graphic> circles) {
 		super();
@@ -49,11 +49,13 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 				row.add(circle.getRiskClassify().getName());// 风险分类
 				row.add(circle.vertexSet().size());// 涉及企业个数
 				row.add(Math.round(GraphicToolkit.getLoanBalance(circle)));// 贷款余额
+				row.add(Math.round(GraphicToolkit.getGuaranteedLoanBalance(circle)));// 被担保贷款余额
 				row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(circle)));// 不良贷款余额
 				row.add(GraphicToolkit.getBuLiangLv(circle));// 不良率
 				row.add(corp.getName());// 企业名称
 				row.add(corp.getLoanBankCount());// 贷款银行家数
 				row.add(Math.round(corp.getLoanBalance()));// 贷款余额
+				row.add(Math.round(corp.getGuaranteedLoanBalance()));// 被担保贷款余额
 				row.add(Math.round(corp.getBuLiangLoanBalance()));// 不良贷款余额
 				row.add(corp.getBuLiangLv());// 不良率
 				row.add(corp);// 最后一列放Vertex对象本身，该列不会被显示
@@ -92,7 +94,7 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		if (columnIndex <= 2||columnIndex==7)
+		if (columnIndex <= 2||columnIndex==8)
 			return String.class;
 		else
 			return Double.class;

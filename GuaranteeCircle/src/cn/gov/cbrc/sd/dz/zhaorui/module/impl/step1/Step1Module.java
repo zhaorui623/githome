@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,20 +143,28 @@ public class Step1Module extends Module {
 		for (Sheet sheet : sheets) {
 			int rowCount = sheet.getRows();
 			for (int row = 1; row < rowCount; row++) {
-				String corpName1 = sheet.getCell(0, row).getContents();// 担保人
-				String corpName2 = sheet.getCell(1, row).getContents();// 借款人
-				Corporation corp1 = corps.get(corpName1);// 担保人
+				String corpOrgcode1 = String.valueOf(sheet.getCell(0, row).getContents()).toUpperCase();// 担保人组织机构代码
+				String corpName1 = sheet.getCell(1, row).getContents();// 担保人名称
+				String corpOrgcode2 = String.valueOf(sheet.getCell(2, row).getContents()).toUpperCase();// 借款人组织机构代码
+				String corpName2 = sheet.getCell(3, row).getContents();// 借款人名称
+				String corpGuaranteedLoanBalance2 = sheet.getCell(4, row).getContents();// 借款人被担保贷款总额
+				String corpOutGuaranteedLoanBalance2 = sheet.getCell(5, row).getContents();// 借款人对外担保贷款总额
+
+				Corporation corp1 = findInCorps(corps, corpOrgcode1, corpName1);// 根据担保人信息在客户信息表里寻找是否有对应的客户
 				if (corp1 == null) {// 说明担保人未在银行办理过信贷类业务
 					// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
-					corp1 = Corporation.createDefaultCorp(corpName1);
-					corps.put(corp1.getName(), corp1);
+					corp1 = Corporation.createDefaultCorp(corpOrgcode1, corpName1);
+					corps.put(corp1.getOrgCode(), corp1);
 				}
-				Corporation corp2 = corps.get(corpName2);// 借款人
+				
+				Corporation corp2 = findInCorps(corps, corpOrgcode2, corpName2);// 根据借款人信息在客户信息表里寻找是否有对应的客户
 				if (corp2 == null) {// 说明借款人未在银行办理过信贷类业务----------------很奇怪，查查原因---------------
 					// 则新建一个Corporation对象，并使用默认值初始化之，并加入到Corporation.corps中
-					corp2 = Corporation.createDefaultCorp(corpName2);
-					corps.put(corp2.getName(), corp2);
+					corp2 = Corporation.createDefaultCorp(corpOrgcode2, corpName2);
+					corps.put(corp2.getOrgCode(), corp2);
 				}
+				corp2.setGuaranteedLoanBalance(Double.parseDouble(corpGuaranteedLoanBalance2));
+				corp2.setOutGuaranteedLoanBalance(Double.parseDouble(corpOutGuaranteedLoanBalance2));
 				// 将担保人和借款人以及其担保关系加入总图中
 				totalGraphic.addVertex(corp1);
 				totalGraphic.addVertex(corp2);
@@ -163,6 +172,26 @@ public class Step1Module extends Module {
 			}
 		}
 		totalGraphic.printBasicInfo();
+	}
+
+	private Corporation findInCorps(Map<String, Corporation> corps, String corpOrgcode, String corpName) {
+
+		Corporation corp = null;
+		// 先直接用组织机构代码找
+		if(corpOrgcode.length()!=0&&corpOrgcode.equals("NULL")==false)
+			corp = corps.get(corpOrgcode);
+		
+		//如果用组织机构代码找不到，就用名字找
+		if(corp==null){
+			Iterator<Corporation> iter=corps.values().iterator();
+			while(iter.hasNext()){
+				Corporation c=iter.next();
+				if(c.getName().equals(corpName))
+					return c;
+			}
+		}
+		
+		return corp;
 	}
 
 	private Map<String, Corporation> initCorps(Workbook book) {
@@ -188,7 +217,7 @@ public class Step1Module extends Module {
 					datas.put(key, value);
 				}
 				corp = new Corporation(datas);
-				corps.put(corp.getName(), corp);
+				corps.put(corp.getOrgCode(), corp);
 			}
 		}
 		return corps;

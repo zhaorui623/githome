@@ -42,18 +42,18 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	private int loan_balance_floor_value;
 	private Unit loan_balance_floor_unit;
 	private boolean loan_balance_floor_selected;
-	private boolean one_hand_vertex_all;
-	private boolean one_hand_vertex_in_only;
-	private boolean one_hand_vertex_none;
-	private boolean two_hand_vertex_all;
-	private boolean two_hand_vertex_in_only;
-	private boolean two_hand_vertex_none;
-	private boolean three_hand_vertex_all;
-	private boolean three_hand_vertex_in_only;
-	private boolean three_hand_vertex_none;
-	private boolean unpick_corecorp_son;
-	private boolean pick_mutually_guaranteed_corp;
-	private boolean pick_corecorp_loop;
+	private static boolean one_hand_vertex_all;
+	private static boolean one_hand_vertex_in_only;
+	private static boolean one_hand_vertex_none;
+	private static boolean two_hand_vertex_all;
+	private static boolean two_hand_vertex_in_only;
+	private static boolean two_hand_vertex_none;
+	private static boolean three_hand_vertex_all;
+	private static boolean three_hand_vertex_in_only;
+	private static boolean three_hand_vertex_none;
+	private static boolean unpick_corecorp_son;
+	private static boolean pick_mutually_guaranteed_corp;
+	private static boolean pick_corecorp_loop;
 
 	public PickAlgorithm(String algorithm_name, Boolean algorithm_enable, Boolean algorithm_selected) throws Exception {
 
@@ -202,100 +202,100 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		this.loan_balance_floor_selected = loan_balance_floor_selected;
 	}
 
-	public boolean isOne_hand_vertex_all() {
+	public static   boolean isOne_hand_vertex_all() {
 		return one_hand_vertex_all;
 	}
 
 	public void setOne_hand_vertex_all(boolean one_hand_vertex_all) {
-		this.one_hand_vertex_all = one_hand_vertex_all;
+		PickAlgorithm.one_hand_vertex_all = one_hand_vertex_all;
 	}
 
-	public boolean isOne_hand_vertex_in_only() {
+	public static  boolean isOne_hand_vertex_in_only() {
 		return one_hand_vertex_in_only;
 	}
 
 	public void setOne_hand_vertex_in_only(boolean one_hand_vertex_in_only) {
-		this.one_hand_vertex_in_only = one_hand_vertex_in_only;
+		PickAlgorithm.one_hand_vertex_in_only = one_hand_vertex_in_only;
 	}
 
-	public boolean isOne_hand_vertex_none() {
+	public static boolean isOne_hand_vertex_none() {
 		return one_hand_vertex_none;
 	}
 
 	public void setOne_hand_vertex_none(boolean one_hand_vertex_none) {
-		this.one_hand_vertex_none = one_hand_vertex_none;
+		PickAlgorithm.one_hand_vertex_none = one_hand_vertex_none;
 	}
 
-	public boolean isTwo_hand_vertex_all() {
+	public static  boolean isTwo_hand_vertex_all() {
 		return two_hand_vertex_all;
 	}
 
 	public void setTwo_hand_vertex_all(boolean two_hand_vertex_all) {
-		this.two_hand_vertex_all = two_hand_vertex_all;
+		PickAlgorithm.two_hand_vertex_all = two_hand_vertex_all;
 	}
 
-	public boolean isTwo_hand_vertex_in_only() {
+	public static  boolean isTwo_hand_vertex_in_only() {
 		return two_hand_vertex_in_only;
 	}
 
 	public void setTwo_hand_vertex_in_only(boolean two_hand_vertex_in_only) {
-		this.two_hand_vertex_in_only = two_hand_vertex_in_only;
+		PickAlgorithm.two_hand_vertex_in_only = two_hand_vertex_in_only;
 	}
 
-	public boolean isTwo_hand_vertex_none() {
+	public static  boolean isTwo_hand_vertex_none() {
 		return two_hand_vertex_none;
 	}
 
 	public void setTwo_hand_vertex_none(boolean two_hand_vertex_none) {
-		this.two_hand_vertex_none = two_hand_vertex_none;
+		PickAlgorithm.two_hand_vertex_none = two_hand_vertex_none;
 	}
 
-	public boolean isThree_hand_vertex_all() {
+	public  static boolean isThree_hand_vertex_all() {
 		return three_hand_vertex_all;
 	}
 
 	public void setThree_hand_vertex_all(boolean three_hand_vertex_all) {
-		this.three_hand_vertex_all = three_hand_vertex_all;
+		PickAlgorithm.three_hand_vertex_all = three_hand_vertex_all;
 	}
 
-	public boolean isThree_hand_vertex_in_only() {
+	public static  boolean isThree_hand_vertex_in_only() {
 		return three_hand_vertex_in_only;
 	}
 
 	public void setThree_hand_vertex_in_only(boolean three_hand_vertex_in_only) {
-		this.three_hand_vertex_in_only = three_hand_vertex_in_only;
+		PickAlgorithm.three_hand_vertex_in_only = three_hand_vertex_in_only;
 	}
 
-	public boolean isThree_hand_vertex_none() {
+	public static  boolean isThree_hand_vertex_none() {
 		return three_hand_vertex_none;
 	}
 
 	public void setThree_hand_vertex_none(boolean three_hand_vertex_none) {
-		this.three_hand_vertex_none = three_hand_vertex_none;
+		PickAlgorithm.three_hand_vertex_none = three_hand_vertex_none;
 	}
 
-	public boolean isUnpick_corecorp_son() {
+	public static boolean isUnpick_corecorp_son() {
 		return unpick_corecorp_son;
 	}
 
 	public void setUnpick_corecorp_son(boolean unpick_corecorp_son) {
-		this.unpick_corecorp_son = unpick_corecorp_son;
+		PickAlgorithm.unpick_corecorp_son = unpick_corecorp_son;
 	}
 
-	public boolean isPick_mutually_guaranteed_corp() {
+	public static boolean isPick_mutually_guaranteed_corp() {
 		return pick_mutually_guaranteed_corp;
 	}
 
 	public void setPick_mutually_guaranteed_corp(boolean pick_mutually_guaranteed_corp) {
-		this.pick_mutually_guaranteed_corp = pick_mutually_guaranteed_corp;
+		PickAlgorithm.pick_mutually_guaranteed_corp = pick_mutually_guaranteed_corp;
 	}
 
-	public boolean isPick_corecorp_loop() {
+	public static boolean isPick_corecorp_loop() {
 		return pick_corecorp_loop;
 	}
 
 	public void setPick_corecorp_loop(boolean pick_corecorp_loop) {
-		this.pick_corecorp_loop = pick_corecorp_loop;
+		PickAlgorithm.pick_corecorp_loop = pick_corecorp_loop;
 	}
 
 	public int getCondition_number_value() {
@@ -354,7 +354,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	}
 
 	/**
-	 * 对超大圈拆分的具体工作在这里进行
+	 * 对超大圈处理的具体工作在这里进行
 	 * 
 	 * @return
 	 * 
@@ -376,6 +376,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 			p.setPercent((int) (i * 1.0 / coreCorps.size() * 100));
 			gs.add(g);
 		}
+//		double q=FNAlgorithm.getEQ(graphic,gs);
+//		InfoPane.getInstance().info("模块度为Q="+q);
 		return gs;
 	}
 
@@ -388,7 +390,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @return
 	 * @throws Exception
 	 */
-	public Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
+	public static Graphic pickCircleOf(Graphic graphic, Corporation core) throws Exception {
 		// 用来存放待会拉出来的担保圈图
 		Graphic g = new Graphic();
 		// g.setNameSuffix(core.getName());
@@ -403,11 +405,11 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		// 拉取第三层节点
 		Set<Corporation> corpsOfLevel3 = pickNextLevel(graphic, g, corpsOfLevel2, "Three");
 		// 如果“互保企业必取之”的条件被选中的话，则拉取核心企业及其N手互保企业的所有互保企业
-		if (this.isPick_mutually_guaranteed_corp()) {
+		if (isPick_mutually_guaranteed_corp()) {
 			pickMutuallyGuaranteedCorps(graphic, g, core);
 		}
 		// 如果“环上企业必取之”的条件被选中的话，则拉取核心企业所在环上的所有企业
-		if (this.isPick_corecorp_loop()) {
+		if (isPick_corecorp_loop()) {
 			pickCorecorpLoop(graphic, g, core);
 		}
 
@@ -424,7 +426,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @param g
 	 * @param core
 	 */
-	private void pickCorecorpLoop(Graphic graphic, Graphic g, Corporation core) {
+	private static void pickCorecorpLoop(Graphic graphic, Graphic g, Corporation core) {
 		int loopLengthCeilling = 4;
 		Set<Loop> loops = graphic.loopsOf(core, loopLengthCeilling);
 		for (Graphic loop : loops) {
@@ -449,17 +451,17 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @return
 	 * @throws Exception
 	 */
-	private Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToPick)
+	private static Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToPick)
 			throws Exception {
 		int levelTopick = levelToPick.equals("One") ? 1 : (levelToPick.equals("Two") ? 2 : 3);
 		Set<Corporation> corpsOfLevelX = new HashSet<Corporation>();
 		// 如果是“全不取”被选中
-		if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_none").invoke(this))
+		if ((Boolean) PickAlgorithm.class.getMethod("is" + levelToPick + "_hand_vertex_none").invoke(null))
 			return corpsOfLevelX;// 直接返回空集
 		else {
 			for (Corporation corp : corps) {// 对于每一个节点
 				// 如果用户选择“不取核心节点的后手的话”，就不取核心节点的后手
-				if (this.isUnpick_corecorp_son() == true && levelTopick > 1 && corp.isCore() == true)
+				if (isUnpick_corecorp_son() == true && levelTopick > 1 && corp.isCore() == true)
 					continue;
 				// 获取与该点接触的所有边
 				Set<DefaultWeightedEdge> edges = graphic.edgesOf(corp);
@@ -468,7 +470,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 					Corporation corpT = graphic.getEdgeTarget(edge);// 边的尾顶点
 					Corporation corp2 = corpS.equals(corp) == false ? corpS : corpT;// core的对端顶点
 					// 如果是“全部”被选中
-					if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_all").invoke(this)) {
+					if ((Boolean) PickAlgorithm.class.getMethod("is" + levelToPick + "_hand_vertex_all").invoke(null)) {
 						if (g.containsVertex(corp2) == false) {
 							// 将每条边的另一端的那个节点加到g中
 							g.addVertex(corp2);
@@ -476,7 +478,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 						}
 					}
 					// 如果是“只取为核心企业提供担保的企业”
-					if ((Boolean) getClass().getMethod("is" + levelToPick + "_hand_vertex_in_only").invoke(this)) {
+					if ((Boolean) PickAlgorithm.class.getMethod("is" + levelToPick + "_hand_vertex_in_only").invoke(null)) {
 						if (corpT.equals(corp)) {
 							if (g.containsVertex(corpS) == false) {
 								// 将core作为尾顶点时的对端顶点加入g中
@@ -501,7 +503,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @param core
 	 *            核心企业
 	 */
-	private void pickMutuallyGuaranteedCorps(Graphic graphic, Graphic g, Corporation core) {
+	private static void pickMutuallyGuaranteedCorps(Graphic graphic, Graphic g, Corporation core) {
 		Queue<Corporation> queue = new LinkedList<Corporation>();
 		// 将核心节点加入队列中
 		addToQueue(queue, core);
@@ -528,7 +530,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 
 	}
 
-	private void markCoreCorp(Graphic graphic) throws Exception {
+	public void markCoreCorp(Graphic graphic) throws Exception {
 		Iterator<Corporation> iterator = graphic.vertexSet().iterator();
 		while (iterator.hasNext()) {
 			Corporation corp = iterator.next();
@@ -567,13 +569,15 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 			}
 
 			// 如果实际满足的条件个数超过用户定义的下限的话，则认定为核心企业
-			if (conditionMeetCount >= this.getCondition_number_value())
+			if (conditionMeetCount >= this.getCondition_number_value()){
 				corp.setCore(true);
+				graphic.addCoreCorps(corp);
+			}
 			else
 				corp.setCore(false);
 		}
 
-		InfoPane.getInstance().info("超大圈内识别出的核心企业数为：" + getCoreCorpCount(graphic));
+//		InfoPane.getInstance().info("超大圈内识别出的核心企业数为：" + getCoreCorpCount(graphic));
 	}
 
 	/**

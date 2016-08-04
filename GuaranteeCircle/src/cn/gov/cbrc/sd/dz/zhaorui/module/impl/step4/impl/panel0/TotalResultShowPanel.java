@@ -46,7 +46,7 @@ public class TotalResultShowPanel extends JPanel {
 
 		JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		circleNameFilterPanel=new TableFilterPanel("查找担保圈名称：",table,0);
-		corpNameFilterPanel=new TableFilterPanel("查找企业名称：",table,7);
+		corpNameFilterPanel=new TableFilterPanel("查找企业名称：",table,8);
 		northPanel.add(circleNameFilterPanel);
 		northPanel.add(corpNameFilterPanel);
 		exp2ExcelButton = new JButton("导出为Excel");

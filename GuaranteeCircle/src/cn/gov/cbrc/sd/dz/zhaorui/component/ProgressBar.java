@@ -149,14 +149,14 @@ public class ProgressBar extends JDialog {
 				cancelButton.removeActionListener(cancelButtonListener);
 				removeWindowListener(windowAdapter);
 
-				setVisible(false);
+				dispose();
 			}
 		};
 
 		// the panel containing the cancel button
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		buttonsPanel.add(cancelButton);
+//		buttonsPanel.add(cancelButton);
 
 		getContentPane().add(progressBarPanel, BorderLayout.CENTER);
 		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);

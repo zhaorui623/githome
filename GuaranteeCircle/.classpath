@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.6-20091214.jar"/>
 	<classpathentry kind="lib" path="lib/looks-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/ejp/lib/presenter.jar"/>
+	<classpathentry kind="lib" path="C:/ejp/lib/tracerapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

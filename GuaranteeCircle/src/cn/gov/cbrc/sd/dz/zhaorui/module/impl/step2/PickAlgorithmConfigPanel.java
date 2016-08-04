@@ -1,5 +1,6 @@
 package cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -35,7 +36,8 @@ public class PickAlgorithmConfigPanel extends JPanel {
 	private JRadioButton radio1_1, radio1_2, radio1_3, radio2_1, radio2_2, radio2_3, radio3_1, radio3_2, radio3_3;
 
 	public PickAlgorithmConfigPanel() {
-		this.setLayout(new GridLayout(1, 2));
+//		this.setLayout(new GridLayout(1, 2));
+		this.setLayout(new BorderLayout(5,5));
 	}
 
 	public void init() {
@@ -46,7 +48,7 @@ public class PickAlgorithmConfigPanel extends JPanel {
 
 	private void addPanel1() {
 		JPanel p1 = new JPanel(new GridLayout(5, 1));
-		p1.setBorder(BorderFactory.createTitledBorder("拆分规则-核心企业的认定"));
+		p1.setBorder(BorderFactory.createTitledBorder("摘取规则-核心企业的认定"));
 		// =====================================================
 		JPanel p1_0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel instruction1 = new JLabel("以下条件满足其中");
@@ -137,12 +139,12 @@ public class PickAlgorithmConfigPanel extends JPanel {
 		p1_2.add(new JLabel("家（含）以上企业存在互保关系"));
 		p1.add(p1_2);
 		
-		this.add(p1);
+		this.add(p1,BorderLayout.CENTER);
 	}
 
 	private void addPanel2() {
 		JPanel p2 = new JPanel(new GridLayout(6, 1));
-		p2.setBorder(BorderFactory.createTitledBorder("拆分规则-担保圈摘取时的规模控制"));
+		p2.setBorder(BorderFactory.createTitledBorder("摘取规则-担保圈摘取时的规模控制"));
 		// =====================================================
 		JPanel p2_1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p2_1.add(new JLabel("1手圈摘取规则："));
@@ -213,7 +215,7 @@ public class PickAlgorithmConfigPanel extends JPanel {
 		p2_6.add(pickCorecorpLoop);
 		p2.add(p2_6);
 
-		this.add(p2);
+		this.add(p2,BorderLayout.EAST);
 	}
 
 	public boolean isGuarantorFloorSelected() {

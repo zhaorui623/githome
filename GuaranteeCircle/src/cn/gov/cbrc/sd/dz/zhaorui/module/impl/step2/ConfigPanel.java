@@ -44,7 +44,7 @@ public class ConfigPanel extends JPanel {
 
 	private Step2Module step2Module = null;
 
-	private String instructionText = "程序会自动分析所导入企业的担保关系，并在内存中绘制一整张担保关系拓扑图。一般情况下，该图会包含若干张彼此独立的连通子图，其中规模较小的连通子图会有几十个，但往往也存在一个规模超大（内部节点数为几百甚至几千）的连通子图。对于这种超大连通子图，需要用一定的算法将其合理拆分为规模适中的小图，本页面即用来配置拆分算法。配置完成后，点击“应用”按钮即完成参数配置。";
+	private String instructionText = "程序会自动分析所导入企业的担保关系，并在内存中绘制一整张担保关系拓扑图。一般情况下，该图会包含若干张彼此独立的连通子图，其中规模较小的连通子图会有几十个，但往往也存在一个规模超大（内部节点数为几百甚至几千）的连通子图。对于这种超大连通子图，需要用一定的算法将其合理处理为规模适中的小图，本页面即用来配置处理算法。配置完成后，点击“应用”按钮即完成参数配置。";
 
 	private JPanel algmConfigPanel;
 
@@ -81,9 +81,9 @@ public class ConfigPanel extends JPanel {
 		JPanel centerPanel = new JPanel(new BorderLayout(5, 5));
 		// 超大圈算法选择和配置面板
 		JPanel p1 = new JPanel(new BorderLayout());
-		p1.setBorder(BorderFactory.createTitledBorder("超大圈拆分算法配置"));
+		p1.setBorder(BorderFactory.createTitledBorder("超大圈处理算法配置"));
 		JPanel algorithmChoosePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));// 超大圈算法选择面板
-		algorithmChoosePanel.add(new JLabel("超大圈拆分算法:"));
+		algorithmChoosePanel.add(new JLabel("超大圈处理算法:"));
 		List<JRadioButton> algorithmChooseRadioButtons = createAlgorithmChooseRadioButtons();
 		for (JRadioButton button : algorithmChooseRadioButtons) {
 			algorithmChoosePanel.add(button);

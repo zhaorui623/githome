@@ -44,7 +44,7 @@ public class GC {
 	 * the parent container
 	 */
 	private static JFrame parentContainer = null;
-	int WIDTH = 1024, HEIGHT = 700;
+	int WIDTH = 1124, HEIGHT = 825;
 
 	/**
 	 * the desktop component

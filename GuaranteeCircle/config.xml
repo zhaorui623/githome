@@ -10,15 +10,15 @@
 				<!-- 核心企业的认定标准,以下条件只要满足其中[condition-number]个，即视为核心企业 -->
 				<core-corp id="5">
 					<!-- 要被认定为核心企业需要满足的条件个数 -->
-					<condition-number id="32" value="3"/>
+					<condition-number id="32" value="1"/>
 					<!-- 条件1：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<loan-balance-floor id="9" selected="true" unit="万元" value="1000"/>
-					<!-- 条件2：如果企业被[guarantor-floor.value](含)家以上企业担保，并且“企业的被担保贷款总余额>=[guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
-					<guarantor-floor id="6" selected="true" value="3"/>
-					<guaranteed-loan-balance-floor id="8" unit="万元" value="500"/>
+					<loan-balance-floor id="9" selected="true" unit="亿元" value="5"/>
+					<!-- 条件2： color=""/>企业被[guarantor-floor.value](含)家以上企业担保，并且“企业的被担保贷款总余额>=[guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
+					<guarantor-floor id="6" selected="false" value="3"/>
+					<guaranteed-loan-balance-floor id="8" unit="万元" value="3000"/>
 					<!-- 条件3：如果企业为[out-guarantor-floor.value](含)家以上企业提供担保，并且“企业的对外担保贷款总余额>=[out-guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
-					<out-guarantor-floor id="34" selected="true" value="3"/>
-					<out-guaranteed-loan-balance-floor id="35" unit="万元" value="500"/>
+					<out-guarantor-floor id="34" selected="false" value="3"/>
+					<out-guaranteed-loan-balance-floor id="35" unit="万元" value="3000"/>
 					<!-- 条件4：如果企业与[mutually-guaranteed-floor.value](含)家以上企业存在互保关系，则摘取以它为核心的担保圈 -->
 					<mutually-guaranteed-floor id="7" selected="false" value="2"/>
 					
@@ -28,20 +28,20 @@
 					<!-- 1手节点企业摘取规则，以下规则只能选择1个 -->
 					<one-hand-vertex id="11">
 						<!-- 规则1：摘取全部1手节点企业（含担保和被担保） -->
-						<all id="12" selected="false"/>
+						<all id="12" selected="true"/>
 						<!-- 规则2：只取为核心企业提供担保的企业 -->
-						<in-only id="13" selected="true"/>
+						<in-only id="13" selected="false"/>
 						<!-- 规则3：全不取 -->
 						<none id="14" selected="false"/>
 					</one-hand-vertex>
 					<!-- 2手节点企业摘取规则，以下规则只能选择1个 -->
 					<two-hand-vertex id="15">
 						<!-- 规则1：摘取全部2手节点企业（含担保和被担保） -->
-						<all id="16" selected="false"/>
+						<all id="16" selected="true"/>
 						<!-- 规则2：只取为1手企业提供担保的企业 -->
 						<in-only id="17" selected="false"/>
 						<!-- 规则3：全不取 -->
-						<none id="18" selected="true"/>
+						<none id="18" selected="false"/>
 					</two-hand-vertex>
 					<!-- 3手节点企业摘取规则，以下规则只能选择1个 -->
 					<three-hand-vertex id="19">
@@ -53,12 +53,16 @@
 						<none id="22" selected="true"/>
 					</three-hand-vertex>
 					<!-- 如果N手企业也被认定为“核心企业”，则不取它的后手 -->
-					<unpick-corecorp-son id="23" selected="true"/>
+					<unpick-corecorp-son id="23" selected="false"/>
 					<!-- 如果N手企业与N-1手企业存在互保关系，则必取之 -->
 					<pick-mutually-guaranteed-corp id="24" selected="false"/>
 					<!-- 如果核心企业位于一个LOOP中，则取整个LOOP -->
 					<pick-corecorp-loop id="25" selected="false"/>
 				</scale-control>
+			</algorithm>
+			<algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.FNAlgorithm" component="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.FNAlgorithmConfigPanel" enable="false" id="36" name="FN" selected="false">
+			</algorithm>
+			<algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.SeedMergeAlgorithm" component="cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.SeedMergeAlgorithmConfigPanel" enable="false" id="37" name="种子社区合并法" selected="false">
 			</algorithm>
 			<algorithm class="" component="" enable="false" id="32" name="其他（欢迎集思广益）" selected="false">
 			</algorithm>
@@ -69,12 +73,20 @@
 		<!-- 小圈合并入大圈时，是只并入核心企业(true)，还是并入所有企业(false) -->
 		<only-absorb-corecorp id="34" value="false"/>
 	</circle-merge>
+	<!-- 节点权重 -->
+	<vertex-weight>
+		<weight id="38" name="正常贷款权重" value="0.01"/><!-- 一旦存在不良贷款，则程序将自动把正常类权重调整为和次级类一样 -->
+		<weight id="39" name="关注贷款权重" value="0.02"/>&gt;<!-- 一旦存在不良贷款，则程序将自动把关注类权重调整为和次级类一样 -->
+		<weight id="40" name="次级贷款权重" value="0.25"/>
+		<weight id="41" name="可疑贷款权重" value="0.50"/>
+		<weight id="42" name="损失贷款权重" value="1.00"/>
+	</vertex-weight>
 	<!-- 担保圈分类标准 -->
 	<circle-classify id="26">
 		<!-- 规模维度 -->
 		<scale-dimension id="27">
 			<scale id="28" level="A"/>
-			<scale id="29" level="B" loan-balance-ceiling="10" loan-balance-floor="3"/>
+			<scale id="29" level="B" loan-balance-ceiling="30" loan-balance-floor="10"/>
 			<scale id="30" level="C"/>
 		</scale-dimension>
 		<!-- 风险维度 -->
@@ -83,177 +95,177 @@
 	<!-- 计算区域分布时细化到哪个级别，2-省，4-市，6-县 -->
 	<region-level id="33" value="县"/>
 	<region-list>
-		<region code="370000" name="山东省"/>
-		<region code="370100" name="济南市"/>
-		<region code="370101" name="济南市市辖区"/>
-		<region code="370102" name="济南市历下区"/>
-		<region code="370103" name="济南市市中区"/>
-		<region code="370104" name="济南市槐荫区"/>
-		<region code="370105" name="济南市天桥区"/>
-		<region code="370112" name="济南市历城区"/>
-		<region code="370113" name="济南市长清区"/>
-		<region code="370124" name="济南市平阴县"/>
-		<region code="370125" name="济南市济阳县"/>
-		<region code="370126" name="济南市商河县"/>
-		<region code="370181" name="济南市章丘市"/>
-		<region code="370200" name="青岛市"/>
-		<region code="370201" name="青岛市市辖区"/>
-		<region code="370202" name="青岛市市南区"/>
-		<region code="370203" name="青岛市市北区"/>
-		<region code="370211" name="青岛市黄岛区"/>
-		<region code="370212" name="青岛市崂山区"/>
-		<region code="370213" name="青岛市李沧区"/>
-		<region code="370214" name="青岛市城阳区"/>
-		<region code="370281" name="青岛市胶州市"/>
-		<region code="370282" name="青岛市即墨市"/>
-		<region code="370283" name="青岛市平度市"/>
-		<region code="370285" name="青岛市莱西市"/>
-		<region code="370300" name="淄博市"/>
-		<region code="370301" name="淄博市市辖区"/>
-		<region code="370302" name="淄博市淄川区"/>
-		<region code="370303" name="淄博市张店区"/>
-		<region code="370304" name="淄博市博山区"/>
-		<region code="370305" name="淄博市临淄区"/>
-		<region code="370306" name="淄博市周村区"/>
-		<region code="370321" name="淄博市桓台县"/>
-		<region code="370322" name="淄博市高青县"/>
-		<region code="370323" name="淄博市沂源县"/>
-		<region code="370400" name="枣庄市"/>
-		<region code="370401" name="枣庄市市辖区"/>
-		<region code="370402" name="枣庄市市中区"/>
-		<region code="370403" name="枣庄市薛城区"/>
-		<region code="370404" name="枣庄市峄城区"/>
-		<region code="370405" name="枣庄市台儿庄区"/>
-		<region code="370406" name="枣庄市山亭区"/>
-		<region code="370481" name="枣庄市滕州市"/>
-		<region code="370500" name="东营市"/>
-		<region code="370501" name="东营市市辖区"/>
-		<region code="370502" name="东营市东营区"/>
-		<region code="370503" name="东营市河口区"/>
-		<region code="370521" name="东营市垦利县"/>
-		<region code="370522" name="东营市利津县"/>
-		<region code="370523" name="东营市广饶县"/>
-		<region code="370600" name="烟台市"/>
-		<region code="370601" name="烟台市市辖区"/>
-		<region code="370602" name="烟台市芝罘区"/>
-		<region code="370611" name="烟台市福山区"/>
-		<region code="370612" name="烟台市牟平区"/>
-		<region code="370613" name="烟台市莱山区"/>
-		<region code="370634" name="烟台市长岛县"/>
-		<region code="370681" name="烟台市龙口市"/>
-		<region code="370682" name="烟台市莱阳市"/>
-		<region code="370683" name="烟台市莱州市"/>
-		<region code="370684" name="烟台市蓬莱市"/>
-		<region code="370685" name="烟台市招远市"/>
-		<region code="370686" name="烟台市栖霞市"/>
-		<region code="370687" name="烟台市海阳市"/>
-		<region code="370700" name="潍坊市"/>
-		<region code="370701" name="潍坊市市辖区"/>
-		<region code="370702" name="潍坊市潍城区"/>
-		<region code="370703" name="潍坊市寒亭区"/>
-		<region code="370704" name="潍坊市坊子区"/>
-		<region code="370705" name="潍坊市奎文区"/>
-		<region code="370724" name="潍坊市临朐县"/>
-		<region code="370725" name="潍坊市昌乐县"/>
-		<region code="370781" name="潍坊市青州市"/>
-		<region code="370782" name="潍坊市诸城市"/>
-		<region code="370783" name="潍坊市寿光市"/>
-		<region code="370784" name="潍坊市安丘市"/>
-		<region code="370785" name="潍坊市高密市"/>
-		<region code="370786" name="潍坊市昌邑市"/>
-		<region code="370800" name="济宁市"/>
-		<region code="370801" name="济宁市市辖区"/>
-		<region code="370811" name="济宁市任城区"/>
-		<region code="370812" name="济宁市兖州区"/>
-		<region code="370826" name="济宁市微山县"/>
-		<region code="370827" name="济宁市鱼台县"/>
-		<region code="370828" name="济宁市金乡县"/>
-		<region code="370829" name="济宁市嘉祥县"/>
-		<region code="370830" name="济宁市汶上县"/>
-		<region code="370831" name="济宁市泗水县"/>
-		<region code="370832" name="济宁市梁山县"/>
-		<region code="370881" name="济宁市曲阜市"/>
-		<region code="370883" name="济宁市邹城市"/>
-		<region code="370900" name="泰安市"/>
-		<region code="370901" name="泰安市市辖区"/>
-		<region code="370902" name="泰安市泰山区"/>
-		<region code="370911" name="泰安市岱岳区"/>
-		<region code="370921" name="泰安市宁阳县"/>
-		<region code="370923" name="泰安市东平县"/>
-		<region code="370982" name="泰安市新泰市"/>
-		<region code="370983" name="泰安市肥城市"/>
-		<region code="371000" name="威海市"/>
-		<region code="371001" name="威海市市辖区"/>
-		<region code="371002" name="威海市环翠区"/>
-		<region code="371003" name="威海市文登区"/>
-		<region code="371082" name="威海市荣成市"/>
-		<region code="371083" name="威海市乳山市"/>
-		<region code="371100" name="日照市"/>
-		<region code="371101" name="日照市市辖区"/>
-		<region code="371102" name="日照市东港区"/>
-		<region code="371103" name="日照市岚山区"/>
-		<region code="371121" name="日照市五莲县"/>
-		<region code="371122" name="日照市莒县"/>
-		<region code="371200" name="莱芜市"/>
-		<region code="371201" name="莱芜市市辖区"/>
-		<region code="371202" name="莱芜市莱城区"/>
-		<region code="371203" name="莱芜市钢城区"/>
-		<region code="371300" name="临沂市"/>
-		<region code="371301" name="临沂市市辖区"/>
-		<region code="371302" name="临沂市兰山区"/>
-		<region code="371311" name="临沂市罗庄区"/>
-		<region code="371312" name="临沂市河东区"/>
-		<region code="371321" name="临沂市沂南县"/>
-		<region code="371322" name="临沂市郯城县"/>
-		<region code="371323" name="临沂市沂水县"/>
-		<region code="371324" name="临沂市兰陵县"/>
-		<region code="371325" name="临沂市费县"/>
-		<region code="371326" name="临沂市平邑县"/>
-		<region code="371327" name="临沂市莒南县"/>
-		<region code="371328" name="临沂市蒙阴县"/>
-		<region code="371329" name="临沂市临沭县"/>
-		<region code="371400" name="德州市"/>
-		<region code="371401" name="德州市市辖区"/>
-		<region code="371402" name="德州市德城区"/>
-		<region code="371403;371421" name="德州市陵城区"/>
-		<region code="371422" name="德州市宁津县"/>
-		<region code="371423" name="德州市庆云县"/>
-		<region code="371424" name="德州市临邑县"/>
-		<region code="371425" name="德州市齐河县"/>
-		<region code="371426" name="德州市平原县"/>
-		<region code="371427" name="德州市夏津县"/>
-		<region code="371428" name="德州市武城县"/>
-		<region code="371481" name="德州市乐陵市"/>
-		<region code="371482" name="德州市禹城市"/>
-		<region code="371500" name="聊城市"/>
-		<region code="371501" name="聊城市市辖区"/>
-		<region code="371502" name="聊城市东昌府区"/>
-		<region code="371521" name="聊城市阳谷县"/>
-		<region code="371522" name="聊城市莘县"/>
-		<region code="371523" name="聊城市茌平县"/>
-		<region code="371524" name="聊城市东阿县"/>
-		<region code="371525" name="聊城市冠县"/>
-		<region code="371526" name="聊城市高唐县"/>
-		<region code="371581" name="聊城市临清市"/>
-		<region code="371600" name="滨州市"/>
-		<region code="371601" name="滨州市市辖区"/>
-		<region code="371602" name="滨州市滨城区"/>
-		<region code="371603" name="滨州市沾化区"/>
-		<region code="371621" name="滨州市惠民县"/>
-		<region code="371622" name="滨州市阳信县"/>
-		<region code="371623" name="滨州市无棣县"/>
-		<region code="371625" name="滨州市博兴县"/>
-		<region code="371626" name="滨州市邹平县"/>
-		<region code="371700" name="菏泽市"/>
-		<region code="371701" name="菏泽市市辖区"/>
-		<region code="371702" name="菏泽市牡丹区"/>
-		<region code="371721" name="菏泽市曹县"/>
-		<region code="371722" name="菏泽市单县"/>
-		<region code="371723" name="菏泽市成武县"/>
-		<region code="371724" name="菏泽市巨野县"/>
-		<region code="371725" name="菏泽市郓城县"/>
-		<region code="371726" name="菏泽市鄄城县"/>
-		<region code="371727" name="菏泽市定陶县"/>
-		<region code="371728" name="菏泽市东明县"/>
+		<region code="370000" color="#00FFFF" name="山东省"/>
+		<region code="370100" color="#7FFFD4" name="济南市"/>
+		<region code="370101" color="#FFE4C4" name="济南市市辖区"/>
+		<region code="370102" color="#0000FF" name="济南市历下区"/>
+		<region code="370103" color="#8A2BE2" name="济南市市中区"/>
+		<region code="370104" color="#A52A2A" name="济南市槐荫区"/>
+		<region code="370105" color="#DEB887" name="济南市天桥区"/>
+		<region code="370112" color="#5F9EA0" name="济南市历城区"/>
+		<region code="370113" color="#7FFF00" name="济南市长清区"/>
+		<region code="370124" color="#D2691E" name="济南市平阴县"/>
+		<region code="370125" color="#FF7F50" name="济南市济阳县"/>
+		<region code="370126" color="#6495ED" name="济南市商河县"/>
+		<region code="370181" color="#DC143C" name="济南市章丘市"/>
+		<region code="370200" color="#00FFFF" name="青岛市"/>
+		<region code="370201" color="#00008B" name="青岛市市辖区"/>
+		<region code="370202" color="#008B8B" name="青岛市市南区"/>
+		<region code="370203" color="#B8860B" name="青岛市市北区"/>
+		<region code="370211" color="#A9A9A9" name="青岛市黄岛区"/>
+		<region code="370212" color="#BDB76B" name="青岛市崂山区"/>
+		<region code="370213" color="#8B008B" name="青岛市李沧区"/>
+		<region code="370214" color="#556B2F" name="青岛市城阳区"/>
+		<region code="370281" color="#FF8C00" name="青岛市胶州市"/>
+		<region code="370282" color="#9932CC" name="青岛市即墨市"/>
+		<region code="370283" color="#8B0000" name="青岛市平度市"/>
+		<region code="370285" color="#E9967A" name="青岛市莱西市"/>
+		<region code="370300" color="#8FBC8F" name="淄博市"/>
+		<region code="370301" color="#483D8B" name="淄博市市辖区"/>
+		<region code="370302" color="#2F4F4F" name="淄博市淄川区"/>
+		<region code="370303" color="#00CED1" name="淄博市张店区"/>
+		<region code="370304" color="#9400D3" name="淄博市博山区"/>
+		<region code="370305" color="#FF1493" name="淄博市临淄区"/>
+		<region code="370306" color="#00BFFF" name="淄博市周村区"/>
+		<region code="370321" color="#696969" name="淄博市桓台县"/>
+		<region code="370322" color="#1E90FF" name="淄博市高青县"/>
+		<region code="370323" color="#B22222" name="淄博市沂源县"/>
+		<region code="370400" color="#228B22" name="枣庄市"/>
+		<region code="370401" color="#FF00FF" name="枣庄市市辖区"/>
+		<region code="370402" color="#FFD700" name="枣庄市市中区"/>
+		<region code="370403" color="#DAA520" name="枣庄市薛城区"/>
+		<region code="370404" color="#808080" name="枣庄市峄城区"/>
+		<region code="370405" color="#ADFF2F" name="枣庄市台儿庄区"/>
+		<region code="370406" color="#FF69B4" name="枣庄市山亭区"/>
+		<region code="370481" color="#CD5C5C" name="枣庄市滕州市"/>
+		<region code="370500" color="#4B0082" name="东营市"/>
+		<region code="370501" color="#F0E68C" name="东营市市辖区"/>
+		<region code="370502" color="#7CFC00" name="东营市东营区"/>
+		<region code="370503" color="#ADD8E6" name="东营市河口区"/>
+		<region code="370521" color="#F08080" name="东营市垦利县"/>
+		<region code="370522" color="#D3D3D3" name="东营市利津县"/>
+		<region code="370523" color="#90EE90" name="东营市广饶县"/>
+		<region code="370600" color="#FFB6C1" name="烟台市"/>
+		<region code="370601" color="#FFA07A" name="烟台市市辖区"/>
+		<region code="370602" color="#20B2AA" name="烟台市芝罘区"/>
+		<region code="370611" color="#87CEFA" name="烟台市福山区"/>
+		<region code="370612" color="#778899" name="烟台市牟平区"/>
+		<region code="370613" color="#B0C4DE" name="烟台市莱山区"/>
+		<region code="370634" color="#00FF00" name="烟台市长岛县"/>
+		<region code="370681" color="#32CD32" name="烟台市龙口市"/>
+		<region code="370682" color="#FF00FF" name="烟台市莱阳市"/>
+		<region code="370683" color="#800000" name="烟台市莱州市"/>
+		<region code="370684" color="#66CDAA" name="烟台市蓬莱市"/>
+		<region code="370685" color="#0000CD" name="烟台市招远市"/>
+		<region code="370686" color="#BA55D3" name="烟台市栖霞市"/>
+		<region code="370687" color="#9370DB" name="烟台市海阳市"/>
+		<region code="370700" color="#3CB371" name="潍坊市"/>
+		<region code="370701" color="#7B68EE" name="潍坊市市辖区"/>
+		<region code="370702" color="#00FA9A" name="潍坊市潍城区"/>
+		<region code="370703" color="#48D1CC" name="潍坊市寒亭区"/>
+		<region code="370704" color="#C71585" name="潍坊市坊子区"/>
+		<region code="370705" color="#191970" name="潍坊市奎文区"/>
+		<region code="370724" color="#808000" name="潍坊市临朐县"/>
+		<region code="370725" color="#6B8E23" name="潍坊市昌乐县"/>
+		<region code="370781" color="#FFA500" name="潍坊市青州市"/>
+		<region code="370782" color="#FF4500" name="潍坊市诸城市"/>
+		<region code="370783" color="#DA70D6" name="潍坊市寿光市"/>
+		<region code="370784" color="#98FB98" name="潍坊市安丘市"/>
+		<region code="370785" color="#AFEEEE" name="潍坊市高密市"/>
+		<region code="370786" color="#DB7093" name="潍坊市昌邑市"/>
+		<region code="370800" color="#CD853F" name="济宁市"/>
+		<region code="370801" color="#FFC0CB" name="济宁市市辖区"/>
+		<region code="370811" color="#DDA0DD" name="济宁市任城区"/>
+		<region code="370812" color="#B0E0E6" name="济宁市兖州区"/>
+		<region code="370826" color="#800080" name="济宁市微山县"/>
+		<region code="370827" color="#FF0000" name="济宁市鱼台县"/>
+		<region code="370828" color="#BC8F8F" name="济宁市金乡县"/>
+		<region code="370829" color="#8B4513" name="济宁市嘉祥县"/>
+		<region code="370830" color="#FA8072" name="济宁市汶上县"/>
+		<region code="370831" color="#F4A460" name="济宁市泗水县"/>
+		<region code="370832" color="#2E8B57" name="济宁市梁山县"/>
+		<region code="370881" color="#A0522D" name="济宁市曲阜市"/>
+		<region code="370883" color="#87CEEB" name="济宁市邹城市"/>
+		<region code="370900" color="#6A5ACD" name="泰安市"/>
+		<region code="370901" color="#708090" name="泰安市市辖区"/>
+		<region code="370902" color="#00FF7F" name="泰安市泰山区"/>
+		<region code="370911" color="#4682B4" name="泰安市岱岳区"/>
+		<region code="370921" color="#D2B48C" name="泰安市宁阳县"/>
+		<region code="370923" color="#FF6347" name="泰安市东平县"/>
+		<region code="370982" color="#40E0D0" name="泰安市新泰市"/>
+		<region code="370983" color="#EE82EE" name="泰安市肥城市"/>
+		<region code="371000" color="#FFFF00" name="威海市"/>
+		<region code="371001" color="#9ACD32" name="威海市市辖区"/>
+		<region code="371002" color="#00FFFF" name="威海市环翠区"/>
+		<region code="371003" color="#7FFFD4" name="威海市文登区"/>
+		<region code="371082" color="#FFE4C4" name="威海市荣成市"/>
+		<region code="371083" color="#0000FF" name="威海市乳山市"/>
+		<region code="371100" color="#8A2BE2" name="日照市"/>
+		<region code="371101" color="#A52A2A" name="日照市市辖区"/>
+		<region code="371102" color="#DEB887" name="日照市东港区"/>
+		<region code="371103" color="#5F9EA0" name="日照市岚山区"/>
+		<region code="371121" color="#7FFF00" name="日照市五莲县"/>
+		<region code="371122" color="#D2691E" name="日照市莒县"/>
+		<region code="371200" color="#FF7F50" name="莱芜市"/>
+		<region code="371201" color="#6495ED" name="莱芜市市辖区"/>
+		<region code="371202" color="#DC143C" name="莱芜市莱城区"/>
+		<region code="371203" color="#00FFFF" name="莱芜市钢城区"/>
+		<region code="371300" color="#00008B" name="临沂市"/>
+		<region code="371301" color="#008B8B" name="临沂市市辖区"/>
+		<region code="371302" color="#B8860B" name="临沂市兰山区"/>
+		<region code="371311" color="#A9A9A9" name="临沂市罗庄区"/>
+		<region code="371312" color="#BDB76B" name="临沂市河东区"/>
+		<region code="371321" color="#8B008B" name="临沂市沂南县"/>
+		<region code="371322" color="#556B2F" name="临沂市郯城县"/>
+		<region code="371323" color="#FF8C00" name="临沂市沂水县"/>
+		<region code="371324" color="#9932CC" name="临沂市兰陵县"/>
+		<region code="371325" color="#8B0000" name="临沂市费县"/>
+		<region code="371326" color="#E9967A" name="临沂市平邑县"/>
+		<region code="371327" color="#8FBC8F" name="临沂市莒南县"/>
+		<region code="371328" color="#483D8B" name="临沂市蒙阴县"/>
+		<region code="371329" color="#2F4F4F" name="临沂市临沭县"/>
+		<region code="371400" color="#00CED1" name="德州市"/>
+		<region code="371401" color="#9400D3" name="德州市市辖区"/>
+		<region code="371402" color="#FF1493" name="德州市德城区"/>
+		<region code="371403;371421" color="#00BFFF" name="德州市陵城区"/>
+		<region code="371422" color="#696969" name="德州市宁津县"/>
+		<region code="371423" color="#1E90FF" name="德州市庆云县"/>
+		<region code="371424" color="#B22222" name="德州市临邑县"/>
+		<region code="371425" color="#228B22" name="德州市齐河县"/>
+		<region code="371426" color="#FF00FF" name="德州市平原县"/>
+		<region code="371427" color="#FFD700" name="德州市夏津县"/>
+		<region code="371428" color="#DAA520" name="德州市武城县"/>
+		<region code="371481" color="#808080" name="德州市乐陵市"/>
+		<region code="371482" color="#ADFF2F" name="德州市禹城市"/>
+		<region code="371500" color="#FF69B4" name="聊城市"/>
+		<region code="371501" color="#CD5C5C" name="聊城市市辖区"/>
+		<region code="371502" color="#4B0082" name="聊城市东昌府区"/>
+		<region code="371521" color="#F0E68C" name="聊城市阳谷县"/>
+		<region code="371522" color="#7CFC00" name="聊城市莘县"/>
+		<region code="371523" color="#ADD8E6" name="聊城市茌平县"/>
+		<region code="371524" color="#F08080" name="聊城市东阿县"/>
+		<region code="371525" color="#D3D3D3" name="聊城市冠县"/>
+		<region code="371526" color="#90EE90" name="聊城市高唐县"/>
+		<region code="371581" color="#FFB6C1" name="聊城市临清市"/>
+		<region code="371600" color="#FFA07A" name="滨州市"/>
+		<region code="371601" color="#20B2AA" name="滨州市市辖区"/>
+		<region code="371602" color="#87CEFA" name="滨州市滨城区"/>
+		<region code="371603" color="#778899" name="滨州市沾化区"/>
+		<region code="371621" color="#B0C4DE" name="滨州市惠民县"/>
+		<region code="371622" color="#00FF00" name="滨州市阳信县"/>
+		<region code="371623" color="#32CD32" name="滨州市无棣县"/>
+		<region code="371625" color="#FF00FF" name="滨州市博兴县"/>
+		<region code="371626" color="#800000" name="滨州市邹平县"/>
+		<region code="371700" color="#66CDAA" name="菏泽市"/>
+		<region code="371701" color="#0000CD" name="菏泽市市辖区"/>
+		<region code="371702" color="#BA55D3" name="菏泽市牡丹区"/>
+		<region code="371721" color="#9370DB" name="菏泽市曹县"/>
+		<region code="371722" color="#3CB371" name="菏泽市单县"/>
+		<region code="371723" color="#7B68EE" name="菏泽市成武县"/>
+		<region code="371724" color="#00FA9A" name="菏泽市巨野县"/>
+		<region code="371725" color="#48D1CC" name="菏泽市郓城县"/>
+		<region code="371726" color="#C71585" name="菏泽市鄄城县"/>
+		<region code="371727" color="#191970" name="菏泽市定陶县"/>
+		<region code="371728" color="#808000" name="菏泽市东明县"/>
 	</region-list>
 </config>

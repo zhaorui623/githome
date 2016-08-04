@@ -29,6 +29,9 @@ public class Step1Module extends Module {
 	private File customerInfoFile = new File("D:\\TDDOWNLOAD\\eclipse\\githome\\GuaranteeCircle\\客户信息表201506.xls"),
 			guaranteeInfoFile = new File("D:\\TDDOWNLOAD\\eclipse\\githome\\GuaranteeCircle\\担保关系表201506.xls"),
 			vipCustomerFile = new File("D:\\TDDOWNLOAD\\eclipse\\githome\\GuaranteeCircle\\重点客户清单.xls");
+	
+	private String reportDate;
+	
 	private Workbook guaranteeInfoBook, customerInfo, vipCustomerBook;
 
 	private DataSourcePanel cmPanel;
@@ -89,6 +92,8 @@ public class Step1Module extends Module {
 			JOptionPane.showMessageDialog(cmPanel, "“担保信息表”未选择或文件不存在！", "错误", JOptionPane.ERROR_MESSAGE);
 		else if (customerInfoFile == null || customerInfoFile.exists() == false)
 			JOptionPane.showMessageDialog(cmPanel, "“客户信息表”未选择或文件不存在！", "错误", JOptionPane.ERROR_MESSAGE);
+		else if (reportDate == null || String.valueOf(reportDate).length() == 0)
+			JOptionPane.showMessageDialog(cmPanel, "“数据期次”未设置！", "错误", JOptionPane.ERROR_MESSAGE);
 		else {
 			guaranteeInfoBook = Workbook.getWorkbook(guaranteeInfoFile);
 			customerInfo = Workbook.getWorkbook(customerInfoFile);
@@ -118,9 +123,10 @@ public class Step1Module extends Module {
 		for (int row = 2; row < rowCount; row++) {
 			String index = String.valueOf(sheet.getCell(0, row).getContents()).trim();
 			String groupName = String.valueOf(sheet.getCell(1, row).getContents()).trim();
-			String corpName = String.valueOf(sheet.getCell(2, row).getContents()).trim();
-			if (corpName.equals("") || corpName.equals("null"))
-				continue;
+			String orgCode = String.valueOf(sheet.getCell(2, row).getContents()).trim();
+			String corpName = String.valueOf(sheet.getCell(3, row).getContents()).trim();
+//			if (corpName.equals("") || corpName.equals("null"))
+//				continue;
 			VIPCustomerGroup group;
 			if (index.equals("") || index.equals("null")) {// 如果没有序号，说明当前组还没完，沿用刚才的组对象
 				// 取当前vipCustomerGroupList的最后一个元素的下标（注意list的最后一个元素与row的当前行并不是同一个概念）
@@ -130,7 +136,7 @@ public class Step1Module extends Module {
 				group = new VIPCustomerGroup(groupName);
 				vipCustomerGroupList.add(group);
 			}
-			Corporation corp = totalGraphic.getVertexByName(corpName);
+			Corporation corp = totalGraphic.getVertexEqualTo(Corporation.createDefaultCorp(orgCode, corpName));
 			if (corp != null) // 只处理担保关系表中涵盖的客户
 				group.addCorporation(corp);
 		}
@@ -147,8 +153,8 @@ public class Step1Module extends Module {
 				String corpName1 = sheet.getCell(1, row).getContents();// 担保人名称
 				String corpOrgcode2 = String.valueOf(sheet.getCell(2, row).getContents()).toUpperCase();// 借款人组织机构代码
 				String corpName2 = sheet.getCell(3, row).getContents();// 借款人名称
-				String corpGuaranteedLoanBalance2 = sheet.getCell(4, row).getContents();// 借款人被担保贷款总额
-				String corpOutGuaranteedLoanBalance2 = sheet.getCell(5, row).getContents();// 借款人对外担保贷款总额
+				String outGuarantValue1 = sheet.getCell(4, row).getContents();// 担保人对外担保金额
+				String corpOutGuaranteedLoanBalance1 = sheet.getCell(5, row).getContents();// 担保人对外担保贷款对应的贷款余额
 
 				Corporation corp1 = findInCorps(corps, corpOrgcode1, corpName1);// 根据担保人信息在客户信息表里寻找是否有对应的客户
 				if (corp1 == null) {// 说明担保人未在银行办理过信贷类业务
@@ -156,6 +162,8 @@ public class Step1Module extends Module {
 					corp1 = Corporation.createDefaultCorp(corpOrgcode1, corpName1);
 					corps.put(corp1.getOrgCode(), corp1);
 				}
+				corp1.setOutGuarantValue(Double.parseDouble(outGuarantValue1));//担保人对外担保金额
+				corp1.setOutGuaranteedLoanBalance(Double.parseDouble(corpOutGuaranteedLoanBalance1));//担保人对外担保贷款对应的贷款余额
 				
 				Corporation corp2 = findInCorps(corps, corpOrgcode2, corpName2);// 根据借款人信息在客户信息表里寻找是否有对应的客户
 				if (corp2 == null) {// 说明借款人未在银行办理过信贷类业务----------------很奇怪，查查原因---------------
@@ -163,12 +171,13 @@ public class Step1Module extends Module {
 					corp2 = Corporation.createDefaultCorp(corpOrgcode2, corpName2);
 					corps.put(corp2.getOrgCode(), corp2);
 				}
-				corp2.setGuaranteedLoanBalance(Double.parseDouble(corpGuaranteedLoanBalance2));
-				corp2.setOutGuaranteedLoanBalance(Double.parseDouble(corpOutGuaranteedLoanBalance2));
+//				corp2.setGuaranteedLoanBalance(Double.parseDouble(corpGuaranteedLoanBalance2));
+//				corp2.setOutGuaranteedLoanBalance(Double.parseDouble(corpOutGuaranteedLoanBalance2));
 				// 将担保人和借款人以及其担保关系加入总图中
 				totalGraphic.addVertex(corp1);
 				totalGraphic.addVertex(corp2);
-				totalGraphic.addEdge(corp1, corp2);
+				if(corp1.equals(corp2)==false){
+				totalGraphic.addEdge(corp1, corp2);}
 			}
 		}
 		totalGraphic.printBasicInfo();
@@ -181,15 +190,15 @@ public class Step1Module extends Module {
 		if(corpOrgcode.length()!=0&&corpOrgcode.equals("NULL")==false)
 			corp = corps.get(corpOrgcode);
 		
-		//如果用组织机构代码找不到，就用名字找
-		if(corp==null){
-			Iterator<Corporation> iter=corps.values().iterator();
-			while(iter.hasNext()){
-				Corporation c=iter.next();
-				if(c.getName().equals(corpName))
-					return c;
-			}
-		}
+//		//如果用组织机构代码找不到，就用名字找
+//		if(corp==null){
+//			Iterator<Corporation> iter=corps.values().iterator();
+//			while(iter.hasNext()){
+//				Corporation c=iter.next();
+//				if(c.getName().equals(corpName))
+//					return c;
+//			}
+//		}
 		
 		return corp;
 	}
@@ -199,10 +208,15 @@ public class Step1Module extends Module {
 		// 解析“客户信息表”
 		Sheet sheet = book.getSheet(0);
 		int colCount = sheet.getColumns();
-		String colNames[] = new String[colCount];
+
+		List<String> colNames = new ArrayList<String>();
 		// 取所有列名，形成数组
-		for (int col = 0; col < colCount; col++)
-			colNames[col] = sheet.getCell(col, 0).getContents();
+		for (int col = 0; col < colCount; col++){
+			String contents=sheet.getCell(col, 0).getContents();
+			if(contents==null||String.valueOf(contents).trim().length()==0)
+				break;
+			colNames.add(contents);
+		}
 
 		// 取每一行数据，组成Corporation对象，加入到corps里
 		Sheet sheets[] = book.getSheets();
@@ -212,7 +226,7 @@ public class Step1Module extends Module {
 				Corporation corp;
 				LinkedHashMap<String, Object> datas = new LinkedHashMap<String, Object>();
 				for (int col = 0; col < colCount; col++) {
-					String key = colNames[col];
+					String key = colNames.get(col);
 					Object value = sheets[s].getCell(col, row).getContents();
 					datas.put(key, value);
 				}
@@ -237,6 +251,15 @@ public class Step1Module extends Module {
 
 	public void setSkipVIPCustomerAnlys(boolean skipVIPCustomerAnlys) {
 		this.skipVIPCustomerAnlys = skipVIPCustomerAnlys;
+	}
+
+	public void setReportDate(String reportDate) {
+		this.reportDate=reportDate;
+	}
+
+	public String getReportDate() {
+		// TODO Auto-generated method stub
+		return reportDate;
 	}
 
 }

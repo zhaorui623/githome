@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.module.Module;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.Step4Module;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TimeToolkit;
 
 @SuppressWarnings("serial")
@@ -31,12 +32,14 @@ public class ProcessPanel extends JPanel {
 
 	private JLabel statusIcons[], procedureLabels[], percentLabels[];
 
-	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行拆分", "第3步：从重点客户维度分析", "第4步：高关联度担保圈合并",
-			"第5步：过滤掉非圈非链、小圈小链", "第6步：从地区分布维度分析", "第7步：从风险分类维度分析", "第8步：生成每个担保圈的拓扑图" };
+	private String[] labeltexts = { "第1步：识别独立连通子图", "第2步：对超大圈进行处理", "第3步：从重点客户维度分析", "第4步：高关联度担保圈合并",
+			"第5步：过滤掉非圈非链、小圈小链", "第6步：从地区分布维度分析", "第7步：从风险分类维度分析", "第8步：生成每个担保圈的拓扑图","第9步:生成超大担保圈的拓扑图" };
 
 	private String finishedLabel = "√", processingLabel = "→", percent100 = "(100%)";
 
 	private JCheckBox skipGraphicGenerate;// 是否跳过“担保圈拓扑图生成”步骤
+	private JCheckBox skipHugeGraphicGenerate;// 是否跳过“超大担保圈拓扑图生成”步骤
+	private JCheckBox skipGraphicMerge;// 是否跳过“担保圈合并”步骤
 
 	// private ImageIcon finishedIcon=ResourceManager.getIcon("ok.png", false);
 
@@ -69,10 +72,23 @@ public class ProcessPanel extends JPanel {
 			panels[i].add(procedureLabels[i]);
 			panels[i].add(percentLabels[i]);
 			centerPanel.add(panels[i]);
-			if (i == labeltexts.length - 1) {
+			if (i == 3) {//允许跳过“第4步：高关联度担保圈合并"
+				skipGraphicMerge = new JCheckBox("跳过本步骤");
+				skipGraphicMerge.setSelected(true);
+				panels[i].add(skipGraphicMerge);
+				procedureLabels[i].setEnabled(!skipGraphicMerge.isSelected());
+			}
+			if (i == 7) {//允许跳过"第8步：生成每个担保圈的拓扑图" 
 				skipGraphicGenerate = new JCheckBox("跳过本步骤");
+				skipGraphicGenerate.setSelected(true);
 				panels[i].add(skipGraphicGenerate);
 				procedureLabels[i].setEnabled(!skipGraphicGenerate.isSelected());
+			}
+			if (i == 8) {//允许跳过"第9步:生成超大担保圈的拓扑图"
+				skipHugeGraphicGenerate = new JCheckBox("跳过本步骤");
+				skipHugeGraphicGenerate.setSelected(true);
+				panels[i].add(skipHugeGraphicGenerate);
+				procedureLabels[i].setEnabled(!skipHugeGraphicGenerate.isSelected());
 			}
 		}
 		this.add(centerPanel, BorderLayout.CENTER);
@@ -85,6 +101,7 @@ public class ProcessPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					Step4Module.shouldRefreshResult=true;
 					String timeStamp=TimeToolkit.formater3.format(new Date());
 					GC.setOutputDir(new File(System.getProperty("user.dir")+"\\"+timeStamp+"\\"));
 					clearProcedueStatusMark();
@@ -110,7 +127,7 @@ public class ProcessPanel extends JPanel {
 									Thread.sleep(100);
 								} catch (InterruptedException e) {
 								}
-								if (p != null && shown == false && p.getIndex() == labeltexts.length) {
+								if (p != null && shown == false && p.getIndex() >= labeltexts.length-1) {
 									shown = true;
 									JOptionPane.showMessageDialog(null,
 											"前序步骤全部结束，目前正在后台生成担保圈图像，该步骤耗时较长，将为您先切换到结果展示页面查看报表。", "提示",
@@ -135,7 +152,19 @@ public class ProcessPanel extends JPanel {
 		skipGraphicGenerate.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				procedureLabels[labeltexts.length - 1].setEnabled(!skipGraphicGenerate.isSelected());
+				procedureLabels[7].setEnabled(!skipGraphicGenerate.isSelected());
+			}
+		});
+		skipGraphicMerge.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				procedureLabels[3].setEnabled(!skipGraphicMerge.isSelected());
+			}
+		});
+		skipHugeGraphicGenerate.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				procedureLabels[8].setEnabled(!skipHugeGraphicGenerate.isSelected());
 			}
 		});
 	}
@@ -152,6 +181,7 @@ public class ProcessPanel extends JPanel {
 		if (percentLabels != null)
 			for (JLabel percentLabel : percentLabels)
 				percentLabel.setText("");
+		this.repaint();
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -166,6 +196,12 @@ public class ProcessPanel extends JPanel {
 
 	public boolean isSkipGraphicGenerate() {
 		return skipGraphicGenerate.isSelected();
+	}
+	public boolean isSkipHugeGraphicGenerate() {
+		return skipHugeGraphicGenerate.isSelected();
+	}
+	public boolean isSkipGraphicMerge() {
+		return skipGraphicMerge.isSelected();
 	}
 
 	public int getProcedureCount() {

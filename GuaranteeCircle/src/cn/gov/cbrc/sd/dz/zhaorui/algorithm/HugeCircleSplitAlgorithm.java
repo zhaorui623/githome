@@ -11,13 +11,17 @@ import javax.swing.JPanel;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
+import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.FNAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.algorithm.impl.PickAlgorithm;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.FNAlgorithmConfigPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step2.PickAlgorithmConfigPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.ResultPanel;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
 
 public abstract class HugeCircleSplitAlgorithm {
 
@@ -90,6 +94,8 @@ public abstract class HugeCircleSplitAlgorithm {
 		this.algorithmConfigPanel = algorithmConfigPanel;
 		if (algorithmConfigPanel instanceof PickAlgorithmConfigPanel)
 			((PickAlgorithmConfigPanel) algorithmConfigPanel).setAlgorithm((PickAlgorithm) this);
+		if (algorithmConfigPanel instanceof FNAlgorithmConfigPanel)
+			((FNAlgorithmConfigPanel) algorithmConfigPanel).setAlgorithm((FNAlgorithm) this);
 	}
 
 	/**
@@ -158,20 +164,35 @@ public abstract class HugeCircleSplitAlgorithm {
 	}
 
 	/**
-	 * 超大圈拆分算法
+	 * 超大圈处理算法
 	 * 
 	 * @param graphic
 	 *            超大圈
-	 * @return 如果graphic是超大圈，则返回拆分后的子图集合；如果graphic不是超大圈，则返回的集合中只包含graphic自己
+	 * @return 如果graphic是超大圈，则返回处理后的子图集合；如果graphic不是超大圈，则返回的集合中只包含graphic自己
 	 * @throws Exception 
 	 */
 	public List<Graphic> splitHugeCircle(Graphic graphic) throws Exception {
 		List<Graphic> gs = new ArrayList<Graphic>();
 		if (isHugeCircle(graphic)) {// 如果确实是超大圈，则拆分之
+			
+			//结果展示用
+//			ResultPanel.hugeCirclesCount++;
+//			ResultPanel.hugeCirclesVertexCount+=graphic.vertexSet().size();
+//			ResultPanel.hugeCirclesLoanBalance+=GraphicToolkit.getLoanBalance(graphic);
+			ResultPanel.hugeCircles.add(graphic.clone());
+			
 			InfoPane.getInstance().info("发现超大圈[节点数："+graphic.vertexSet().size()+"\t边数："+graphic.edgeSet().size()+"]");
 			List<Graphic> sonGrpahicsOfHugeCircle=splitHugeCircleImpl(graphic);
-			InfoPane.getInstance().info("超大圈最终被拆分成了"+sonGrpahicsOfHugeCircle.size()+"个子圈");
-			gs.addAll(sonGrpahicsOfHugeCircle);
+			if(sonGrpahicsOfHugeCircle.size()>0){
+				InfoPane.getInstance().info("超大圈最终被处理成了"+sonGrpahicsOfHugeCircle.size()+"个子圈");
+				gs.addAll(sonGrpahicsOfHugeCircle);
+			}
+			else{
+				InfoPane.getInstance().info("根据用户定义参数，该超大圈无法继续处理，将作为“超大独立担保圈”出现在结果集中");
+				graphic.setName("超大"+graphic.getName());
+				gs.add(graphic);
+			}
+			
 			
 		} else {// 如果不是超大圈，则直接加入到结果集合中
 			gs.add(graphic);

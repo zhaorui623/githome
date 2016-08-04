@@ -22,7 +22,7 @@ public class GCMain {
 	 * 
 	 */
 
-	public static final String TITLE = "担保圈自动识别程序";
+	public static final String TITLE = "担保圈自动识别程序v16.7.28";
 
 	Logger logger = GCLogger.getInstance(this.getClass());
 

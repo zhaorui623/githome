@@ -108,9 +108,10 @@ public class Config {
 			for (int i = 0; i < regionElements.getLength(); i++) {
 				Element regionElement = (Element) regionElements.item(i);
 				String name = regionElement.getAttribute("name");
+				String color = regionElement.getAttribute("color");
 				String codeStr = regionElement.getAttribute("code");
 				String[] codes = codeStr.split(";");
-				Region region = new Region(name, codes);
+				Region region = new Region(name, color, codes);
 				for (String code : codes)
 					regionsMap.put(code, region);
 			}
@@ -121,19 +122,32 @@ public class Config {
 	public static Region getRegionByCode(String code) throws Exception {
 		Region region;
 		if (code == null || "null".equals(code))
-			return new Region("未知地区");
+			return new Region("未知地区", null);
 		region = getRegionsMap().get(code);
 		if (region == null)
-			region = new Region("省外地区", code);
+			region = new Region("省外地区" + code, null, code);
 		return region;
 	}
 
 	public static RegionLevel getRegionLevel() throws Exception {
 
 		Document doc = Config.getDoc();
-		Element regionLevelElement =(Element) doc.getElementsByTagName(Config.REGION_LEVEL_TAG).item(0);
-		String regionLevel=regionLevelElement.getAttribute("value");
+		Element regionLevelElement = (Element) doc.getElementsByTagName(Config.REGION_LEVEL_TAG).item(0);
+		String regionLevel = regionLevelElement.getAttribute("value");
 		return RegionLevel.valueOf(regionLevel);
-		
+
+	}
+
+	private static double weightCoefficients[]=null;
+	public static double getWeightCoefficient(int i) {
+		if(weightCoefficients==null){
+			weightCoefficients=new double[5];
+			for(int id=0;id<=4;id++)
+				weightCoefficients[id]=Double.parseDouble(XMLToolkit.getElementById(doc, ""+(id+38)).getAttribute("value"));
+		}
+		if(i>=1&&i<=5)
+			return weightCoefficients[i-1];
+		else 
+			return 1;
 	}
 }

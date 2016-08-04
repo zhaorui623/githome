@@ -26,7 +26,8 @@ import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GCLogger;
 public class Graphic {
 
 	private SimpleDirectedWeightedGraph<Corporation, DefaultWeightedEdge> g;
-	private Map<String, Corporation> corpIndexing;// 公司索引，方便查找
+	private Map<String, Corporation> corpNameIndexing;// 公司名称索引，方便查找
+	private Map<String, Corporation> corpOrgcodeIndexing;// 公司组织机构代码索引，方便查找
 	private String name;
 	private Region region;
 	private GraphicClassify riskClassify;
@@ -67,7 +68,7 @@ public class Graphic {
 	}
 
 	public int degreeOf(Corporation vertex) {
-		return g.degreeOf(vertex);
+		return g.inDegreeOf(vertex) + g.outDegreeOf(vertex);
 	}
 
 	public Set<DefaultWeightedEdge> edgeSet() {
@@ -142,7 +143,7 @@ public class Graphic {
 		InfoPane.getInstance().info("总图基本信息[节点总数=" + g.vertexSet().size() + "\t边总数=" + g.edgeSet().size() + "]");
 	}
 
-	public String toDotCode() {
+	public String toDotCode(boolean useConfigColor) {
 		StringBuffer code = new StringBuffer();
 		Set<DefaultWeightedEdge> edges = this.edgeSet();
 		Set<Corporation> vertexs = this.vertexSet();
@@ -156,17 +157,19 @@ public class Graphic {
 				code.append(v.getName() + "[peripheries=\"2\",style=\"filled\",fillcolor=\"#FF0033\"]\n");
 			else if (v.isCore() == true) // 将其他核心企业背景设置为粉色
 				code.append(v.getName() + "[style=\"filled\",fillcolor=\"#FF99FF\"]\n");
+			if(useConfigColor)
+				code.append(v.getName() + "[style=\"filled\",fillcolor=\""+v.getRegionColor()+"\"]\n");
 
 		}
 		for (DefaultWeightedEdge e : edges)
-			code.append("\""+this.getEdgeSource(e).getName() + "\"->\"" + this.getEdgeTarget(e).getName() + "\";\n");
+			code.append("\"" + this.getEdgeSource(e).getName() + "\"->\"" + this.getEdgeTarget(e).getName() + "\";\n");
 		code.append("}");
 
 		return code.toString();
 	}
 
-	public File toFile(File dir) throws Exception {
-		String s = this.toDotCode();
+	public File toFile(File dir, String format,boolean useConfigColor) throws Exception {
+		String s = this.toDotCode(useConfigColor);
 		dir = new File(dir.getAbsolutePath());
 		if (dir.exists() == false)
 			dir.mkdir();
@@ -176,11 +179,9 @@ public class Graphic {
 		writer.close();
 
 		String cmd1 = "cmd /c cd " + System.getProperty("user.dir") + "/release/bin";
-		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -Tsvg -o \""
-				+ file.getAbsolutePath().replace(".dot", ".svg") + "\"";
-		String cmd3 = cmd2.replaceAll("svg", "png");
-		Runtime.getRuntime().exec(cmd1 + "&&" /* + cmd2 + "&&" */ + cmd3).waitFor();
-		;
+		String cmd2 = "cmd /c dot \"" + file.getAbsolutePath() + "\" -T" + format + " -o \""
+				+ file.getAbsolutePath().replace(".dot", "." + format) + "\"";
+		Runtime.getRuntime().exec(cmd1 + "&&" + cmd2).waitFor();
 
 		return file;
 	}
@@ -314,30 +315,30 @@ public class Graphic {
 
 	public static void main(String[] args) {
 		Graphic g = new Graphic();
-//		Corporation v0 = Corporation.createDefaultCorp("0");
-//		Corporation v1 = Corporation.createDefaultCorp("1");
-//		Corporation v2 = Corporation.createDefaultCorp("2");
-//		Corporation v3 = Corporation.createDefaultCorp("3");
-//		Corporation v4 = Corporation.createDefaultCorp("4");
+		// Corporation v0 = Corporation.createDefaultCorp("0");
+		// Corporation v1 = Corporation.createDefaultCorp("1");
+		// Corporation v2 = Corporation.createDefaultCorp("2");
+		// Corporation v3 = Corporation.createDefaultCorp("3");
+		// Corporation v4 = Corporation.createDefaultCorp("4");
 
-//		g.addVertex(v0);
-//		g.addVertex(v1);
-//		g.addVertex(v2);
-//		g.addVertex(v3);
-//		g.addVertex(v4);
-//
-//		g.addEdge(v0, v1);
-//		g.addEdge(v1, v0);
-//		g.addEdge(v4, v0);
-//		g.addEdge(v1, v4);
-//		g.addEdge(v2, v1);
-//		g.addEdge(v1, v2);
-//		g.addEdge(v2, v3);
-//		g.addEdge(v3, v2);
-//
-//		g.printBasicInfo();
-//
-//		g.loopsOf(v0, 7);
+		// g.addVertex(v0);
+		// g.addVertex(v1);
+		// g.addVertex(v2);
+		// g.addVertex(v3);
+		// g.addVertex(v4);
+		//
+		// g.addEdge(v0, v1);
+		// g.addEdge(v1, v0);
+		// g.addEdge(v4, v0);
+		// g.addEdge(v1, v4);
+		// g.addEdge(v2, v1);
+		// g.addEdge(v1, v2);
+		// g.addEdge(v2, v3);
+		// g.addEdge(v3, v2);
+		//
+		// g.printBasicInfo();
+		//
+		// g.loopsOf(v0, 7);
 	}
 
 	/**
@@ -374,29 +375,60 @@ public class Graphic {
 		}
 		Set<DefaultWeightedEdge> edgeSet = this.edgeSet();
 		double i = 0, f = edgeSet.size();
-		Procedure p=((Step3Module) (GC.getGalileo().getModule("3"))).procedure;
+		Procedure p = null;
+		if (GC.getGalileo() != null)
+			p = ((Step3Module) (GC.getGalileo().getModule("3"))).procedure;
 		for (DefaultWeightedEdge edge : edgeSet) {
 			Corporation corpSource = this.getEdgeSource(edge);
 			Corporation corpTarget = this.getEdgeTarget(edge);
-			Corporation corpSourceClone = graphicClone.getVertexByName(corpSource.getName());
-			Corporation corpTargetClone = graphicClone.getVertexByName(corpTarget.getName());
-			graphicClone.addEdge(corpSourceClone, corpTargetClone);
+			Corporation corpSourceClone = graphicClone.getVertexEqualTo(corpSource);
+			Corporation corpTargetClone = graphicClone.getVertexEqualTo(corpTarget);
+			// System.out.println("克隆边["+corpSourceClone.getName()+"→"+corpTargetClone.getName()+"]");
+			try {
+				if (corpSourceClone.equals(corpTargetClone) == false)
+					graphicClone.addEdge(corpSourceClone, corpTargetClone);
+			} catch (Exception e) {
+				InfoPane.getInstance().error(e.toString());
+				e.printStackTrace();
+			}
 			i++;
-			p.setPercent((int) (i / f / 2 * 100));
+			if (p != null)
+				p.setPercent((int) (i / f / 2 * 100));
 		}
 
 		return graphicClone;
 	}
 
+	public Corporation getVertexEqualTo(Corporation corp) {
+		Corporation c=getVertexByOrgcode(corp.getOrgCode());
+		if(c==null)
+			c=getVertexByName(corp.getName());
+		return c;
+	}
+
 	public Corporation getVertexByName(String name) {
-		if (corpIndexing == null) {
-			corpIndexing = new HashMap<String, Corporation>();
+		if (corpNameIndexing == null) {
+			corpNameIndexing = new HashMap<String, Corporation>();
 			Set<Corporation> vertexs = this.vertexSet();
-			for (Corporation v : vertexs)
-				corpIndexing.put(v.getName(), v);
+			for (Corporation v : vertexs){
+				if(v.getName()!=null)
+					corpNameIndexing.put(v.getName(), v);				
+			}
 
 		}
-		return corpIndexing.get(name);
+		return corpNameIndexing.get(name);
+	}
+	public Corporation getVertexByOrgcode(String orgCode) {
+		if (corpOrgcodeIndexing == null) {
+			corpOrgcodeIndexing = new HashMap<String, Corporation>();
+			Set<Corporation> vertexs = this.vertexSet();
+			for (Corporation v : vertexs){
+				if(v.getOrgCode()!=null)
+					corpOrgcodeIndexing.put(v.getOrgCode(), v);				
+			}
+
+		}
+		return corpOrgcodeIndexing.get(orgCode);
 	}
 
 	public void setRegion(Region region) {
@@ -502,5 +534,18 @@ public class Graphic {
 	public Corporation getHeaviestVertex() {
 
 		return getHeaviestVertex(false);
+	}
+
+	public Corporation getMaxDegreeVertex() {
+		int max = -1;
+		Corporation maxV = null;
+		for (Corporation v : this.vertexSet()) {
+			int d = this.inDegreeOf(v);
+			if (d > max) {
+				max = d;
+				maxV = v;
+			}
+		}
+		return maxV;
 	}
 }

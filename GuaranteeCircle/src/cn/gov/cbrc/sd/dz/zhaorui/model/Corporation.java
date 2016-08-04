@@ -9,13 +9,17 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 
-public class Corporation {
+public class Corporation { 
 
 	public static final String NAME_COL = "客户名称";
 	public static final String ORG_CODE_COL = "组织机构代码";
 	public static final String LOAN_BANK_COUNT_COL = "贷款银行家数";
 	public static final String ADDRESS_COL = "注册地址";
+	public static final String ZCZE_COL = "资产总额";
+	public static final String FZZE_COL = "负债总额";
+	public static final String CWBBRQ_COL = "财务报表日期";
 	public static final String REGION_CODE_COL = "行政区划代码";
 	public static final String LOAN_BALANCE_COL = "贷款余额";
 	public static final String BULIANG_LOAN_BALANCE_COL = "不良贷款";
@@ -43,6 +47,7 @@ public class Corporation {
 	public static final String OFF_BALANCE_XYFXRZYH_COL = "信用风险仍在银行的销售与购买协议";
 	public static final String OFF_BALANCE_JRYSP_COL = "金融衍生品";
 	public static final String GUARANTEED_LOAN_BALANCE_COL = "被担保贷款余额";
+	public static final String OUT_GUARANT_VALUE_COL = "对外担金额";
 	public static final String OUT_GUARANTEED_LOAN_BALANCE_COL = "对外担保贷款对应的贷款余额";
 
 	private double weight = -1.0;
@@ -71,6 +76,10 @@ public class Corporation {
 	// if (corps != null)
 	// corps.clear();
 	// }
+
+	public LinkedHashMap<String, Object> getDatas() {
+		return datas;
+	}
 
 	public String getStringValue(String key) {
 		return String.valueOf(datas.get(key));
@@ -303,15 +312,15 @@ public class Corporation {
 	private double caculateWeight() {
 		double weight;// 权重
 
-		double coefficient1 = 0.01;// 正常类贷款，权重系数为1%
-		double coefficient2 = 0.02;// 关注类贷款，权重系数为2%
-		double coefficient3 = 0.25;// 次级类贷款，权重系数为25%
-		double coefficient4 = 0.50;// 可疑类贷款，权重系数为50%
-		double coefficient5 = 1.00;// 损失类贷款，权重系数为100%
+		double coefficient1 = Config.getWeightCoefficient(1);// 正常类贷款权重系数
+		double coefficient2 = Config.getWeightCoefficient(2);// 关注类贷款权重系数
+		double coefficient3 = Config.getWeightCoefficient(3);// 次级类贷款权重系数
+		double coefficient4 = Config.getWeightCoefficient(4);// 可疑类贷款权重系数
+		double coefficient5 = Config.getWeightCoefficient(5);// 损失类贷款权重系数
 
-		if (this.getBuLiangLoanBalance() > 0) {// 如果有不良贷款的话，则将正常、关注类的系数调整为25%;
-			coefficient1 = 0.25;
-			coefficient2 = 0.25;
+		if (this.getBuLiangLoanBalance() > 0) {// 如果有不良贷款的话，则将正常、关注类的系数调整为与次级类一样;
+			coefficient1 = coefficient3;
+			coefficient2 = coefficient3;
 		}
 		double value1 = this.getZhengChangLoanBalance() * coefficient1;
 		double value2 = this.getGuanZhuLoanBalance() * coefficient2;
@@ -329,14 +338,40 @@ public class Corporation {
 	public double getOutGuaranteedLoanBalance() {
 		return this.getDoubleValue(OUT_GUARANTEED_LOAN_BALANCE_COL);
 	}
+	public double getOutGuarantValue() {
+		return this.getDoubleValue(OUT_GUARANT_VALUE_COL);
+	}
 
-	public void setGuaranteedLoanBalance(double guaranteedLoanBalance) {
-		this.datas.put(GUARANTEED_LOAN_BALANCE_COL, guaranteedLoanBalance);
+	public void setOutGuarantValue(double outGuarantValue) {
+		this.datas.put(OUT_GUARANT_VALUE_COL, outGuarantValue);
 	}
 
 	public void setOutGuaranteedLoanBalance(double outGuaranteedLoanBalance) {
 		this.datas.put(OUT_GUARANTEED_LOAN_BALANCE_COL, outGuaranteedLoanBalance);
 		
+	}
+
+	public double getZCZE() {
+		// TODO Auto-generated method stub
+		return this.getDoubleValue(ZCZE_COL);
+	}
+
+	public double getFZZE() {
+		// TODO Auto-generated method stub
+		return this.getDoubleValue(FZZE_COL);
+	}
+
+	public String getRegionColor()  {
+		try {
+			if(this.getRegion()==null)
+				return "white";
+			else
+				return this.getRegion().getColor();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "white";
 	}
 
 }

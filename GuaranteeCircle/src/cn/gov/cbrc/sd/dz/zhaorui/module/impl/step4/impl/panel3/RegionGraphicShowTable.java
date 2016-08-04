@@ -9,7 +9,9 @@ import javax.swing.JTable;
 
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.ResultPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.NumberToolkit;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
 public class RegionGraphicShowTable extends JTable {
@@ -44,15 +46,16 @@ class RegionGraphicShowTableModel extends javax.swing.table.AbstractTableModel {
 		for (Region region : regionSet) {
 			Vector<Object> row = new Vector<Object>();
 			List<Graphic> graphics = regionGraphicsMap.get(region);
-			row.add(region.getName());// 地区名称
+			
+			row.add(region==null?"未知地区":region.getName());// 地区名称
 			row.add(graphics.size());// 担保圈个数
 			row.add(GraphicToolkit.getVertexSet(graphics).size());// 涉及企业个数
-			row.add(Math.round(GraphicToolkit.getLoanBalance(graphics)));// 贷款余额
-			row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(graphics)));// 不良贷款余额
+			row.add(NumberToolkit.format(GraphicToolkit.getLoanBalance(graphics)));// 贷款余额
+			row.add(NumberToolkit.format(GraphicToolkit.getBuLiangLoanBalance(graphics)));// 不良贷款余额
 			row.add(GraphicToolkit.getBuLiangLv(graphics));// 不良率
-			row.add(Math.round(GraphicToolkit.getGuanZhuLoanBalance(graphics)));// 关注类贷款余额
-			row.add(Math.round(GraphicToolkit.getYuQi90YiNeiLoanBalance(graphics)));// 逾期90以内贷款余额
-			row.add(Math.round(GraphicToolkit.getOffBalance(graphics)));// 表外业务余额
+			row.add(NumberToolkit.format(GraphicToolkit.getGuanZhuLoanBalance(graphics)));// 关注类贷款余额
+			row.add(NumberToolkit.format(GraphicToolkit.getYuQi90YiNeiLoanBalance(graphics)));// 逾期90以内贷款余额
+			row.add(NumberToolkit.format(GraphicToolkit.getOffBalance(graphics)));// 表外业务余额
 			row.add(graphics);//最后一列用来存本区域所有担保圈列表，不在前台展示该列
 			rowData.add(row);
 		}

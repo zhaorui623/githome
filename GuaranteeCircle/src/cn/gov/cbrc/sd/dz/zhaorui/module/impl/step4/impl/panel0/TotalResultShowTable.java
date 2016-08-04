@@ -10,7 +10,9 @@ import javax.swing.JTable;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Region;
+import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step4.ResultPanel;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.NumberToolkit;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.TableToolkit;
 
 public class TotalResultShowTable extends JTable {
@@ -45,18 +47,18 @@ class GraphicListShowTableModel extends javax.swing.table.AbstractTableModel {
 			for (Corporation corp : circle.vertexSet()) {
 				Vector<Object> row = new Vector<Object>();
 				row.add(circle.getName());// 担保圈名称
-				row.add(circle.getRegion().getName());// 所属地区
+				row.add(circle.getRegion()==null?"未知地区":circle.getRegion().getName());// 所属地区
 				row.add(circle.getRiskClassify().getName());// 风险分类
 				row.add(circle.vertexSet().size());// 涉及企业个数
-				row.add(Math.round(GraphicToolkit.getLoanBalance(circle)));// 贷款余额
-				row.add(Math.round(GraphicToolkit.getGuaranteedLoanBalance(circle)));// 被担保贷款余额
-				row.add(Math.round(GraphicToolkit.getBuLiangLoanBalance(circle)));// 不良贷款余额
+				row.add(NumberToolkit.format(GraphicToolkit.getLoanBalance(circle)));// 贷款余额
+				row.add(NumberToolkit.format(GraphicToolkit.getGuaranteedLoanBalance(circle)));// 被担保贷款余额
+				row.add(NumberToolkit.format(GraphicToolkit.getBuLiangLoanBalance(circle)));// 不良贷款余额
 				row.add(GraphicToolkit.getBuLiangLv(circle));// 不良率
 				row.add(corp.getName());// 企业名称
 				row.add(corp.getLoanBankCount());// 贷款银行家数
-				row.add(Math.round(corp.getLoanBalance()));// 贷款余额
-				row.add(Math.round(corp.getGuaranteedLoanBalance()));// 被担保贷款余额
-				row.add(Math.round(corp.getBuLiangLoanBalance()));// 不良贷款余额
+				row.add(NumberToolkit.format(corp.getLoanBalance()));// 贷款余额
+				row.add(NumberToolkit.format(corp.getGuaranteedLoanBalance()));// 被担保贷款余额
+				row.add(NumberToolkit.format(corp.getBuLiangLoanBalance()));// 不良贷款余额
 				row.add(corp.getBuLiangLv());// 不良率
 				row.add(corp);// 最后一列放Vertex对象本身，该列不会被显示
 				rowData.add(row);

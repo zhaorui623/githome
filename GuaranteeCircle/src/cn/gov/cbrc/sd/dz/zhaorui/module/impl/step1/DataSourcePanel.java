@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -39,7 +41,7 @@ public class DataSourcePanel extends JPanel {
 	private JButton importButton, guaranteeInfoFileChooseButton, customerInfoFileChooseButton,
 			vipCustomerFileChooseButton;
 
-	private JTextField textField1, textField2, textField3;
+	private JTextField textField1, textField2, textField3, textField4;
 
 	public DataSourcePanel(Step1Module step1Module) {
 		this.step1Module = step1Module;
@@ -53,14 +55,15 @@ public class DataSourcePanel extends JPanel {
 	}
 
 	private void addComponents() {
-		JPanel northPanel = new JPanel(new GridLayout(5, 1));
+		JPanel northPanel = new JPanel(new GridLayout(6, 1));
 		JTextArea instruction = new JTextArea();
 		instruction.setEditable(false);
 		instruction.setLineWrap(true);
 		instruction.setText(instructionText);
 		northPanel.add(instruction);
 		JPanel cp1 = new JPanel(new BorderLayout()), cp2 = new JPanel(new BorderLayout()),
-				cp3 = new JPanel(new BorderLayout()), cp4 = new JPanel(new BorderLayout());
+				cp3 = new JPanel(new BorderLayout()), cp4 = new JPanel(new BorderLayout()),
+				cp5 = new JPanel(new BorderLayout());
 
 		cp1.add(new JLabel(" 担保关系表： "), BorderLayout.WEST);
 		textField1 = new JTextField(30);
@@ -86,9 +89,14 @@ public class DataSourcePanel extends JPanel {
 		cp3.add(vipCustomerFileChooseButton, BorderLayout.EAST);
 		northPanel.add(cp3);
 
-		importButton = new JButton("导入");
-		cp4.add(importButton, BorderLayout.CENTER);
+		cp4.add(new JLabel("数据期次："), BorderLayout.WEST);
+		textField4 = new JTextField(30);
+		cp4.add(textField4, BorderLayout.CENTER);
 		northPanel.add(cp4);
+
+		importButton = new JButton("导入");
+		cp5.add(importButton, BorderLayout.CENTER);
+		northPanel.add(cp5);
 		this.add(northPanel, BorderLayout.NORTH);
 	}
 
@@ -103,6 +111,11 @@ public class DataSourcePanel extends JPanel {
 					step1Module.setGuaranteeInfoFile(file);
 					textField1.setText(file.getAbsolutePath());
 					InfoPane.getInstance().info("已选择“担保关系表”：" + file.getAbsolutePath());
+					String reportDate = matchReportDate(file.getName());
+					if (reportDate != null) {
+						textField4.setText(reportDate);
+						step1Module.setReportDate(reportDate);
+					}
 				}
 			}
 		});
@@ -141,7 +154,7 @@ public class DataSourcePanel extends JPanel {
 						JOptionPane.showMessageDialog(DataSourcePanel.this, successMessage, "提示",
 								JOptionPane.INFORMATION_MESSAGE);
 						InfoPane.getInstance().info(successMessage);
-					}else
+					} else
 						return;
 				} catch (Exception exp) {
 					JOptionPane.showMessageDialog(DataSourcePanel.this, failedMessage, "错误", JOptionPane.ERROR_MESSAGE);
@@ -153,6 +166,41 @@ public class DataSourcePanel extends JPanel {
 				Module.gotoStep(2);
 			}
 		});
+		textField4.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int keyChar = e.getKeyChar();
+				if (keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9 && textField4.getText().length() < 6) {
+					step1Module.setReportDate(textField4.getText());
+				} else {
+					e.consume(); // 关键，屏蔽掉非法输入
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
+
+	protected String matchReportDate(String filename) {
+		String result = null;
+		for (int year = 2000; year <= 2099; year++)
+			for (int month = 1; month <= 12; month++) {
+				result = "" + year + (month < 10 ? "0" + month : month);
+				if (filename.contains(result))
+					return result;
+			}
+		return result;
 	}
 
 }

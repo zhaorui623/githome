@@ -102,17 +102,18 @@ public class Step3Module extends Module {
 	public void procedure2() throws Exception {
 		List<Graphic> gs = new ArrayList<Graphic>();
 
-//		//结果展示用，计数器清零
-//		ResultPanel.hugeCirclesCount=0;
-//		ResultPanel.hugeCirclesVertexCount=0;
-//		ResultPanel.hugeCirclesLoanBalance=0;
-		ResultPanel.hugeCircles=new ArrayList<Graphic>();
-		
+		// //结果展示用，计数器清零
+		// ResultPanel.hugeCirclesCount=0;
+		// ResultPanel.hugeCirclesVertexCount=0;
+		// ResultPanel.hugeCirclesLoanBalance=0;
+		ResultPanel.hugeCircles = new ArrayList<Graphic>();
+
 		for (Graphic graphic : graphics) {
-//			if(graphic.getName().equals("独立担保圈78-茌平县冯屯镇东来冷藏加工厂圈")){
+			// if(graphic.getName().equals("独立担保圈78-茌平县冯屯镇东来冷藏加工厂圈")){
 			List<Graphic> sonGrapihcs = hcsAlgm.splitHugeCircle(graphic);
-			gs.addAll(sonGrapihcs);}
-//		}
+			gs.addAll(sonGrapihcs);
+		}
+		// }
 		graphics = gs;
 	}
 
@@ -136,13 +137,13 @@ public class Step3Module extends Module {
 				continue;
 			}
 			// 如果独立担保圈内所有企业均达不到核心企业标准，则丢弃该圈
-//			if (g.getName().contains("独立担保圈")) {
-//				((PickAlgorithm)hcsAlgm).markCoreCorp(g);
-//				if (g.getCoreCorps().size() == 0) {
-//					iterator.remove();
-//					continue;
-//				}
-//			}
+			// if (g.getName().contains("独立担保圈")) {
+			// ((PickAlgorithm)hcsAlgm).markCoreCorp(g);
+			// if (g.getCoreCorps().size() == 0) {
+			// iterator.remove();
+			// continue;
+			// }
+			// }
 
 		}
 		int size2 = graphics.size();
@@ -173,15 +174,18 @@ public class Step3Module extends Module {
 		}.start();
 		while (queue.isEmpty() == false) {
 			Graphic g = queue.take();
-			g.toFile(new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"),"png",false);
+			g.toFile(new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"), "png", false);
 		}
 	}
+
 	/**
 	 * 第9步：生成每个超大担保圈的拓扑图
 	 * 
 	 * @throws Exception
 	 */
 	public void procedure9() throws Exception {
+		if(ResultPanel.hugeCircles.size()==0)
+			return;
 		InfoPane.getInstance().info("为" + ResultPanel.hugeCircles.size() + "个超大担保圈生成图像文件……");
 		final BlockingQueue<Graphic> queue = new LinkedBlockingQueue<Graphic>(ResultPanel.hugeCircles.size());
 		for (Graphic g : ResultPanel.hugeCircles)
@@ -200,7 +204,7 @@ public class Step3Module extends Module {
 		}.start();
 		while (queue.isEmpty() == false) {
 			Graphic g = queue.take();
-			g.toFile(new File(GC.getOutputDir().getAbsolutePath() + "\\超大担保圈图\\"),"svg",true);
+			g.toFile(new File(GC.getOutputDir().getAbsolutePath() + "\\超大担保圈图\\"), "svg", true);
 		}
 	}
 
@@ -214,16 +218,20 @@ public class Step3Module extends Module {
 		for (Graphic g : graphics) {
 			rda.analysisRegion(g);
 		}
-		for(Graphic g:ResultPanel.hugeCircles){
+		if (ResultPanel.hugeCircles == null) {
+			ResultPanel.hugeCircles = new ArrayList<Graphic>();
+		}
+		for (Graphic g : ResultPanel.hugeCircles) {
 			rda.analysisRegion(g);
 		}
-//		//只保留德州地区
-//		Iterator<Graphic> iter=graphics.iterator();
-//		while(iter.hasNext()){
-//			Graphic g=iter.next();
-//			if(g.getRegion().getName().contains("德州")==false)
-//				iter.remove();
-//		}
+
+		// //只保留德州地区
+		// Iterator<Graphic> iter=graphics.iterator();
+		// while(iter.hasNext()){
+		// Graphic g=iter.next();
+		// if(g.getRegion().getName().contains("德州")==false)
+		// iter.remove();
+		// }
 	}
 
 	/**
@@ -232,6 +240,8 @@ public class Step3Module extends Module {
 	 * @throws Exception
 	 */
 	public void procedure3() throws Exception {
+		if (graphics == null)
+			graphics = new ArrayList<Graphic>();
 
 		boolean skip = ((Step1Module) Module.getModule("1")).isSkipVIPCustomerAnlys();
 		if (skip == true) {
@@ -287,11 +297,11 @@ public class Step3Module extends Module {
 	 * @throws Exception
 	 */
 	public void procedure4() throws Exception {
-//		if (0 == 0)
-//			return;
+		// if (0 == 0)
+		// return;
 		final SimpleDirectedWeightedGraph<Graphic, DefaultWeightedEdge> mergeTree = new SimpleDirectedWeightedGraph(
 				DefaultWeightedEdge.class);
-		
+
 		int count = 0;
 		Iterator<Graphic> iterator = graphics.iterator();
 		while (iterator.hasNext()) {
@@ -317,7 +327,7 @@ public class Step3Module extends Module {
 		// public void run() {
 		// try {
 		// System.out.println("生成合并路线图");
-		GraphicToolkit.toFile(mergeTree, new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"),"合并路线图","png");
+		GraphicToolkit.toFile(mergeTree, new File(GC.getOutputDir().getAbsolutePath() + "\\担保圈图\\"), "合并路线图", "png");
 		// System.out.println("生成合并路线图成功");
 		// } catch (Exception e) {
 		// InfoPane.getInstance().warn("担保圈合并路线图生成失败");

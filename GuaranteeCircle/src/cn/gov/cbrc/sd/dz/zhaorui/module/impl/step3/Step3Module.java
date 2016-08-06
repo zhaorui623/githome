@@ -370,4 +370,10 @@ public class Step3Module extends Module {
 	public void setSucessMark(boolean b) {
 		this.sucessMark = b;
 	}
+
+	public void resetData() {
+		this.graphics=null;
+		this.hcsAlgm = ((Step2Module) Module.getModule("2")).getHcsAlgm();
+		ResultPanel.hugeCircles=null;
+	}
 }

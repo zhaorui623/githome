@@ -28,7 +28,8 @@ public class ProcessPanel extends JPanel {
 
 	private Step3Module step3Module;
 
-	private JButton start;
+	private JPanel startPanel;
+	private JButton start,startOnlyVIP;
 
 	private JLabel statusIcons[], procedureLabels[], percentLabels[];
 
@@ -49,8 +50,12 @@ public class ProcessPanel extends JPanel {
 		this.step3Module = step3Module;
 		this.setName(step3Module.getName());
 
+		startPanel=new JPanel(new BorderLayout());
 		start = new JButton("开始识别");
-		this.add(start, BorderLayout.NORTH);
+		startOnlyVIP = new JButton("只做重点客户担保圈识别");
+		startPanel.add(start, BorderLayout.CENTER);
+		startPanel.add(startOnlyVIP, BorderLayout.EAST);
+		this.add(startPanel, BorderLayout.NORTH);
 
 		addComponents();
 		addListeners();
@@ -94,7 +99,24 @@ public class ProcessPanel extends JPanel {
 		this.add(centerPanel, BorderLayout.CENTER);
 	}
 
+	private boolean isOnlyDoVIP=false;
+	private boolean startOnlyVIPButtonClicked=false;
+	
+	public boolean isOnlyDoVIP() {
+		return isOnlyDoVIP;
+	}
+
+
 	private void addListeners() {
+		startOnlyVIP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startOnlyVIPButtonClicked=true;
+				start.doClick();
+				startOnlyVIPButtonClicked=false;
+			}
+		});
 		start.addActionListener(new ActionListener() {
 			boolean shown = false;
 
@@ -102,6 +124,7 @@ public class ProcessPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Step4Module.shouldRefreshResult=true;
+					isOnlyDoVIP=startOnlyVIPButtonClicked;
 					String timeStamp=TimeToolkit.formater3.format(new Date());
 					GC.setOutputDir(new File(System.getProperty("user.dir")+"\\"+timeStamp+"\\"));
 					clearProcedueStatusMark();

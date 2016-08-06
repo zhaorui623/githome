@@ -20,6 +20,10 @@ public class ProcedureThread extends Thread {
 	public void run() {
 		try {
 			for (int i = 1; i <= processPanel.getProcedureCount(); i++) {
+				if(processPanel.isOnlyDoVIP()==true&&(i==1||i==2)){
+					InfoPane.getInstance().info("用户选择只做重点客户担保圈分析，跳过" + step3Module.getpPanel().getLabeltexts()[i - 1]);
+					continue;					
+				}
 				if (i == 8 && processPanel.isSkipGraphicGenerate() == true){ // 是否需要跳过担保图生成的步骤
 					InfoPane.getInstance().info("根据用户选择，跳过" + step3Module.getpPanel().getLabeltexts()[i - 1]);
 					continue;

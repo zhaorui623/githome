@@ -36,6 +36,7 @@ public class Step4Module extends Module {
 		}
 		try {
 			if (shouldRefreshResult == true) {
+				shouldRefreshResult = false;
 				Thread generatTableThread = new Thread() {
 					public void run() {
 						try {
@@ -47,7 +48,6 @@ public class Step4Module extends Module {
 							InfoPane.getInstance().error(e.toString());
 							e.printStackTrace();
 						}
-						shouldRefreshResult = false;
 					};
 				};
 				final ProgressBar bar = new ProgressBar((JFrame) GC.getParent(), "报表生成进程");

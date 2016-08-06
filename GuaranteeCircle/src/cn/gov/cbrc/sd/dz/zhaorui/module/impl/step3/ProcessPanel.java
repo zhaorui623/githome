@@ -125,6 +125,7 @@ public class ProcessPanel extends JPanel {
 				try {
 					Step4Module.shouldRefreshResult=true;
 					isOnlyDoVIP=startOnlyVIPButtonClicked;
+					resetStepModule3();
 					String timeStamp=TimeToolkit.formater3.format(new Date());
 					GC.setOutputDir(new File(System.getProperty("user.dir")+"\\"+timeStamp+"\\"));
 					clearProcedueStatusMark();
@@ -190,6 +191,10 @@ public class ProcessPanel extends JPanel {
 				procedureLabels[8].setEnabled(!skipHugeGraphicGenerate.isSelected());
 			}
 		});
+	}
+
+	protected void resetStepModule3() {
+		step3Module.resetData();
 	}
 
 	public String[] getLabeltexts() {

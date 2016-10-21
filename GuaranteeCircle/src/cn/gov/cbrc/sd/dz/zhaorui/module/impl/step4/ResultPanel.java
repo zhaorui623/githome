@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import javax.swing.JTabbedPane;
 
 import cn.gov.cbrc.sd.dz.zhaorui.GC;
 import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
+import cn.gov.cbrc.sd.dz.zhaorui.model.Corporation;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Graphic;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step1.Step1Module;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
@@ -300,6 +302,13 @@ public class ResultPanel extends JPanel {
 					InfoPane.getInstance().info("不良余额:"+GraphicToolkit.getBuLiangLoanBalance(hg));
 					InfoPane.getInstance().info("不良客户数:"+GraphicToolkit.getBuliangCorpsSet(hg).size());
 					InfoPane.getInstance().info("不良率:"+GraphicToolkit.getBuLiangLv(hg));
+					InfoPane.getInstance().info("关注贷款余额:"+GraphicToolkit.getGuanZhuLoanBalance(hg));
+					InfoPane.getInstance().info("逾期贷款余额:"+GraphicToolkit.getYuQiLoanBalance(hg));
+					Set<Corporation> vs=hg.vertexSet();
+					for(Corporation v:vs){
+						InfoPane.getInstance().info(v.getOrgCode()+"\t"+v.getName()+"\t"+v.getRegion());						
+					}
+					InfoPane.getInstance().info("----------------------超大担保圈："+hg.getName()+"---------------------------");
 				}
 				// 独立担保圈个数
 				ExcelToolkit.addNumberCell(sheet2, 5, row, duliCircles.size());

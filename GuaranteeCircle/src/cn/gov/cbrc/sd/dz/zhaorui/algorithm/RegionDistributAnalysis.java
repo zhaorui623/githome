@@ -48,6 +48,8 @@ public class RegionDistributAnalysis {
 					regionCode = core.getStringValue(Corporation.REGION_CODE_COL);
 				}
 			}
+//			System.out.println(regionCode+regionCode.length());
+			
 			regionCode = regionCode.substring(0, this.regoinLevel.getLength());
 			while (regionCode.length() < 6)
 				regionCode = regionCode + "0";

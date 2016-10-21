@@ -2,7 +2,7 @@
 	<!-- 超大圈拆分算法 -->
 	<huge-circle-split-algorithm class="cn.gov.cbrc.sd.dz.zhaorui.algorithm.HugeCircleSplitAlgorithm" id="1" name="超大圈拆分算法">
 		<!-- 超大圈认定规则：当“圈内节点数>=[vertex-floor.value]”时，则认定为超大圈 -->
-		<vertex-floor id="2" value="100"/>
+		<vertex-floor id="2" value="300"/>
 		<!-- 拆分算法 -->
 		<algorithms id="3">
 			<!-- 拆分算法1：摘取法 -->
@@ -12,7 +12,7 @@
 					<!-- 要被认定为核心企业需要满足的条件个数 -->
 					<condition-number id="32" value="1"/>
 					<!-- 条件1：如果“企业的贷款余额>=[loan-balance-floor.value]”，则摘取以它为核心的担保圈 -->
-					<loan-balance-floor id="9" selected="true" unit="亿元" value="5"/>
+					<loan-balance-floor id="9" selected="true" unit="亿元" value="3"/>
 					<!-- 条件2： color=""/>企业被[guarantor-floor.value](含)家以上企业担保，并且“企业的被担保贷款总余额>=[guaranteed-loan-balance-floor.value]”， 则摘取以它为核心的担保圈 -->
 					<guarantor-floor id="6" selected="false" value="3"/>
 					<guaranteed-loan-balance-floor id="8" unit="万元" value="3000"/>
@@ -75,10 +75,10 @@
 	</circle-merge>
 	<!-- 节点权重 -->
 	<vertex-weight>
-		<weight id="38" name="正常贷款权重" value="0.01"/><!-- 一旦存在不良贷款，则程序将自动把正常类权重调整为和次级类一样 -->
-		<weight id="39" name="关注贷款权重" value="0.02"/><!-- 一旦存在不良贷款，则程序将自动把关注类权重调整为和次级类一样 -->
-		<weight id="40" name="次级贷款权重" value="0.25"/>
-		<weight id="41" name="可疑贷款权重" value="0.50"/>
+		<weight id="38" name="正常贷款权重" value="1"/><!-- 一旦存在不良贷款，则程序将自动把正常类权重调整为和次级类一样 -->
+		<weight id="39" name="关注贷款权重" value="1"/><!-- 一旦存在不良贷款，则程序将自动把关注类权重调整为和次级类一样 -->
+		<weight id="40" name="次级贷款权重" value="1"/>
+		<weight id="41" name="可疑贷款权重" value="1"/>
 		<weight id="42" name="损失贷款权重" value="1.00"/>
 	</vertex-weight>
 	<!-- 担保圈分类标准 -->

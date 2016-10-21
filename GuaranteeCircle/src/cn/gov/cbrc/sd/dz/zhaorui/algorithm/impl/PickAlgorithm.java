@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import org.apache.poi.hssf.record.CountryRecord;
 import org.jgraph.graph.Edge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.w3c.dom.Document;
@@ -22,6 +23,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.model.Loop;
 import cn.gov.cbrc.sd.dz.zhaorui.model.Unit;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.Config;
 import cn.gov.cbrc.sd.dz.zhaorui.resource.ResourceManager;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.XMLToolkit;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;;
@@ -118,6 +120,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuarantor_floor_value(int guarantor_floor_value) {
 		this.guarantor_floor_value = guarantor_floor_value;
 	}
+
 	public void setOut_Guarantor_floor_value(int out_guarantor_floor_value) {
 		this.out_guarantor_floor_value = out_guarantor_floor_value;
 	}
@@ -153,6 +156,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuaranteed_loan_balance_floor_value(int guaranteed_loan_balance_floor_value) {
 		this.guaranteed_loan_balance_floor_value = guaranteed_loan_balance_floor_value;
 	}
+
 	public void setOut_Guaranteed_loan_balance_floor_value(int out_guaranteed_loan_balance_floor_value) {
 		this.out_guaranteed_loan_balance_floor_value = out_guaranteed_loan_balance_floor_value;
 	}
@@ -164,6 +168,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	public void setGuaranteed_loan_balance_floor_unit(Unit guaranteed_loan_balance_floor_unit) {
 		this.guaranteed_loan_balance_floor_unit = guaranteed_loan_balance_floor_unit;
 	}
+
 	public void setOut_Guaranteed_loan_balance_floor_unit(Unit out_guaranteed_loan_balance_floor_unit) {
 		this.out_guaranteed_loan_balance_floor_unit = out_guaranteed_loan_balance_floor_unit;
 	}
@@ -202,7 +207,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		this.loan_balance_floor_selected = loan_balance_floor_selected;
 	}
 
-	public static   boolean isOne_hand_vertex_all() {
+	public static boolean isOne_hand_vertex_all() {
 		return one_hand_vertex_all;
 	}
 
@@ -210,7 +215,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.one_hand_vertex_all = one_hand_vertex_all;
 	}
 
-	public static  boolean isOne_hand_vertex_in_only() {
+	public static boolean isOne_hand_vertex_in_only() {
 		return one_hand_vertex_in_only;
 	}
 
@@ -226,7 +231,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.one_hand_vertex_none = one_hand_vertex_none;
 	}
 
-	public static  boolean isTwo_hand_vertex_all() {
+	public static boolean isTwo_hand_vertex_all() {
 		return two_hand_vertex_all;
 	}
 
@@ -234,7 +239,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.two_hand_vertex_all = two_hand_vertex_all;
 	}
 
-	public static  boolean isTwo_hand_vertex_in_only() {
+	public static boolean isTwo_hand_vertex_in_only() {
 		return two_hand_vertex_in_only;
 	}
 
@@ -242,7 +247,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.two_hand_vertex_in_only = two_hand_vertex_in_only;
 	}
 
-	public static  boolean isTwo_hand_vertex_none() {
+	public static boolean isTwo_hand_vertex_none() {
 		return two_hand_vertex_none;
 	}
 
@@ -250,7 +255,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.two_hand_vertex_none = two_hand_vertex_none;
 	}
 
-	public  static boolean isThree_hand_vertex_all() {
+	public static boolean isThree_hand_vertex_all() {
 		return three_hand_vertex_all;
 	}
 
@@ -258,7 +263,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.three_hand_vertex_all = three_hand_vertex_all;
 	}
 
-	public static  boolean isThree_hand_vertex_in_only() {
+	public static boolean isThree_hand_vertex_in_only() {
 		return three_hand_vertex_in_only;
 	}
 
@@ -266,7 +271,7 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		PickAlgorithm.three_hand_vertex_in_only = three_hand_vertex_in_only;
 	}
 
-	public static  boolean isThree_hand_vertex_none() {
+	public static boolean isThree_hand_vertex_none() {
 		return three_hand_vertex_none;
 	}
 
@@ -376,8 +381,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 			p.setPercent((int) (i * 1.0 / coreCorps.size() * 100));
 			gs.add(g);
 		}
-//		double q=FNAlgorithm.getEQ(graphic,gs);
-//		InfoPane.getInstance().info("模块度为Q="+q);
+		// double q=FNAlgorithm.getEQ(graphic,gs);
+		// InfoPane.getInstance().info("模块度为Q="+q);
 		return gs;
 	}
 
@@ -395,15 +400,43 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 		Graphic g = new Graphic();
 		// g.setNameSuffix(core.getName());
 		g.setName(core.getName() + "圈");
+//		boolean b = false;
+//		if (core.getName().equals("山东省财金投资有限公司"))
+//			b = true;
 		// 先把核心节点放到g里
 		g.addVertex(core);
 		g.addCoreCorps(core);
 		// 拉取第一层节点
 		Set<Corporation> corpsOfLevel1 = pickNextLevel(graphic, g, g.vertexSet(), "One");
+//		if (b)
+//			System.out.println("山东省财金投资有限公司1手:" + corpsOfLevel1.size() + "个企业，贷款余额"
+//					+ GraphicToolkit.getLoanBalance(corpsOfLevel1));
 		// 拉取第二层节点
 		Set<Corporation> corpsOfLevel2 = pickNextLevel(graphic, g, corpsOfLevel1, "Two");
+//		if (b) {
+//			corpsOfLevel1.addAll(corpsOfLevel2);
+//			System.out.println("山东省财金投资有限公司2手:" + corpsOfLevel1.size() + "个企业，贷款余额"
+//					+ GraphicToolkit.getLoanBalance(corpsOfLevel1));
+//		}
 		// 拉取第三层节点
 		Set<Corporation> corpsOfLevel3 = pickNextLevel(graphic, g, corpsOfLevel2, "Three");
+//		if (b) {
+//			corpsOfLevel1.addAll(corpsOfLevel3);
+//			System.out.println("山东省财金投资有限公司3手:" + corpsOfLevel1.size() + "个企业，贷款余额"
+//					+ GraphicToolkit.getLoanBalance(corpsOfLevel1));
+//		}
+//		if (b) {
+//			Set<Corporation> corpsOfLeveli_1 = corpsOfLevel3;
+//			for (int i = 4; i < 100; i++) {
+//				Set<Corporation> corpsOfLeveli = pickNextLevel(graphic, g, corpsOfLeveli_1);
+//				if (b) {
+//					corpsOfLevel1.addAll(corpsOfLeveli);
+//					System.out.println("山东省财金投资有限公司" + i + "手:" + corpsOfLevel1.size() + "个企业，贷款余额"
+//							+ GraphicToolkit.getLoanBalance(corpsOfLevel1));
+//				}
+//				corpsOfLeveli_1 = corpsOfLeveli;
+//			}
+//		}
 		// 如果“互保企业必取之”的条件被选中的话，则拉取核心企业及其N手互保企业的所有互保企业
 		if (isPick_mutually_guaranteed_corp()) {
 			pickMutuallyGuaranteedCorps(graphic, g, core);
@@ -451,8 +484,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps, String levelToPick)
-			throws Exception {
+	private static Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps,
+			String levelToPick) throws Exception {
 		int levelTopick = levelToPick.equals("One") ? 1 : (levelToPick.equals("Two") ? 2 : 3);
 		Set<Corporation> corpsOfLevelX = new HashSet<Corporation>();
 		// 如果是“全不取”被选中
@@ -478,7 +511,8 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 						}
 					}
 					// 如果是“只取为核心企业提供担保的企业”
-					if ((Boolean) PickAlgorithm.class.getMethod("is" + levelToPick + "_hand_vertex_in_only").invoke(null)) {
+					if ((Boolean) PickAlgorithm.class.getMethod("is" + levelToPick + "_hand_vertex_in_only")
+							.invoke(null)) {
 						if (corpT.equals(corp)) {
 							if (g.containsVertex(corpS) == false) {
 								// 将core作为尾顶点时的对端顶点加入g中
@@ -491,6 +525,28 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 			}
 			return corpsOfLevelX;
 		}
+	}
+
+	private static Set<Corporation> pickNextLevel(Graphic graphic, Graphic g, Set<Corporation> corps)
+			throws Exception {
+		Set<Corporation> corpsOfLevelX = new HashSet<Corporation>();
+		for (Corporation corp : corps) {// 对于每一个节点
+			// 获取与该点接触的所有边
+			Set<DefaultWeightedEdge> edges = graphic.edgesOf(corp);
+			for (DefaultWeightedEdge edge : edges) {// 对每一条边
+				Corporation corpS = graphic.getEdgeSource(edge);// 边的头顶点
+				Corporation corpT = graphic.getEdgeTarget(edge);// 边的尾顶点
+				Corporation corp2 = corpS.equals(corp) == false ? corpS : corpT;// core的对端顶点
+				if (g.containsVertex(corp2) == false) {
+					// 将每条边的另一端的那个节点加到g中
+					g.addVertex(corp2);
+					corpsOfLevelX.add(corp2);
+				}
+
+			}
+		}
+		return corpsOfLevelX;
+
 	}
 
 	/**
@@ -552,7 +608,6 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 				}
 			}
 
-
 			if (this.isOut_guarantor_floor_selected()) {// 若条件3被启用的话
 				// 如果企业为[guarantor-floor.value](含)家以上企业提供担保，并且“企业的对外担保贷款总余额>=[guaranteed-loan-balance-floor.value]”，则可以认定为核心企业
 				if (graphic.outDegreeOf(corp) >= this.getOut_guarantor_floor_value()
@@ -569,15 +624,15 @@ public class PickAlgorithm extends HugeCircleSplitAlgorithm {
 			}
 
 			// 如果实际满足的条件个数超过用户定义的下限的话，则认定为核心企业
-			if (conditionMeetCount >= this.getCondition_number_value()){
+			if (conditionMeetCount >= this.getCondition_number_value()) {
 				corp.setCore(true);
 				graphic.addCoreCorps(corp);
-			}
-			else
+			} else
 				corp.setCore(false);
 		}
 
-//		InfoPane.getInstance().info("超大圈内识别出的核心企业数为：" + getCoreCorpCount(graphic));
+		// InfoPane.getInstance().info("超大圈内识别出的核心企业数为：" +
+		// getCoreCorpCount(graphic));
 	}
 
 	/**

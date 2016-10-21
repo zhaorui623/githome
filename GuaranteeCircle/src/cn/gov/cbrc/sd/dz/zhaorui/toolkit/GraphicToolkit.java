@@ -524,6 +524,32 @@ public class GraphicToolkit {
 		}
 	}
 
+	public static double getLoanBalance(Set<Corporation> vertexSet) {
+		double result=0;
+		for(Corporation v:vertexSet)
+			result=result+=v.getLoanBalance();
+		return result;
+	}
+
+	public static double getYuQiLoanBalance(Graphic circle) {
+
+		List<Graphic> list = new ArrayList<Graphic>();
+		list.add(circle);
+		return getYuQiLoanBalance(list);
+	}
+
+	private static double getYuQiLoanBalance(List<Graphic> graphics) {
+		double result = 0;
+		if (graphics != null) {
+			Set<Corporation> corps = getVertexSet(graphics);
+			for (Corporation corp : corps) {
+				double value = corp.getDoubleValue(Corporation.YUQI_LOAN_BALANCE_COL);
+				result = result + value;
+			}
+		}
+		return result;
+	}
+
 	// public static double getMutuallyLoanBalance(Graphic circle) {
 	// Set<DefaultWeightedEdge> mutuallyEdgeSet= circle.getMutuallyEdges();
 	//

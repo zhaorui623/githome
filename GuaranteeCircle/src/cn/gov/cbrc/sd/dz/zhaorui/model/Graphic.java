@@ -22,6 +22,7 @@ import cn.gov.cbrc.sd.dz.zhaorui.component.InfoPane;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Procedure;
 import cn.gov.cbrc.sd.dz.zhaorui.module.impl.step3.Step3Module;
 import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GCLogger;
+import cn.gov.cbrc.sd.dz.zhaorui.toolkit.GraphicToolkit;
 
 public class Graphic {
 
@@ -140,7 +141,7 @@ public class Graphic {
 	}
 
 	public void printBasicInfo() {
-		InfoPane.getInstance().info("总图基本信息[节点总数=" + g.vertexSet().size() + "\t边总数=" + g.edgeSet().size() + "]");
+		InfoPane.getInstance().info("总图基本信息[节点总数=" + g.vertexSet().size() + "\t边总数=" + g.edgeSet().size() +"\t贷款余额"+ GraphicToolkit.getLoanBalance(g.vertexSet())+ "万元]");
 	}
 
 	public String toDotCode(boolean useConfigColor) {

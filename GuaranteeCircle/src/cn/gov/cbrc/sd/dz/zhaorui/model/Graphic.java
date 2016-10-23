@@ -51,6 +51,11 @@ public class Graphic {
 	public DefaultWeightedEdge addEdge(Corporation sourceVertex, Corporation targetVertex) {
 		return g.addEdge(sourceVertex, targetVertex);
 	}
+	public DefaultWeightedEdge addEdge(Corporation sourceVertex, Corporation targetVertex,double weight) {
+		DefaultWeightedEdge edge=g.addEdge(sourceVertex, targetVertex);
+		g.setEdgeWeight(edge, weight);
+		return edge;
+	}
 
 	public boolean addVertex(Corporation v) {
 		return g.addVertex(v);

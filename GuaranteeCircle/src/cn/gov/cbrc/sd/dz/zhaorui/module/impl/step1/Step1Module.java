@@ -207,7 +207,7 @@ public class Step1Module extends Module {
 		Map<String, Corporation> corps = new HashMap<String, Corporation>();
 		// 解析“客户信息表”
 		Sheet sheet = book.getSheet(0);
-		int colCount = sheet.getColumns();
+		int colCount = 39;//sheet.getColumns();
 
 		List<String> colNames = new ArrayList<String>();
 		// 取所有列名，形成数组
